@@ -1,0 +1,80 @@
+services:
+
+  webview:
+    container_name: webview
+    build:
+      context: .
+      dockerfile: ./docker/dev/webview/Dockerfile
+    volumes:
+      - ./app/webview/src/:/webview/src/
+    ports:
+      - "${WEBVIEW_PORT}:${WEBVIEW_PORT}"
+    restart: always
+    env_file:
+      - ./app/webview/.env.dev
+    depends_on:
+      - webapi
+
+  webapi:
+    container_name: webapi
+    build:
+      context: .
+      dockerfile: ./docker/dev/webapi/Dockerfile
+    volumes:
+      - ./app/webapi/:/webapi/
+    ports:
+      - "${WEBAPI_PORT}:${WEBAPI_PORT}"
+    restart: always
+    env_file:
+      - ./app/webapi/.env.dev
+    depends_on:
+      - rdb
+
+
+  rdb:
+    container_name: rdb
+    build:
+      context: .
+      dockerfile: ./docker/dev/rdb/Dockerfile
+    volumes:
+      - type: bind
+        source: ./app/rdb/postgresql/data
+        target: /var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${RDB_NAME}
+      POSTGRES_USER: ${RDB_USER}
+      POSTGRES_PASSWORD: ${RDB_PASSWORD}
+    ports:
+      - "${RDB_PORT}:${RDB_PORT}"
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${RDB_USER} -d ${RDB_NAME}"]
+      interval: 1s
+      timeout: 3s
+      retries: 30
+
+  kvs:
+    container_name: kvs
+    build:
+      context: .
+      dockerfile: ./docker/dev/kvs/Dockerfile
+    volumes:
+      - type: bind
+        source: ./app/kvs/redis/data
+        target: /data
+    ports:
+      - "${KVS_PORT}:${KVS_PORT}"
+    restart: always
+
+  vdb:
+    container_name: vdb
+    build:
+      context: .
+      dockerfile: ./docker/dev/vdb/Dockerfile
+    volumes:
+      - type: bind
+        source: ./app/vdb/qdrant/data
+        target: /qdrant/storage
+    ports:
+      - "${VDB_PORT}:${VDB_PORT}"
+    restart: always
