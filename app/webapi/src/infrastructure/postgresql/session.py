@@ -25,7 +25,7 @@ session_local = scoped_session(
         )
     )
 
-def get_session():
+def get_rdb_session():
     try:
         session = session_local()
         yield session
