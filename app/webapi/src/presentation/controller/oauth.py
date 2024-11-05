@@ -12,7 +12,7 @@ async def oauth_signup(form: OAuthSignupRequestParams, usecase: OAuthSignupUseca
     result = usecase.request_exec(form)
     return result
 
-@router.post("/oauth/signup/verify/{key}")
+@router.get("/oauth/signup/verify")
 async def oauth_verify(key: str, usecase: OAuthSignupUsecase = Depends(implement_oauth_signup_usecase)):
     result = usecase.verify_exec(key)
     return result
