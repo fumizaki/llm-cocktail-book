@@ -1,0 +1,13 @@
+.github/ @fumizaki
+app/kvs/ @fumizaki
+app/rdb/ @fumizaki
+app/vdb/ @fumizaki
+app/webapi/ @fumizaki
+app/webview/ @fumizaki
+docker/ @fumizaki
+iac/ @fumizaki
+.env.example @fumizaki
+.gitignore @fumizaki
+compose.dev.yml @fumizaki
+Makefile @fumizaki
+README.md @fumizaki
