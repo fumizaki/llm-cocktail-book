@@ -7,12 +7,13 @@ from src.presentation.dependency.repository import (
 )
 from src.application.usecase.oauth.signup import OAuthSignupUsecase
 from src.application.usecase.oauth.password import OAuthPasswordUsecase
+from src.application.usecase.oauth.refresh import OAuthRefreshUsecase
 from src.domain.query.account import AccountQuery
 from src.domain.repository.account import AccountRepository
 from src.domain.repository.account_secret import AccountSecretRepository
 from src.infrastructure.postgresql.session import get_rdb_session
 from src.infrastructure.core.rdb.transaction import TransactionClient
-from src.infrastructure.resend.email import ResendEmailClient
+from src.infrastructure.resend.mailer import ResendEmailClient
 from src.infrastructure.redis.session import RedisSessionClient
 
 def implement_oauth_signup_usecase(
@@ -33,3 +34,9 @@ def implement_oauth_password_usecase(
         account_query: AccountQuery = Depends(implement_account_query)
     ) -> OAuthPasswordUsecase:
     return OAuthPasswordUsecase(account_query)
+
+
+def implement_oauth_refresh_usecase(
+        account_repository: AccountRepository = Depends(implement_account_repository)
+    ) -> OAuthRefreshUsecase:
+    return OAuthRefreshUsecase(account_repository)

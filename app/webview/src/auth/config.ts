@@ -1,6 +1,7 @@
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import { signinAction } from '@/server-actions/signin-action';
+import { refreshAction } from '@/server-actions/refresh-action';
 import { AuthToken } from '@/domain/schema';
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
@@ -38,6 +39,15 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
             return token;
         },
         async session({ session, token }) {
+            const accessTokenExpiration = new Date(token.authorization.expiresIn * 1000);
+            if (accessTokenExpiration < new Date()) {
+                try {
+                    const res = await refreshAction(token.authorization.refreshToken)
+                    token.authorization = res
+                } catch (e) {
+                    throw new Error('System Error');
+                }
+            }
             session.user.authorization = token.authorization as AuthToken
             return session;
         }

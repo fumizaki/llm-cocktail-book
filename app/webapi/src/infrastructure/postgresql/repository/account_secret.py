@@ -3,7 +3,6 @@ from sqlalchemy.orm import Session
 from sqlalchemy import select
 from sqlalchemy.engine.row import Row, Tuple
 from src.domain.entity.account_secret import AccountSecret
-from src.domain.schema.account_secret import UpdateAccountSecretParams
 from src.domain.repository.account_secret import AccountSecretRepository
 from src.infrastructure.postgresql.schema.table import AccountSecretTable
 
@@ -54,7 +53,7 @@ class AccountSecretRepositoryImpl(AccountSecretRepository):
         return self.to_entity(obj)
     
     
-    def update(self, id: str, params: UpdateAccountSecretParams) -> AccountSecret:
+    def update(self, id: str, password: str, salt: str, stretching: int) -> AccountSecret:
         result = self._session.execute(
             select(
                 AccountSecretTable
@@ -66,7 +65,9 @@ class AccountSecretRepositoryImpl(AccountSecretRepository):
         )
         row: Row[Tuple[AccountSecretTable]] = result.one()
         _in_db: AccountSecretTable = row[0]
-        # _in_db.title = params.title
+        _in_db.password = password
+        _in_db.salt = salt
+        _in_db.stretching = stretching
         self._session.flush()
 
         return self.to_entity(_in_db)

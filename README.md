@@ -20,7 +20,7 @@ TBD
 * CI/CD
     * GitHub Actions
 * IaC
-    * TBD
+    * Terraform
 * App
     * WebView
         * Next.js

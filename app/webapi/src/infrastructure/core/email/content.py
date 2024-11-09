@@ -18,7 +18,7 @@ class EmailContent(BaseModel):
 
 
 def build_signup_request_content(key: str) -> EmailContent:
-    subject=f"Verify your account"
+    subject = f"Verify Your Account"
     message = f"""
 Verify your email to sign up for App
 
@@ -32,6 +32,19 @@ please note that by completing your sign-up you are agreeing to our Terms of Ser
 
 """
 
+
+    return EmailContent(
+        subject=subject,
+        message_type=MessageType.TEXT,
+        message=message
+    )
+
+
+def build_update_password_content() -> EmailContent:
+    subject = f"Notice of Password Change"
+    message = f"""
+Notice of password change 
+"""
 
     return EmailContent(
         subject=subject,

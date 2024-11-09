@@ -14,7 +14,7 @@ class AccountSecretRepository(ABC):
         raise NotImplementedError
     
     @abstractmethod
-    def update(self, id: str, params: UpdateAccountSecretParams) -> AccountSecret:
+    def update(self, id: str, password: str, salt: str, stretching: int) -> AccountSecret:
         raise NotImplementedError
 
     @abstractmethod

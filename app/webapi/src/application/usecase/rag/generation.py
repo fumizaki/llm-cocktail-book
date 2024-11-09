@@ -3,7 +3,7 @@ from src.infrastructure.openai.embeddings import AsyncOpenAIEmbeddingsClient
 from src.infrastructure.qdrant.session import QdrantSessionClient
 
 
-class GenerationUsecase:
+class RagGenerationUsecase:
     
     def __init__(self):
         self.params = {'collection_name': 'test'}

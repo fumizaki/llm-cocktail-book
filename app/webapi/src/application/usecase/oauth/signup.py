@@ -1,6 +1,6 @@
 from datetime import datetime
-from fastapi import HTTPException, status
 from uuid import uuid4
+from fastapi import HTTPException, status
 from src.domain.repository.account import AccountRepository
 from src.domain.repository.account_secret import AccountSecretRepository
 from src.domain.entity.account import Account
@@ -10,14 +10,14 @@ from src.infrastructure.core.rdb.transaction import TransactionClient
 from src.infrastructure.core.security.hash import HashClient
 from src.infrastructure.core.security.oauth import TokenClient, TokenType
 from src.infrastructure.core.email.content import build_signup_request_content
-from src.infrastructure.resend.email import ResendEmailClient
+from src.infrastructure.core.email.mailer import EmailClient
 from src.infrastructure.redis.session import RedisSessionClient
 
 class OAuthSignupUsecase:
 
     def __init__(
         self,
-        mailer: ResendEmailClient,
+        mailer: EmailClient,
         kvs: RedisSessionClient,
         tx: TransactionClient,
         account_repository: AccountRepository,
@@ -42,11 +42,9 @@ class OAuthSignupUsecase:
             self.kvs.set(id, {'email': params.email, 'salt': salt, 'stretching': stretching, 'password': hashed})
 
             # メール送信
-            content = build_signup_request_content(id)
             self.mailer.send_mail(
                 to_add=[params.email],
-                subject=content.subject,
-                message=content.message
+                content=build_signup_request_content(id)
             )
             
             return

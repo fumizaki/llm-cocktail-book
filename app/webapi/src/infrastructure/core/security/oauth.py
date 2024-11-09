@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 from dotenv import load_dotenv
 import jwt
 from pydantic import BaseModel
+from fastapi.security import OAuth2PasswordBearer
 
 load_dotenv()
 
@@ -104,23 +105,29 @@ class TokenClient:
                 )
             )
             if not TokenClient.is_effective(payload.exp):
-                    raise jwt.exceptions.InvalidTokenError
+                raise jwt.exceptions.InvalidTokenError
             
             return payload
 
         except Exception:
             raise jwt.exceptions.InvalidTokenError
-        
 
 
-def is_valid_scope(required_scopes: list[str], scopes: list[str]) -> bool:
-    if len(required_scopes) == 0:
-        return True
+    def get_bearer_token(authorization: str) -> str:
+        scheme, _, param = authorization.partition(" ")
+        if scheme.lower() != "bearer":
+            raise Exception
+        return param
 
-    is_valid = False
-    for scope in required_scopes:
-        if scope in scopes:
-            is_valid = True
-            break
 
-    return is_valid
+    def is_valid_scope(required_scopes: list[str], scopes: list[str]) -> bool:
+        if len(required_scopes) == 0:
+            return True
+
+        is_valid = False
+        for scope in required_scopes:
+            if scope in scopes:
+                is_valid = True
+                break
+
+        return is_valid

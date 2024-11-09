@@ -1,8 +1,9 @@
+from src.domain.entity.credential import Credential
 from src.infrastructure.openai.embeddings import AsyncOpenAIEmbeddingsClient
 from src.infrastructure.qdrant.session import QdrantSessionClient
 
 
-class IndexingUsecase:
+class RagIndexingUsecase:
 
     def __init__(self):
         self.params = {'collection_name': 'test'}
