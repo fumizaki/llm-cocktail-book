@@ -25,3 +25,11 @@ export const AuthorizationToken = {
 
 export type AuthorizationTokenType = (typeof AuthorizationToken)[keyof typeof AuthorizationToken];
 
+
+export const ChatRole = {
+    USER: 'user',
+    ASSISTANT: 'assistant',
+    SYSTEM: 'system',
+}
+
+export type ChatRoleType = (typeof ChatRole)[keyof typeof ChatRole];

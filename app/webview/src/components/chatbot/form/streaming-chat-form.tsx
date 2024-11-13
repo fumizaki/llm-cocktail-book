@@ -6,13 +6,13 @@ import { SendHorizonal } from 'lucide-react';
 type Props = {
     prompt: string
     onChangePrompt: (value: string) => void
-    action: (e: FormEvent<HTMLFormElement>) => void
+    onSubmit: (e: FormEvent<HTMLFormElement>) => void
 }
 
 export const StreamingChatForm = ({
     prompt,
     onChangePrompt,
-    action,
+    onSubmit,
 }: Props) => {
     const hiddenInput = useRef<HTMLDivElement>(null)
 
@@ -24,7 +24,7 @@ export const StreamingChatForm = ({
     };
 
     return (
-        <form onSubmit={action} className={'max-h-[25dvh] max-h-52 overflow-auto w-full flex justify-end items-center rounded-lg py-4 px-2 bg-gray-300'}>
+        <form onSubmit={onSubmit} className={'max-h-[25dvh] max-h-52 overflow-auto w-full flex justify-end items-center rounded-lg py-4 px-2 bg-gray-300'}>
             <div className={'relative w-full flex'}>
                 <div
                     className="invisible min-h-10 overflow-hidden whitespace-pre-wrap break-words"

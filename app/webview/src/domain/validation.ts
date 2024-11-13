@@ -14,7 +14,7 @@ export const selectAuthToken = z.object({
 
 export const signUpRequest = z.object({
     email: z.string().email(),
-    password: z.string().min(8, { message: 'パスワードは8文字以上で入力してください'})
+    password: z.string().trim().min(8, { message: 'パスワードは8文字以上で入力してください'})
 });
 
 export const signInRequest = signUpRequest.extend({
@@ -29,3 +29,15 @@ export const refreshTokenRequest = z.object({
     projectSecret: z.string(),
     scope: z.string().optional()
 });
+
+
+// Chat
+export const selectChatMessage = z.object({
+    id: z.string().uuid(),
+    content: z.string(),
+    role: z.nativeEnum(value.ChatRole)
+})
+
+export const insertChatMessage = z.object({
+    prompt: z.string().trim()
+})
