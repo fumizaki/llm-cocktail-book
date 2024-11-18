@@ -2,7 +2,8 @@ from fastapi import FastAPI
 from src.presentation.controller import (
     oauth,
     rag,
-    chatbot
+    chatbot,
+    websocket
 )
 
 
@@ -19,4 +20,8 @@ app.include_router(
 
 app.include_router(
     chatbot.router
+)
+
+app.include_router(
+    websocket.router
 )

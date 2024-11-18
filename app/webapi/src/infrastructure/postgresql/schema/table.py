@@ -18,3 +18,16 @@ class AccountSecretTable(CoreTable):
     password: Mapped[str] = mapped_column(Text, nullable=False)
     salt: Mapped[str] = mapped_column(String(64), nullable=False)
     stretching: Mapped[int] = mapped_column(Integer, nullable=False)
+
+
+class ChatRoomTable(CoreTable):
+    __tablename__ = 'chat_room'
+    account_id: Mapped[str] = mapped_column(String, ForeignKey('account.id'))
+    title: Mapped[str] = mapped_column(String(64), nullable=False)
+
+
+class ChatMessageTable(CoreTable):
+    __tablename__ = 'chat_message'
+    room_id: Mapped[str] = mapped_column(String, ForeignKey('chat_room.id'))
+    role: Mapped[str] = mapped_column(String, nullable=False)
+    content: Mapped[str] = mapped_column(String, nullable=False)

@@ -1,6 +1,6 @@
 from fastapi import Depends
 from sqlalchemy.orm import Session
-from src.presentation.dependency.authorization import get_credential
+from src.presentation.dependency.authorization import get_credential_from_header
 from src.presentation.dependency.repository import (
     implement_account_repository,
     implement_account_secret_repository
@@ -23,7 +23,7 @@ def implement_profile_usecase(
 
 
 def implement_secret_usecase(
-        credential: Credential = Depends(get_credential),
+        credential: Credential = Depends(get_credential_from_header),
         session: Session = Depends(get_rdb_session),
         account_secret_repository: AccountSecretRepository = Depends(implement_account_secret_repository),
     ):
