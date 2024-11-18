@@ -26,21 +26,11 @@ export const useWebSocket = (url: string, accessToken?: string) => {
 
     const disconnect = useCallback(() => {
         if (wsRef.current) {
-            try {
-                const ws = wsRef.current;
-                ws.removeEventListener('open', handleOpen);
-                ws.removeEventListener('close', handleClose);
-                ws.removeEventListener('message', handleMessage);
-                ws.removeEventListener('error', handleError);
-                ws.close();
-            } catch (err) {
-                setError(err as Error)
-            } finally {
-                wsRef.current = null;
-            }
-            
+            wsRef.current.close();
+            wsRef.current = null;
         }
-    }, [handleOpen, handleClose, handleMessage, handleError]);
+        setIsConnected(false);
+    }, []);
 
 
     const connect = useCallback(() => {
@@ -50,7 +40,11 @@ export const useWebSocket = (url: string, accessToken?: string) => {
         }
 
         try {
-            const ws = new WebSocket(`ws:localhost:8000${url}?header=${accessToken}`);
+            // URLにアクセストークンを追加(TODO: localhost:8000を修正)
+            const wsUrl = accessToken 
+                ? `ws://localhost:8000${url}?header=${encodeURIComponent(accessToken)}` 
+                : `ws://localhost:8000${url}`;
+            const ws = new WebSocket(wsUrl);
             wsRef.current = ws;
     
             ws.addEventListener('open', handleOpen);
@@ -73,7 +67,7 @@ export const useWebSocket = (url: string, accessToken?: string) => {
         if (wsRef.current?.readyState === WebSocket.OPEN) {
             wsRef.current.send(content);
         } else {
-            throw new Error('WebSocket is not connected');
+            setError(new Error('WebSocket is not connected'));
         }
     }, []);
 

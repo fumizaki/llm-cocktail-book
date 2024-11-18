@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getAccessToken } from "@/lib/with-auth";
+import { convertCamelToSnake } from "@/lib/convert-case";
 
 export async function POST(req: NextRequest) {
     const accessToken = await getAccessToken()
@@ -14,7 +15,7 @@ export async function POST(req: NextRequest) {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${accessToken}`
         },
-        body: JSON.stringify({ prompt: params.prompt }),
+        body: JSON.stringify(convertCamelToSnake({ prompt: params.prompt })),
     });
     return new NextResponse(res.body)
 }
