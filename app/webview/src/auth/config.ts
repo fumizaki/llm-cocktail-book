@@ -18,7 +18,6 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
 
                 try {
                     const res = await signinAction(credentials.email, credentials.password);
-                    
                     return {
                         email: credentials.email,
                         authorization: res

@@ -17,5 +17,5 @@ export async function refreshAction(refreshToken: string): Promise<any> {
         throw new Error('Error refresh: ' + res.statusText);
     }
 
-    return convertSnakeToCamel(res.json());
+    return convertSnakeToCamel(await res.json());
 }

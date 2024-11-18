@@ -16,5 +16,5 @@ export async function signinAction(email: string, password: string): Promise<any
         throw new Error('Error sign-in: ' + res.statusText);
     }
 
-    return convertSnakeToCamel(res.json());
+    return convertSnakeToCamel(await res.json());
 }

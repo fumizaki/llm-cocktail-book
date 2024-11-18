@@ -42,7 +42,7 @@ export const useWebSocket = (url: string, accessToken?: string) => {
         try {
             // URLにアクセストークンを追加(TODO: localhost:8000を修正)
             const wsUrl = accessToken 
-                ? `ws://localhost:8000${url}?header=${encodeURIComponent(accessToken)}` 
+                ? `ws://localhost:8000${url}?header=${accessToken}` 
                 : `ws://localhost:8000${url}`;
             const ws = new WebSocket(wsUrl);
             wsRef.current = ws;
