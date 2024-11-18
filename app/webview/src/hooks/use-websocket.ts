@@ -40,10 +40,10 @@ export const useWebSocket = (url: string, accessToken?: string) => {
         }
 
         try {
-            // URLにアクセストークンを追加(TODO: localhost:8000を修正)
+            // URLにアクセストークンを追加
             const wsUrl = accessToken 
-                ? `ws://localhost:8000${url}?header=${accessToken}` 
-                : `ws://localhost:8000${url}`;
+                ? `${process.env.WEBSOCKET_BASE_URL}${url}?header=${accessToken}` 
+                : `${process.env.WEBSOCKET_BASE_URL}${url}`;
             const ws = new WebSocket(wsUrl);
             wsRef.current = ws;
     
