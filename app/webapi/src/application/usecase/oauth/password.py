@@ -2,7 +2,7 @@ from fastapi import HTTPException, status
 from src.domain.query.account import AccountQuery
 from src.domain.schema.oauth import OAuthPasswordRequestParams, OAuthPasswordResponseParams
 from src.infrastructure.core.security.hash import HashClient
-from src.infrastructure.core.security.oauth import TokenClient, TokenType
+from src.infrastructure.core.security.jwt import JWTClient, TokenType
 
 
 class OAuthPasswordUsecase:
@@ -24,14 +24,14 @@ class OAuthPasswordUsecase:
             ):
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='Invalid Request')
         
-        access_token_exp = TokenClient.get_expires_in(1)
-        access_token = TokenClient.encode_token(
+        access_token_exp = JWTClient.get_expires_in(1)
+        access_token = JWTClient.encode_token(
             member_id=account_in_db.id,
             expires_in=access_token_exp
         )
-        refresh_token = TokenClient.encode_token(
+        refresh_token = JWTClient.encode_token(
             member_id=account_in_db.id,
-            expires_in=TokenClient.get_expires_in(30)
+            expires_in=JWTClient.get_expires_in(30)
         )
         
         return OAuthPasswordResponseParams(

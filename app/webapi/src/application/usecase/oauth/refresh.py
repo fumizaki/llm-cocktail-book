@@ -1,7 +1,7 @@
 from fastapi import HTTPException, status
 from src.domain.repository.account import AccountRepository
 from src.domain.schema.oauth import OAuthRefreshRequestParams, OAuthRefreshResponseParams
-from src.infrastructure.core.security.oauth import TokenClient, TokenType, TokenPayload
+from src.infrastructure.core.security.jwt import JWTClient, TokenType, JWTPayload
 
 
 class OAuthRefreshUsecase:
@@ -14,17 +14,17 @@ class OAuthRefreshUsecase:
 
 
     def token_exec(self, params: OAuthRefreshRequestParams) -> OAuthRefreshResponseParams:
-        token_payload: TokenPayload = TokenClient.decode_token(params.refresh_token)
+        token_payload: JWTPayload = JWTClient.decode_token(params.refresh_token)
         account_in_db = self.account_repository.get_exclude_deleted(token_payload.sub)
         
-        access_token_exp = TokenClient.get_expires_in(1)
-        access_token = TokenClient.encode_token(
+        access_token_exp = JWTClient.get_expires_in(1)
+        access_token = JWTClient.encode_token(
             member_id=account_in_db.id,
             expires_in=access_token_exp
         )
-        refresh_token = TokenClient.encode_token(
+        refresh_token = JWTClient.encode_token(
             member_id=account_in_db.id,
-            expires_in=TokenClient.get_expires_in(30)
+            expires_in=JWTClient.get_expires_in(30)
         )
         
         return OAuthRefreshResponseParams(

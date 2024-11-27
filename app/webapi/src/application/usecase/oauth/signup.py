@@ -8,7 +8,7 @@ from src.domain.entity.account_secret import AccountSecret
 from src.domain.schema.oauth import OAuthSignupRequestParams, OAuthPasswordResponseParams
 from src.infrastructure.core.rdb.transaction import TransactionClient
 from src.infrastructure.core.security.hash import HashClient
-from src.infrastructure.core.security.oauth import TokenClient, TokenType
+from src.infrastructure.core.security.jwt import JWTClient, TokenType
 from src.infrastructure.core.email.content import build_signup_request_content
 from src.infrastructure.core.email.mailer import EmailClient
 from src.infrastructure.redis.session import RedisSessionClient
@@ -73,14 +73,14 @@ class OAuthSignupUsecase:
             self.tx.commit()
 
             # トークン作成
-            access_token_exp = TokenClient.get_expires_in(1)
-            access_token = TokenClient.encode_token(
+            access_token_exp = JWTClient.get_expires_in(1)
+            access_token = JWTClient.encode_token(
                 member_id=account_in_db.id,
                 expires_in=access_token_exp
             )
-            refresh_token = TokenClient.encode_token(
+            refresh_token = JWTClient.encode_token(
                 member_id=account_in_db.id,
-                expires_in=TokenClient.get_expires_in(30)
+                expires_in=JWTClient.get_expires_in(30)
             )
             
             return OAuthPasswordResponseParams(
