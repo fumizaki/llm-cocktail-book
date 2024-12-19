@@ -6,15 +6,15 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 
 load_dotenv()
 
-PSQL_USER: str = os.environ.get("POSTGRES_USER", 'postgres')
-PSQL_PASSWORD: str = os.environ.get("POSTGRES_PASSWORD", 'postgres')
-PSQL_HOST: str = os.environ.get("POSTGRES_HOST", 'postgres')
-PSQL_PORT: str = os.environ.get("POSTGRES_PORT", '5432')
-PSQL_DB: str = os.environ.get("POSTGRES_DB", 'postgres')
+RDB_USER: str = os.environ.get("RDB_USER", 'postgres')
+RDB_PASSWORD: str = os.environ.get("RDB_PASSWORD", 'postgres')
+RDB_HOST: str = os.environ.get("RDB_HOST", 'postgres')
+RDB_PORT: str = os.environ.get("RDB_PORT", '5432')
+RDB_DB: str = os.environ.get("RDB_DB", 'postgres')
 
 
-PSQL_URL = "postgresql+psycopg2://{}:{}@{}:{}/{}".format(PSQL_USER, PSQL_PASSWORD, PSQL_HOST, PSQL_PORT, PSQL_DB)
-ENGINE = create_engine(PSQL_URL, echo = False)
+RDB_URL = "postgresql+psycopg2://{}:{}@{}:{}/{}".format(RDB_USER, RDB_PASSWORD, RDB_HOST, RDB_PORT, RDB_DB)
+ENGINE = create_engine(RDB_URL, echo = False)
 
 session_local = scoped_session(
     sessionmaker(

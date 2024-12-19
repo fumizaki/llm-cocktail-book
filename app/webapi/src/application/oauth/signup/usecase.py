@@ -1,11 +1,12 @@
 from datetime import datetime
 from uuid import uuid4
 from fastapi import HTTPException, status
+from src.application.oauth.core import OAuthTokenModel
+from src.application.oauth.signup import OAuthSignupModel
 from src.domain.repository.account import AccountRepository
 from src.domain.repository.account_secret import AccountSecretRepository
 from src.domain.entity.account import Account
 from src.domain.entity.account_secret import AccountSecret
-from src.domain.schema.oauth import OAuthSignupRequestParams, OAuthPasswordResponseParams
 from src.infrastructure.core.rdb.transaction import TransactionClient
 from src.infrastructure.core.security.hash import HashClient
 from src.infrastructure.core.security.jwt import JWTClient, TokenType
@@ -30,7 +31,7 @@ class OAuthSignupUsecase:
         self.account_secret_repository = account_secret_repository
 
 
-    def request_exec(self, params: OAuthSignupRequestParams) -> None:
+    def request_exec(self, params: OAuthSignupModel) -> None:
         # TODO:アカウントがいるか確認(いたらエラー)
         try:
             salt = HashClient.create_salt()
@@ -53,7 +54,7 @@ class OAuthSignupUsecase:
             self.tx.rollback()
 
 
-    def verify_exec(self, key: str) -> OAuthPasswordResponseParams:
+    def verify_exec(self, key: str) -> OAuthTokenModel:
         try:
             # kvsからデータを取得
             data = self.kvs.get(key)
@@ -83,7 +84,7 @@ class OAuthSignupUsecase:
                 expires_in=JWTClient.get_expires_in(30)
             )
             
-            return OAuthPasswordResponseParams(
+            return OAuthTokenModel(
                 access_token=access_token,
                 token_type=TokenType.BEARER,
                 expires_in=access_token_exp,

@@ -16,7 +16,6 @@ class OAuth2Config:
     AUDIENCE: str = os.getenv('OAUTH2_AUDIENCE', '')
     ALGORITHM: str = os.getenv('OAUTH2_ALGORITHM', '')
     TOKEN_SECRET: str = os.getenv('OAUTH2_TOKEN_SECRET', '')
-    CODE_SECRET: str = os.getenv('OAUTH2_CODE_SECRET', '')
 
 
 class AuthResponseType(str, Enum):

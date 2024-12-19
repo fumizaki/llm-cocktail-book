@@ -1,6 +1,7 @@
 from fastapi import HTTPException, status
+from src.application.oauth.core import OAuthTokenModel
+from src.application.oauth.password import OAuthPasswordModel
 from src.domain.query.account import AccountQuery
-from src.domain.schema.oauth import OAuthPasswordRequestParams, OAuthPasswordResponseParams
 from src.infrastructure.core.security.hash import HashClient
 from src.infrastructure.core.security.jwt import JWTClient, TokenType
 
@@ -14,7 +15,7 @@ class OAuthPasswordUsecase:
         self.account_query = account_query
 
 
-    def token_exec(self, params: OAuthPasswordRequestParams) -> OAuthPasswordResponseParams:
+    def token_exec(self, params: OAuthPasswordModel) -> OAuthTokenModel:
         account_in_db = self.account_query.get_account_with_secret(params.email)
         if not HashClient.verify(
                 account_in_db.secret.password,
@@ -34,7 +35,7 @@ class OAuthPasswordUsecase:
             expires_in=JWTClient.get_expires_in(30)
         )
         
-        return OAuthPasswordResponseParams(
+        return OAuthTokenModel(
             access_token=access_token,
             token_type=TokenType.BEARER,
             expires_in=access_token_exp,

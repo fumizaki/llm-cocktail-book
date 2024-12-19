@@ -24,12 +24,6 @@ class OpenAIVectorizeResponse(BaseModel):
     vector: list[float]
 
 
-class OpenAIVectorSearchResponse(BaseModel):
-    model: str
-    result: str
-    usage: int
-
-
 class OpenAIEmbeddingsModel(str, Enum):
     EMBEDDING3_SMALL = 'text-embedding-3-small'
     EMBEDDING3_LARGE = 'text-embedding-3-large'

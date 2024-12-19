@@ -10,11 +10,11 @@ from src.infrastructure.postgresql.schema.table import *
 
 load_dotenv()
 
-PSQL_USER: str = os.environ.get("POSTGRES_USER", 'postgres')
-PSQL_PASSWORD: str = os.environ.get("POSTGRES_PASSWORD", 'postgres')
-PSQL_HOST: str = os.environ.get("POSTGRES_HOST", 'postgres')
-PSQL_PORT: str = os.environ.get("POSTGRES_PORT", '5432')
-PSQL_DB: str = os.environ.get("POSTGRES_DB", 'postgres')
+RDB_USER: str = os.environ.get("RDB_USER", 'postgres')
+RDB_PASSWORD: str = os.environ.get("RDB_PASSWORD", 'postgres')
+RDB_HOST: str = os.environ.get("RDB_HOST", 'postgres')
+RDB_PORT: str = os.environ.get("RDB_PORT", '5432')
+RDB_DB: str = os.environ.get("RDB_DB", 'postgres')
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -69,11 +69,11 @@ def run_migrations_online() -> None:
 
     """
     # set database variable
-    config.set_section_option("alembic", "DB_USER", PSQL_USER)
-    config.set_section_option("alembic", "DB_PASSWORD", PSQL_PASSWORD)
-    config.set_section_option("alembic", "DB_HOST", PSQL_HOST)
-    config.set_section_option("alembic", "DB_PORT", PSQL_PORT)
-    config.set_section_option("alembic", "DB_NAME", PSQL_DB)
+    config.set_section_option("alembic", "DB_USER", RDB_USER)
+    config.set_section_option("alembic", "DB_PASSWORD", RDB_PASSWORD)
+    config.set_section_option("alembic", "DB_HOST", RDB_HOST)
+    config.set_section_option("alembic", "DB_PORT", RDB_PORT)
+    config.set_section_option("alembic", "DB_NAME", RDB_DB)
 
     connectable = engine_from_config(
         config.get_section(config.config_ini_section, {}),

@@ -5,7 +5,7 @@ from src.presentation.dependency.repository import (
     implement_account_repository,
     implement_account_secret_repository
 )
-from src.application.usecase.account.secret import AccountSecretUsecase
+from src.application.account.secret import AccountSecretUsecase
 from src.domain.entity.credential import Credential
 from src.domain.repository.account import AccountRepository
 from src.domain.repository.account_secret import AccountSecretRepository

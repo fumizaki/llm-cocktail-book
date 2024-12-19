@@ -1,8 +1,8 @@
 from fastapi import HTTPException, status
+from src.application.account.secret import UpdateAccountSecretModel
 from src.domain.repository.account_secret import AccountSecretRepository
 from src.domain.entity.credential import Credential
 from src.domain.entity.account_secret import AccountSecret
-from src.domain.schema.account_secret import UpdateAccountSecretParams
 from src.infrastructure.core.rdb.transaction import TransactionClient
 from src.infrastructure.core.security.hash import HashClient
 from src.infrastructure.core.email.mailer import EmailClient
@@ -22,7 +22,7 @@ class AccountSecretUsecase:
         self.account_secret_repository = account_secret_repository
 
 
-    def update_exec(self, params: UpdateAccountSecretParams) -> None:
+    def update_exec(self, params: UpdateAccountSecretModel) -> None:
         try:
             if params.current_password == params.new_password:
                 raise Exception

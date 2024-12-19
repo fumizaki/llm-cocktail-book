@@ -5,9 +5,7 @@ from src.presentation.dependency.repository import (
     implement_account_repository,
     implement_account_secret_repository
 )
-from src.application.usecase.oauth.signup import OAuthSignupUsecase
-from src.application.usecase.oauth.password import OAuthPasswordUsecase
-from src.application.usecase.oauth.refresh import OAuthRefreshUsecase
+from src.application.oauth import OAuthSignupUsecase, OAuthPasswordUsecase, OAuthRefreshUsecase
 from src.domain.query.account import AccountQuery
 from src.domain.repository.account import AccountRepository
 from src.domain.repository.account_secret import AccountSecretRepository

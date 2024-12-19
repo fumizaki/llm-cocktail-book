@@ -4,15 +4,15 @@ from redis import Redis
 
 load_dotenv()
 
-REDIS_HOST = os.environ.get('REDIS_HOST', "localhost")
-REDIS_PORT = os.environ.get('REDIS_PORT', "6379")
+KVS_HOST = os.environ.get('KVS_HOST', "localhost")
+KVS_PORT = os.environ.get('KVS_PORT', "6379")
 
 class RedisSessionClient:
 
     def __init__(self) -> None:
         self.client = Redis(
-            host=REDIS_HOST,
-            port=int(REDIS_PORT),
+            host=KVS_HOST,
+            port=int(KVS_PORT),
             decode_responses = True
         )
 

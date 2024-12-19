@@ -5,13 +5,13 @@ from qdrant_client.models import VectorParams, Distance, PointStruct
 
 load_dotenv()
 
-QDRANT_HOST = os.environ.get("QDRANT_HOST", "localhost")
-QDRANT_PORT = os.environ.get("QDRANT_PORT", "6379")
+VDB_HOST = os.environ.get("VDB_HOST", "localhost")
+VDB_PORT = os.environ.get("VDB_PORT", "6379")
 
 
 class QdrantSessionClient:
     def __init__(self):
-        self.client = QdrantClient(host=QDRANT_HOST, port=QDRANT_PORT, prefer_grpc=True)
+        self.client = QdrantClient(host=VDB_HOST, port=VDB_PORT, prefer_grpc=True)
 
 
     def is_alive(self) -> bool:
