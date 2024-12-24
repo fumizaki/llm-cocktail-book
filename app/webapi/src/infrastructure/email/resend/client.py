@@ -1,8 +1,8 @@
 import os
 from dotenv import load_dotenv
 import resend
-from src.infrastructure.core.email.content import EmailContent
-from src.infrastructure.core.email.mailer import EmailClient
+from ..content import EmailContent
+from ..client import EmailClient
 
 load_dotenv()
 

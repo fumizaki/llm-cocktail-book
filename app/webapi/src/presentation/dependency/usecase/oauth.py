@@ -11,7 +11,7 @@ from src.domain.repository.account import AccountRepository
 from src.domain.repository.account_secret import AccountSecretRepository
 from src.infrastructure.database.rdb.postgresql.session import get_rdb_session
 from src.infrastructure.database.rdb.transaction import TransactionClient
-from src.infrastructure.resend.mailer import ResendEmailClient
+from src.infrastructure.email.resend import ResendEmailClient
 from src.infrastructure.database.kvs.redis.session import RedisSessionClient
 
 def implement_oauth_signup_usecase(

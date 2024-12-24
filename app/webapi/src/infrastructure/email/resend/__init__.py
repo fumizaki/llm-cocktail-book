@@ -1,0 +1,1 @@
+from .client import ResendEmailClient as ResendEmailClient

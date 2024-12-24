@@ -10,8 +10,7 @@ from src.domain.entity.account_secret import AccountSecret
 from src.infrastructure.database.rdb.transaction import TransactionClient
 from src.infrastructure.core.security.hash import HashClient
 from src.infrastructure.core.security.jwt import JWTClient, TokenType
-from src.infrastructure.core.email.content import build_signup_request_content
-from src.infrastructure.core.email.mailer import EmailClient
+from src.infrastructure.email import build_signup_request_content, EmailClient
 from src.infrastructure.database.kvs.redis.session import RedisSessionClient
 
 class OAuthSignupUsecase:

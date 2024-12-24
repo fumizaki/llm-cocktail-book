@@ -1,20 +1,11 @@
 import os
 from dotenv import load_dotenv
-from enum import Enum
-from pydantic import BaseModel
+from .model import MessageType, EmailContent
+
 
 load_dotenv()
 
 API_BASE_URL = os.environ.get('API_BASE_URL', "http://localhost:8000")
-
-class MessageType(str, Enum):
-    TEXT = 'text'
-    HTML = 'html'
-
-class EmailContent(BaseModel):
-    subject: str
-    message_type: str
-    message: str
 
 
 def build_signup_request_content(key: str) -> EmailContent:

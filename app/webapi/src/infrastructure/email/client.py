@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from src.infrastructure.core.email.content import EmailContent
+from .model import EmailContent
 
 
 class EmailClient(ABC):
