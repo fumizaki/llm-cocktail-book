@@ -9,10 +9,10 @@ from src.application.oauth import OAuthSignupUsecase, OAuthPasswordUsecase, OAut
 from src.domain.query.account import AccountQuery
 from src.domain.repository.account import AccountRepository
 from src.domain.repository.account_secret import AccountSecretRepository
-from src.infrastructure.postgresql.session import get_rdb_session
-from src.infrastructure.core.rdb.transaction import TransactionClient
+from src.infrastructure.database.rdb.postgresql.session import get_rdb_session
+from src.infrastructure.database.rdb.transaction import TransactionClient
 from src.infrastructure.resend.mailer import ResendEmailClient
-from src.infrastructure.redis.session import RedisSessionClient
+from src.infrastructure.database.kvs.redis.session import RedisSessionClient
 
 def implement_oauth_signup_usecase(
         session: Session = Depends(get_rdb_session),

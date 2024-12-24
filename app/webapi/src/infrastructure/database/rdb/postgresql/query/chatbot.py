@@ -3,7 +3,7 @@ from sqlalchemy.orm import selectinload
 from src.application.chatbot.message.query import ChatbotMessageQuery
 from src.domain.entity.chatbot_message import ChatbotMessage
 from src.domain.aggregate.chatbot import AggChatbot
-from src.infrastructure.postgresql.schema.table import (
+from src.infrastructure.database.rdb.postgresql.schema.table import (
     ChatbotTable,
 )
 class ChatbotMessageQueryImpl(ChatbotMessageQuery):

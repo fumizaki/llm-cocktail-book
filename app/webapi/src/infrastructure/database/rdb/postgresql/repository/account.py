@@ -3,7 +3,7 @@ from sqlalchemy import select
 from sqlalchemy.engine.row import Row, Tuple
 from src.domain.entity.account import Account
 from src.domain.repository.account import AccountRepository
-from src.infrastructure.postgresql.schema.table import AccountTable
+from src.infrastructure.database.rdb.postgresql.schema.table import AccountTable
 
 
 class AccountRepositoryImpl(AccountRepository):

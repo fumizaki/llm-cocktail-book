@@ -2,7 +2,7 @@ from .model import CreateChatbotModel
 from src.domain.repository.chatbot import ChatbotRepository
 from src.domain.entity.credential import Credential
 from src.domain.entity.chatbot import Chatbot
-from src.infrastructure.core.rdb.transaction import TransactionClient
+from src.infrastructure.database.rdb.transaction import TransactionClient
 
 class ChatbotUsecase:
     def __init__(

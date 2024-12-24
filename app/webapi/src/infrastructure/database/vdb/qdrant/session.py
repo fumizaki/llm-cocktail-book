@@ -16,7 +16,7 @@ class QdrantSessionClient:
 
     def is_alive(self) -> bool:
         try:
-            print(self.client.get_collections())
+            self.client.get_collections()
             return True
         except:
             return False

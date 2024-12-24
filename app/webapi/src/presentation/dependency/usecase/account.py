@@ -9,8 +9,8 @@ from src.application.account.secret import AccountSecretUsecase
 from src.domain.entity.credential import Credential
 from src.domain.repository.account import AccountRepository
 from src.domain.repository.account_secret import AccountSecretRepository
-from src.infrastructure.postgresql.session import get_rdb_session
-from src.infrastructure.core.rdb.transaction import TransactionClient
+from src.infrastructure.database.rdb.postgresql.session import get_rdb_session
+from src.infrastructure.database.rdb.transaction import TransactionClient
 from src.infrastructure.resend.mailer import ResendEmailClient
 
 

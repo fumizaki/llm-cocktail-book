@@ -2,7 +2,7 @@ from __future__ import annotations
 from datetime import datetime
 from sqlalchemy import String, Text, DateTime, Integer, ForeignKey
 from sqlalchemy.orm import mapped_column, Mapped, relationship
-from src.infrastructure.postgresql.schema.core import CoreTable
+from src.infrastructure.database.rdb.postgresql.schema.core import CoreTable
 
 
 class AccountTable(CoreTable):

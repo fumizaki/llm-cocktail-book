@@ -7,12 +7,12 @@ from src.domain.repository.account import AccountRepository
 from src.domain.repository.account_secret import AccountSecretRepository
 from src.domain.entity.account import Account
 from src.domain.entity.account_secret import AccountSecret
-from src.infrastructure.core.rdb.transaction import TransactionClient
+from src.infrastructure.database.rdb.transaction import TransactionClient
 from src.infrastructure.core.security.hash import HashClient
 from src.infrastructure.core.security.jwt import JWTClient, TokenType
 from src.infrastructure.core.email.content import build_signup_request_content
 from src.infrastructure.core.email.mailer import EmailClient
-from src.infrastructure.redis.session import RedisSessionClient
+from src.infrastructure.database.kvs.redis.session import RedisSessionClient
 
 class OAuthSignupUsecase:
 

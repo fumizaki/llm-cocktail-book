@@ -3,7 +3,7 @@ from sqlalchemy import select
 from sqlalchemy.engine.row import Row, Tuple, Sequence
 from src.domain.entity.chatbot_message import ChatbotMessage
 from src.domain.repository.chatbot_message import ChatMessageRepository
-from src.infrastructure.postgresql.schema.table import ChatbotMessageTable
+from src.infrastructure.database.rdb.postgresql.schema.table import ChatbotMessageTable
 
 
 class ChatMessageRepositoryImpl(ChatMessageRepository):

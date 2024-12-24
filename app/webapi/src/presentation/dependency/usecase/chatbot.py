@@ -5,8 +5,8 @@ from src.presentation.dependency.query.chatbot import implement_chatbot_message_
 from src.application.chatbot import ChatbotUsecase, ChatbotMessageUsecase, ChatbotMessageQuery
 from src.domain.entity.credential import Credential
 from src.domain.repository.chatbot import ChatbotRepository
-from src.infrastructure.postgresql.session import get_rdb_session
-from src.infrastructure.core.rdb.transaction import TransactionClient
+from src.infrastructure.database.rdb.postgresql.session import get_rdb_session
+from src.infrastructure.database.rdb.transaction import TransactionClient
 
 
 def implement_chatbot_usecase(

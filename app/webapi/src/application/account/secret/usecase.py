@@ -3,7 +3,7 @@ from src.application.account.secret import UpdateAccountSecretModel
 from src.domain.repository.account_secret import AccountSecretRepository
 from src.domain.entity.credential import Credential
 from src.domain.entity.account_secret import AccountSecret
-from src.infrastructure.core.rdb.transaction import TransactionClient
+from src.infrastructure.database.rdb.transaction import TransactionClient
 from src.infrastructure.core.security.hash import HashClient
 from src.infrastructure.core.email.mailer import EmailClient
 from src.infrastructure.core.email.content import build_update_password_content

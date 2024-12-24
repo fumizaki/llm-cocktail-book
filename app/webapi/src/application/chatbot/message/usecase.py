@@ -3,7 +3,7 @@ from .model import CreateChatbotMessageModel
 from src.domain.entity.credential import Credential
 from src.domain.aggregate.chatbot import AggChatbot
 from src.domain.entity.chatbot_message import ChatbotMessage
-from src.infrastructure.core.rdb.transaction import TransactionClient
+from src.infrastructure.database.rdb.transaction import TransactionClient
 from src.infrastructure.llm.txt2txt import LLMTxt2TxtClient, Txt2TxtModel, Txt2TxtLLMMessageRole
 
 class ChatbotMessageUsecase:
