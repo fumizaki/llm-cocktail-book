@@ -1,0 +1,1 @@
+# docker exec -it -w /webapi webapi pytest --cov --cov-branch -vs tests/integration/postgresql

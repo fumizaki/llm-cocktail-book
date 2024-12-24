@@ -8,6 +8,6 @@ export type SignInRequestParams = z.infer<typeof validation.signInRequest>;
 export type RefreshTokenRequestParams = z.infer<typeof validation.refreshTokenRequest>;
 
 
-// Chat
-export type ChatMessage = z.infer<typeof validation.selectChatMessage>
-export type NewChatMessage = z.infer<typeof validation.insertChatMessage>
+// Message
+export type Message = z.infer<typeof validation.selectMessage>
+export type NewMessage = z.infer<typeof validation.insertMessage>

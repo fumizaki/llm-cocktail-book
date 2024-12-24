@@ -1,5 +1,4 @@
-import { useState } from "react"
-import { StreamingChat } from "@/components/chatbot/chat/streaming-chat"
+import { CodeGeneration } from "@/components/chatbot/generation/code-generation"
 
 type Props = {
 
@@ -14,7 +13,7 @@ export const ChatbotTemplate = ({
                 <p>CHATBOT</p>
             </div>
             <div className={'w-full'}>
-                <StreamingChat/>
+                <CodeGeneration/>
             </div>
         </div>
         

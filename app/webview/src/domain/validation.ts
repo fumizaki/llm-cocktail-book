@@ -32,12 +32,12 @@ export const refreshTokenRequest = z.object({
 
 
 // Chat
-export const selectChatMessage = z.object({
+export const selectMessage = z.object({
     id: z.string().uuid(),
     content: z.string(),
-    role: z.nativeEnum(value.ChatRole)
+    role: z.nativeEnum(value.MessageRole)
 })
 
-export const insertChatMessage = z.object({
+export const insertMessage = z.object({
     prompt: z.string().trim()
 })

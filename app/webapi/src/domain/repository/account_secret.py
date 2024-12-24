@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
 from src.domain.entity.account_secret import AccountSecret
-from src.domain.schema.account_secret import UpdateAccountSecretParams
 
 
 class AccountSecretRepository(ABC):
