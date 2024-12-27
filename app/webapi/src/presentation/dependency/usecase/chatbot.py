@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from src.presentation.dependency.authorization import get_credential_from_header
 from src.presentation.dependency.query.chatbot import implement_chatbot_message_query
 from src.application.chatbot import ChatbotUsecase, ChatbotMessageUsecase, ChatbotMessageQuery
-from src.domain.entity.credential import Credential
+from src.application.core import Credential
 from src.domain.repository.chatbot import ChatbotRepository
 from src.infrastructure.database.rdb.postgresql.session import get_rdb_session
 from src.infrastructure.database.rdb.transaction import TransactionClient

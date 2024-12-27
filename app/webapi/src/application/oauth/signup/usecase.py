@@ -8,8 +8,8 @@ from src.domain.repository.account_secret import AccountSecretRepository
 from src.domain.entity.account import Account
 from src.domain.entity.account_secret import AccountSecret
 from src.infrastructure.database.rdb.transaction import TransactionClient
-from src.infrastructure.core.security.hash import HashClient
-from src.infrastructure.core.security.jwt import JWTClient, TokenType
+from src.infrastructure.hashing import HashingClient
+from src.infrastructure.oauth import JWTClient, TokenType
 from src.infrastructure.email import build_signup_request_content, EmailClient
 from src.infrastructure.database.kvs.redis.session import RedisSessionClient
 
@@ -17,12 +17,14 @@ class OAuthSignupUsecase:
 
     def __init__(
         self,
+        jwt: JWTClient,
         mailer: EmailClient,
         kvs: RedisSessionClient,
         tx: TransactionClient,
         account_repository: AccountRepository,
         account_secret_repository: AccountSecretRepository,
     ) -> None:
+        self.jwt = jwt
         self.mailer = mailer
         self.kvs = kvs
         self.tx = tx
@@ -33,13 +35,13 @@ class OAuthSignupUsecase:
     def request_exec(self, params: OAuthSignupModel) -> None:
         # TODO:アカウントがいるか確認(いたらエラー)
         try:
-            salt = HashClient.create_salt()
-            stretching = HashClient.create_stretching()
-            hashed = HashClient.hash(params.password, salt, stretching)
+            
+            hasher = HashingClient()
+            hashed = hasher.hash(params.password)
             id = str(uuid4())
 
             # kvsに格納(30min)
-            self.kvs.set(id, {'email': params.email, 'salt': salt, 'stretching': stretching, 'password': hashed})
+            self.kvs.set(id, {'email': params.email, 'salt': hasher.salt, 'stretching': hasher.stretching, 'password': hashed})
 
             # メール送信
             self.mailer.send_mail(
@@ -73,20 +75,19 @@ class OAuthSignupUsecase:
             self.tx.commit()
 
             # トークン作成
-            access_token_exp = JWTClient.get_expires_in(1)
-            access_token = JWTClient.encode_token(
+            access_token = self.jwt.encode(
                 member_id=account_in_db.id,
-                expires_in=access_token_exp
+                expires_in=self.jwt.access_token_exp
             )
-            refresh_token = JWTClient.encode_token(
+            refresh_token = self.jwt.encode(
                 member_id=account_in_db.id,
-                expires_in=JWTClient.get_expires_in(30)
+                expires_in=self.jwt.refresh_token_exp
             )
             
             return OAuthTokenModel(
                 access_token=access_token,
                 token_type=TokenType.BEARER,
-                expires_in=access_token_exp,
+                expires_in=self.jwt.access_token_exp,
                 refresh_token=refresh_token,
                 scope=None,
                 id_token=None # TODO: IDトークンを作成して付与する

@@ -1,12 +1,11 @@
 from fastapi import HTTPException, status
 from src.application.account.secret import UpdateAccountSecretModel
+from src.application.core import Credential
 from src.domain.repository.account_secret import AccountSecretRepository
-from src.domain.entity.credential import Credential
 from src.domain.entity.account_secret import AccountSecret
 from src.infrastructure.database.rdb.transaction import TransactionClient
 from src.infrastructure.core.security.hash import HashClient
-from src.infrastructure.core.email.mailer import EmailClient
-from src.infrastructure.core.email.content import build_update_password_content
+from src.infrastructure.email import EmailClient, build_update_password_content
 
 class AccountSecretUsecase:
     def __init__(
@@ -27,7 +26,7 @@ class AccountSecretUsecase:
             if params.current_password == params.new_password:
                 raise Exception
             
-            account_secret_in_db: AccountSecret = self.account_secret_repository.get_exclude_deleted(self.credential.id)
+            account_secret_in_db: AccountSecret = self.account_secret_repository.get_exclude_deleted(self.credential.account_id)
             if not HashClient.verify(account_secret_in_db.password, params.current_password, account_secret_in_db.salt, account_secret_in_db.stretching):
                 raise Exception
             

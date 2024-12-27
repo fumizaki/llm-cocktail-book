@@ -1,9 +1,9 @@
 from typing import Optional
 from src.application.core import CoreModel
-from src.infrastructure.core.security.jwt import AuthGrantType
+from src.infrastructure.oauth import GrantType
 
 class OAuthPasswordModel(CoreModel):
-    grant_type: AuthGrantType
+    grant_type: GrantType
     email: str
     password: str
     scope: Optional[str] = None

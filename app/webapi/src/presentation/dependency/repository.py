@@ -1,4 +1,4 @@
-from fastapi import Depends, Header
+from fastapi import Depends
 from sqlalchemy.orm import Session
 from src.domain.repository.account import AccountRepository
 from src.domain.repository.account_secret import AccountSecretRepository

@@ -1,23 +1,20 @@
+from typing import Optional
 import bcrypt
 
-class HashClient:
 
-    @staticmethod
-    def create_salt() -> str:
-        return bcrypt.gensalt().decode()
-    
-    @staticmethod
-    def create_stretching() -> int:
-        return 10
+class HashingClient:
+
+    def __init__(self, salt: Optional[str] = bcrypt.gensalt().decode(), stretching: Optional[int] = 10) -> None:
+        self.salt: str = salt
+        self.stretching: int = stretching
 
 
-    @staticmethod
-    def hash(input: str, salt: str, stretching: int = 1) -> str:
+    def hash(self, input: str) -> str:
         try:
-            for _ in range(stretching):
+            for _ in range(self.stretching):
                 _hashed: bytes = bcrypt.hashpw(
                     input.encode(),
-                    salt.encode(),
+                    self.salt.encode(),
                 )
                 input = _hashed.decode()
             return _hashed.decode()
@@ -26,13 +23,12 @@ class HashClient:
             raise ValueError(f"Invalid hashing")
 
 
-    @staticmethod
-    def verify(hashed: str, input: str, salt: str, stretching: int = 1) -> bool:
+    def verify(self, hashed: str, input: str) -> bool:
         try:
-            for _ in range(stretching):
+            for _ in range(self.stretching):
                 _hashed: bytes = bcrypt.hashpw(
                     input.encode(),
-                    salt.encode(),
+                    self.salt.encode(),
                 )
                 input = _hashed.decode()
             return hashed == input

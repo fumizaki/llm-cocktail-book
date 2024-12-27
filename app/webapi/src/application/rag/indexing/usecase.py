@@ -1,4 +1,4 @@
-from src.domain.entity.credential import Credential
+from src.application.core import Credential
 # from src.infrastructure.openai.embeddings import AsyncOpenAIEmbeddingsClient
 from src.infrastructure.database.vdb.qdrant.session import QdrantSessionClient
 

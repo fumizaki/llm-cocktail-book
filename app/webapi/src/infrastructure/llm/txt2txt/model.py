@@ -26,7 +26,7 @@ class Txt2TxtLLM(str, Enum):
 class GenerationMode(str, Enum):
     TEXT = 'text'
     CODE = 'code'
-    # TODO: MARKDOWN = 'md'
+    # TODO: PROMPT = 'prompt'
     # TODO: TRANSLATION = 'translation'
     
 

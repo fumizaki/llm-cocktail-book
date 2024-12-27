@@ -1,6 +1,6 @@
 from .query import ChatbotMessageQuery
 from .model import CreateChatbotMessageModel
-from src.domain.entity.credential import Credential
+from src.application.core import Credential
 from src.domain.aggregate.chatbot import AggChatbot
 from src.domain.entity.chatbot_message import ChatbotMessage
 from src.infrastructure.database.rdb.transaction import TransactionClient
@@ -20,7 +20,7 @@ class ChatbotMessageUsecase:
 
     def get_all_exec(self, chatbot_id: str) -> AggChatbot:
         try:
-            agg_chat_in_db: AggChatbot = self.chatbot_message_query.get_agg_chatbot(chatbot_id, self.credential.id)
+            agg_chat_in_db: AggChatbot = self.chatbot_message_query.get_agg_chatbot(chatbot_id, self.credential.account_id)
             return agg_chat_in_db
         finally:
             self.tx.close()

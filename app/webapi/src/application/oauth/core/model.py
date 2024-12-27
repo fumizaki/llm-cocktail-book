@@ -1,6 +1,6 @@
 from typing import Optional
 from src.application.core import CoreModel
-from src.infrastructure.core.security.jwt import TokenType
+from src.infrastructure.oauth import TokenType
 
 
 class OAuthTokenModel(CoreModel):
