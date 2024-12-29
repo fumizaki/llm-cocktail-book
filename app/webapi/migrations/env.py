@@ -4,8 +4,7 @@ from logging.config import fileConfig
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 from alembic import context
-from src.infrastructure.postgresql.schema.core import CoreTable
-from src.infrastructure.postgresql.schema.table import *
+from src.infrastructure.database.rdb import *
 
 
 load_dotenv()

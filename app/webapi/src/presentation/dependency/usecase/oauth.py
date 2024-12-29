@@ -1,7 +1,7 @@
 from fastapi import Depends
 from sqlalchemy.orm import Session
 from src.presentation.dependency.query.account import implement_account_query
-from src.presentation.dependency.repository import (
+from src.presentation.dependency.repository.account import (
     implement_account_repository,
     implement_account_secret_repository
 )

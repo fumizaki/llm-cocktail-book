@@ -28,8 +28,8 @@ class ChatbotMessageUsecase:
 
     async def create_exec(self, chatbot_id: str, params: CreateChatbotMessageModel) -> ChatbotMessage:
         try:
-            txt2txt_client = LLMTxt2TxtClient()
-            res = await txt2txt_client.generate(
+            txt2txt = LLMTxt2TxtClient()
+            res = await txt2txt.generate(
                 Txt2TxtModel(
                     mode=params.mode,
                     meta=params.meta,
@@ -37,7 +37,6 @@ class ChatbotMessageUsecase:
                     context=params.context
                 )
             )
-            print(res.usage)
 
             # DBへ保存
             user_chatbot_message = ChatbotMessage(

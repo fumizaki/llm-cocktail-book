@@ -1,5 +1,3 @@
-import re
-from typing import Optional
 from src.infrastructure.llm.openai.core import AsyncOpenAICoreClient
 from .model import (
     OpenAIEmbeddingsModel,

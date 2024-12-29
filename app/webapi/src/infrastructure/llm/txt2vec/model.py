@@ -26,4 +26,5 @@ class Txt2VecResult(BaseModel):
     llm: Txt2VecLLM
     model: str
     usage: int
-    content: list[list[float]]
+    chunks: list[str]
+    content: list[float]

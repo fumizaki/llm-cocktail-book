@@ -1,5 +1,5 @@
 from fastapi import Depends, Header, Query
-from src.presentation.dependency.repository import (
+from src.presentation.dependency.repository.account import (
     implement_account_repository,
 )
 from src.application.core import Credential

@@ -10,25 +10,26 @@ class LLMTxt2VecClient:
         try:
             chunks = split_prompt(params.prompt)
 
-            model = ''
-            vec: list[list[float]] = []
-            usage: int = 0
-
+    
+            result: Txt2VecResult
             if params.meta.llm == Txt2VecLLM.OPENAI:
                 client = AsyncOpenAIEmbeddingsClient()
-                for chunk in chunks:
-                    res = await client.vectorize(
-                            input=chunk,
-                            model='text-embedding-3-small'
+                res = await client.vectorize(
+                    OpenAIEmbeddingsModel(
+                        input=chunks,
+                        model='text-embedding-3-small'
                         )
-                    model = res.model
-                    vec.append(res.content)
-                    usage += res.usage
+                    )
+                
+                result = Txt2VecResult(
+                    llm=Txt2VecLLM.OPENAI,
+                    model=res.model,
+                    usage=res.usage,
+                    chunks=chunks,
+                    vector=res.vector
+                )
+                
             
-            return Txt2VecResult(
-                model=model,
-                usage=usage,
-                vector=vec
-            )
+            return result
         except Exception as e:
             print(f"Error during embedding generation: {e}")

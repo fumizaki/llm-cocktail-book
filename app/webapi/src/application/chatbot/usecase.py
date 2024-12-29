@@ -15,7 +15,7 @@ class ChatbotUsecase:
         self.tx = tx
         self.chatbot_repository = chatbot_repository
 
-    def get_all_exec(self) -> list[Chatbot]:
+    async def get_all_exec(self) -> list[Chatbot]:
         try:
             chatbot_in_db: list[Chatbot] = self.chatbot_repository.get_all_exclude_deleted(self.credential.account_id)
             return chatbot_in_db
@@ -23,7 +23,7 @@ class ChatbotUsecase:
             self.tx.close()
 
 
-    def create_exec(self, params: CreateChatbotModel) -> Chatbot:
+    async def create_exec(self, params: CreateChatbotModel) -> Chatbot:
         try:
             chat = Chatbot(
                 account_id=self.credential.account_id,

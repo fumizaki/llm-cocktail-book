@@ -3,7 +3,7 @@ from openai.types.embedding_model import EmbeddingModel as EmbeddingModel
 
 class OpenAIEmbeddingsModel(BaseModel):
     model: EmbeddingModel
-    prompt: str
+    prompt: list[str]
 
 class OpenAIEmbeddingsResult(BaseModel):
     model: EmbeddingModel

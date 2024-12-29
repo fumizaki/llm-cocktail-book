@@ -2,7 +2,6 @@ from fastapi import FastAPI
 from src.presentation.controller import (
     oauth,
     chatbot,
-    rag,
 )
 
 
@@ -17,6 +16,4 @@ app.include_router(
     chatbot.router
 )
 
-app.include_router(
-    rag.router
-)
+

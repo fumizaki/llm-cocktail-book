@@ -1,12 +1,13 @@
-import { Message } from "@/domain/schema";
-import { MessageCard } from "@/components/chatbot/card/message-card";
+import { Chatbot } from "@/domain/schema";
+import { ChatbotCard } from "@/components/chatbot/card/chatbot-card";
+import { getAllAction } from "@/server-actions/chatbot/get-all-action"
 
 type Props = {
-    messages: Message[]
 };
 
-export function MessageCardList({messages}: Props) {
-    const values: Message[] = messages;
+export async function ChatbotCardList({}: Props) {
+    
+    const values = await getAllAction()
 
     if (values.length <= 0) {
         return (
@@ -17,10 +18,10 @@ export function MessageCardList({messages}: Props) {
     }
     return (
         <ul className={'grid grid-cols-1 justify-center items-center gap-x-5 gap-y-8'}>
-            {values.map((value: Message, idx: number) => {
+            {values.map((value: Chatbot, idx: number) => {
                 return (
                     <li key={idx} className={'w-full group relative flex justify-center items-center '}>
-                        <MessageCard {...value} />
+                        <ChatbotCard value={value} />
                     </li>
                 );
             })}

@@ -31,13 +31,27 @@ export const refreshTokenRequest = z.object({
 });
 
 
-// Chat
-export const selectMessage = z.object({
+// Chatbot
+export const selectChatbot = z.object({
     id: z.string().uuid(),
+    title: z.string(),
+})
+
+export const insertChatbot = z.object({
+    title: z.string().trim()
+})
+
+
+export const selectChatbotMessage = z.object({
+    id: z.string().uuid(),
+    chatbotId: z.string().uuid(),
     content: z.string(),
     role: z.nativeEnum(value.MessageRole)
 })
 
-export const insertMessage = z.object({
-    prompt: z.string().trim()
+export const insertChatbotMessage = z.object({
+    mode: z.string(),
+    meta: z.object({ llm: z.string() }),
+    prompt: z.string().trim(),
+    context: z.array(z.object({ role: z.nativeEnum(value.MessageRole), prompt: z.string() }))
 })
