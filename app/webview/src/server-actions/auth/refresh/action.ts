@@ -1,10 +1,11 @@
 'use server'
 
 import { AuthorizationGrant } from "@/domain/value";
-
 import { convertCamelToSnake, convertSnakeToCamel } from "@/lib/convert-case";
+import { RefreshActionState } from "./type";
 
-export async function refreshAction(refreshToken: string): Promise<any> {
+
+export async function refreshAction(refreshToken: string): Promise<RefreshActionState> {
     const res = await fetch(`${process.env.API_BASE_URL}/oauth/refresh`, {
         method: 'POST',
         headers: {
@@ -17,5 +18,9 @@ export async function refreshAction(refreshToken: string): Promise<any> {
         throw new Error('Error refresh: ' + res.statusText);
     }
 
-    return convertSnakeToCamel(await res.json());
+    return {
+        ok: true,
+        status: 200,
+        data: convertSnakeToCamel(await res.json())
+    }
 }

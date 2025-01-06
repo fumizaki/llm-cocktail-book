@@ -7,7 +7,7 @@ ENV NODE_ENV=development
 WORKDIR /webview
 COPY ./app/webview/package.json .
 
-RUN npm install -g npm@latest
+# RUN npm install -g npm@latest
 RUN npm install
 COPY ./app/webview .
 CMD ["npm", "run", "dev"]

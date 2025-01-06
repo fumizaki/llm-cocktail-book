@@ -2,8 +2,9 @@
 
 import { AuthorizationGrant } from "@/domain/value";
 import { convertCamelToSnake, convertSnakeToCamel } from "@/lib/convert-case";
+import { SigninActionState } from "./type";
 
-export async function signinAction(email: string, password: string): Promise<any> {
+export async function signinAction(email: string, password: string): Promise<SigninActionState> {
     const res = await fetch(`${process.env.API_BASE_URL}/oauth/signin`, {
         method: 'POST',
         headers: {
@@ -16,5 +17,9 @@ export async function signinAction(email: string, password: string): Promise<any
         throw new Error('Error sign-in: ' + res.statusText);
     }
 
-    return convertSnakeToCamel(await res.json());
+    return {
+        ok: true,
+        status: 200,
+        data: convertSnakeToCamel(await res.json())
+    }
 }

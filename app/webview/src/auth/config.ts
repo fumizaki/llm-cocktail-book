@@ -1,7 +1,7 @@
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
-import { signinAction } from '@/server-actions/signin-action';
-import { refreshAction } from '@/server-actions/refresh-action';
+import { signinAction } from '@/server-actions/auth/signin';
+import { refreshAction } from '@/server-actions/auth/refresh';
 import { AuthToken } from '@/domain/schema';
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
@@ -18,9 +18,12 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
 
                 try {
                     const res = await signinAction(credentials.email, credentials.password);
+                    if (!res.data) {
+                        throw new Error('System Error')
+                    }
                     return {
                         email: credentials.email,
-                        authorization: res
+                        authorization: res.data
                     };
                 } catch {
                     console.error('不正なログインです。');
@@ -42,7 +45,10 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
             if (accessTokenExpiration < new Date()) {
                 try {
                     const res = await refreshAction(token.authorization.refreshToken)
-                    token.authorization = res
+                    if (!res.data) {
+                        throw new Error('Ssytem Error')
+                    }
+                    token.authorization = res.data
                 } catch (e) {
                     throw new Error('System Error');
                 }

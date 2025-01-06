@@ -2,9 +2,9 @@
 
 import { auth } from "@/auth/config";
 // import { convertSnakeToCamel } from "@/lib/convert-case";
-import { Chatbot } from "@/domain/schema";
+import { GetAllActionState } from "./type";
 
-export async function getAllAction(): Promise<Chatbot[]> {
+export async function getAllAction(): Promise<GetAllActionState> {
     const session = await auth()
     const res = await fetch(`${process.env.API_BASE_URL}/chatbot`, {
         headers: {
@@ -16,5 +16,9 @@ export async function getAllAction(): Promise<Chatbot[]> {
         throw new Error('Error get all chatbot: ' + res.statusText)
     }
 
-    return await res.json()
+    return {
+        ok: true,
+        status: 200,
+        data: await res.json()
+    }
 }
