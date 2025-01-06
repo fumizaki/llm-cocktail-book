@@ -18,7 +18,7 @@ class ChatbotMessageUsecase:
         self.chatbot_message_query = chatbot_message_query
 
 
-    def get_all_exec(self, chatbot_id: str) -> AggChatbot:
+    async def get_all_exec(self, chatbot_id: str) -> AggChatbot:
         try:
             agg_chat_in_db: AggChatbot = self.chatbot_message_query.get_agg_chatbot(chatbot_id, self.credential.account_id)
             return agg_chat_in_db

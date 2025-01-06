@@ -16,12 +16,12 @@ async def create_chatbot(form: CreateChatbotModel, usecase: ChatbotUsecase = Dep
     result = await usecase.create_exec(form)
     return result
 
-@router.get("/chatbot/messages/{chatbot_id}")
-async def get_chatbot_messages(chatbot_id: str, usecase: ChatbotMessageUsecase = Depends(implement_chatbot_message_usecase)):
+@router.get("/chatbot/message/{chatbot_id}")
+async def get_chatbot_message(chatbot_id: str, usecase: ChatbotMessageUsecase = Depends(implement_chatbot_message_usecase)):
     result = await usecase.get_all_exec(chatbot_id)
     return result
 
-@router.post("/chatbot/messages/{chatbot_id}")
-async def create_chatbot_messages(chatbot_id: str, form: CreateChatbotMessageModel, usecase: ChatbotMessageUsecase = Depends(implement_chatbot_message_usecase)):
+@router.post("/chatbot/message/{chatbot_id}")
+async def create_chatbot_message(chatbot_id: str, form: CreateChatbotMessageModel, usecase: ChatbotMessageUsecase = Depends(implement_chatbot_message_usecase)):
     result = await usecase.create_exec(chatbot_id, form)
     return result

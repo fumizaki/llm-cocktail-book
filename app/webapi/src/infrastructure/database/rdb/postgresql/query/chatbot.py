@@ -18,7 +18,7 @@ class ChatbotMessageQueryImpl(ChatbotMessageQuery):
             .one()
         )
 
-        messages = list[ChatbotMessage] = []
+        messages: list[ChatbotMessage] = []
         for message in chatbot.messages:
             if message.deleted_at is not None:
                 continue
@@ -30,6 +30,7 @@ class ChatbotMessageQueryImpl(ChatbotMessageQuery):
 
         return AggChatbot(
             id=chatbot.id,
+            account_id=chatbot.account_id,
             title=chatbot.title,
             created_at=chatbot.created_at,
             updated_at=chatbot.updated_at,

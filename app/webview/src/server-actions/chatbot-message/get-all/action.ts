@@ -1,11 +1,11 @@
 'use server'
 
 import { auth } from "@/auth/config";
-import { ChatbotMessage } from "@/domain/schema";
+import { GetAllActionState } from "./type";
 
-export async function getAllAction(chatbotId: string): Promise<ChatbotMessage[]> {
+export async function getAllAction(chatbotId: string): Promise<GetAllActionState> {
     const session = await auth()
-    const res = await fetch(`${process.env.API_BASE_URL}/chatbot/${chatbotId}/message`, {
+    const res = await fetch(`${process.env.API_BASE_URL}/chatbot/message/${chatbotId}`, {
         headers: {
             'Authorization': `Bearer ${session?.user.authorization.accessToken}`
         },
@@ -14,6 +14,9 @@ export async function getAllAction(chatbotId: string): Promise<ChatbotMessage[]>
     if (!res.ok) {
         throw new Error('Error get all chatbot: ' + res.statusText)
     }
-
-    return await res.json()
+    return {
+        ok: true,
+        status: 200,
+        data: await res.json()
+    }
 }
