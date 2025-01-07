@@ -50,8 +50,7 @@ export const selectChatbotMessage = z.object({
 })
 
 export const insertChatbotMessage = z.object({
-    mode: z.string(),
-    meta: z.object({ llm: z.string() }),
+    chatbotId: z.string().uuid(),
+    meta: z.object({ llm: z.string(), mode: z.string() }),
     prompt: z.string().trim(),
-    context: z.array(z.object({ role: z.nativeEnum(value.MessageRole), prompt: z.string() }))
 })

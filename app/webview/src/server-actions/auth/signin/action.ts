@@ -1,7 +1,7 @@
 'use server'
 
 import { AuthorizationGrant } from "@/domain/value";
-import { convertCamelToSnake, convertSnakeToCamel } from "@/lib/convert-case";
+import { parseCamelToSnake, parseSnakeToCamel } from "@/lib/parse-case";
 import { SigninActionState } from "./type";
 
 export async function signinAction(email: string, password: string): Promise<SigninActionState> {
@@ -10,7 +10,7 @@ export async function signinAction(email: string, password: string): Promise<Sig
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(convertCamelToSnake({ grantType: AuthorizationGrant.PASSWORD, email: email, password: password })),
+        body: JSON.stringify(parseCamelToSnake({ grantType: AuthorizationGrant.PASSWORD, email: email, password: password })),
     });
 
     if (!res.ok) {
@@ -20,6 +20,6 @@ export async function signinAction(email: string, password: string): Promise<Sig
     return {
         ok: true,
         status: 200,
-        data: convertSnakeToCamel(await res.json())
+        data: parseSnakeToCamel(await res.json())
     }
 }

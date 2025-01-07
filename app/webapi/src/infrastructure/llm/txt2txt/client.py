@@ -14,9 +14,9 @@ class LLMTxt2TxtClient:
     async def generate(self, params: Txt2TxtModel) -> Txt2TxtResult:
 
         system_prompt: str = ''
-        if params.mode == GenerationMode.TEXT:
+        if params.meta.mode == GenerationMode.TEXT:
             system_prompt += build_text_prompt()
-        elif params.mode == GenerationMode.CODE:
+        elif params.meta.mode == GenerationMode.CODE:
             system_prompt += build_code_prompt(params.meta.lang)
 
         system_prompt += build_contextualized_prompt(params.context)

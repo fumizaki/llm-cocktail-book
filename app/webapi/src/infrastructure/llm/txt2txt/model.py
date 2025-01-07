@@ -32,6 +32,7 @@ class GenerationMode(str, Enum):
 
 class GenerationMeta(BaseModel):
     llm: Txt2TxtLLM
+    mode: GenerationMode
 
 
 class TextGenerationMeta(GenerationMeta):
@@ -43,7 +44,6 @@ class CodeGenerationMeta(GenerationMeta):
 
 
 class Txt2TxtModel(BaseModel):
-    mode: GenerationMode
     meta: TextGenerationMeta | CodeGenerationMeta
     prompt: str
     context: list[Txt2TxtLLMMessage]

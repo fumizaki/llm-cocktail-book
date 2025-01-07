@@ -1,7 +1,7 @@
 'use server'
 
 import { AuthorizationGrant } from "@/domain/value";
-import { convertCamelToSnake, convertSnakeToCamel } from "@/lib/convert-case";
+import { parseCamelToSnake, parseSnakeToCamel } from "@/lib/parse-case";
 import { RefreshActionState } from "./type";
 
 
@@ -11,7 +11,7 @@ export async function refreshAction(refreshToken: string): Promise<RefreshAction
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(convertCamelToSnake({ grantType: AuthorizationGrant.REFRESH_TOKEN, refreshToken: refreshToken })),
+        body: JSON.stringify(parseCamelToSnake({ grantType: AuthorizationGrant.REFRESH_TOKEN, refreshToken: refreshToken })),
     });
 
     if (!res.ok) {
@@ -21,6 +21,6 @@ export async function refreshAction(refreshToken: string): Promise<RefreshAction
     return {
         ok: true,
         status: 200,
-        data: convertSnakeToCamel(await res.json())
+        data: parseSnakeToCamel(await res.json())
     }
 }

@@ -2,7 +2,6 @@ from src.application.core.model import CoreModel
 
 
 class CreateChatbotMessageModel(CoreModel):
-    mode: str
+    chatbot_id: str
     meta: dict[str, str]
     prompt: str
-    context: list[dict[str, str]]

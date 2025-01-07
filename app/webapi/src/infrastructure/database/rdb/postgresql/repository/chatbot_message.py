@@ -2,11 +2,11 @@ from sqlalchemy.orm import Session
 from sqlalchemy import select
 from sqlalchemy.engine.row import Row, Tuple, Sequence
 from src.domain.entity.chatbot_message import ChatbotMessage
-from src.domain.repository.chatbot_message import ChatMessageRepository
+from src.domain.repository.chatbot_message import ChatbotMessageRepository
 from src.infrastructure.database.rdb.postgresql.schema.table import ChatbotMessageTable
 
 
-class ChatMessageRepositoryImpl(ChatMessageRepository):
+class ChatbotMessageRepositoryImpl(ChatbotMessageRepository):
 
     def __init__(self, session: Session) -> None:
         self._session = session

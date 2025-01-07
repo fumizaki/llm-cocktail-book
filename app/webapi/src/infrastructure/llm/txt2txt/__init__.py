@@ -6,5 +6,6 @@ from .model import (
     Txt2TxtModel as Txt2TxtModel,
     CodeGenerationMeta as CodeGenerationMeta,
     TextGenerationMeta as TextGenerationMeta,
-    Txt2TxtResult as Txt2TxtResult
+    Txt2TxtResult as Txt2TxtResult,
+    Txt2TxtLLMMessage as Txt2TxtLLMMessage
 )

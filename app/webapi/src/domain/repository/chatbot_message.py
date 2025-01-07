@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from src.domain.entity.chatbot_message import ChatbotMessage
 
 
-class ChatMessageRepository(ABC):
+class ChatbotMessageRepository(ABC):
 
     @abstractmethod
     def get_exclude_deleted(self, id: str) -> ChatbotMessage:
