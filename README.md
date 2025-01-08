@@ -6,7 +6,7 @@ This is Fullstack Web Application Using LLM.
 
 ```
 make init-app
-make docker-up
+make docker-up-dev
 ```
 
 ## Feature

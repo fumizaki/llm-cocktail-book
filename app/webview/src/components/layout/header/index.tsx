@@ -1,4 +1,5 @@
 import { cn } from '@/lib/style';
+import { HeaderDropdown } from './dropdown';
 
 export const Header = ({ className }: { className?: string }) => {
     return (
@@ -10,6 +11,9 @@ export const Header = ({ className }: { className?: string }) => {
         >
             <div className={'flex items-center gap-2 pl-4'}>
                 <h2>LLM Cocktail Book</h2>
+            </div>
+            <div className={'pr-8'}>
+                <HeaderDropdown/>
             </div>
         </header>
     );

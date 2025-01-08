@@ -40,11 +40,11 @@ create_vdb_data:
 init-app: create_root_env create_webapi_env create_webview_env create_rdb_data create_kvs_data create_vdb_data
 
 # Dockerコンテナ起動
-docker-up:
+docker-up-dev:
 	docker compose -f compose.dev.yml up -d --build
 
 # Dockerコンテナ削除
-docker-down:
+docker-down-dev:
 	docker compose -f compose.dev.yml down --rmi all
 
 # Dockerコンテナ解放

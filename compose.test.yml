@@ -1,4 +1,17 @@
 services:
+  e2e:
+    container_name: e2e
+    build:
+      context: .
+      dockerfile: ./docker/e2e/Dockerfile
+    volumes:
+      - ./app/e2e/:/e2e/
+    restart: on-failure
+    env_file:
+      - ./app/e2e/.env.test
+    depends_on:
+      - webview
+      - webapi
 
   webview:
     container_name: webview
