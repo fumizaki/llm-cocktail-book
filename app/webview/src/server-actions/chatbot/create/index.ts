@@ -1,2 +1,2 @@
-export { createAction } from './action'
-export { type CreateActionState } from './type'
+export { createAction } from "./action";
+export type { CreateActionState } from "./type";

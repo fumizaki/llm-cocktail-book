@@ -59,6 +59,7 @@ class OAuthSignupUsecase:
         try:
             # kvsからデータを取得
             data = self.kvs.get(key)
+            # TODO: validation
 
             # アカウント作成
             account_in_db = self.account_repository.create(Account(email=data['email'], email_verified=datetime.now()))

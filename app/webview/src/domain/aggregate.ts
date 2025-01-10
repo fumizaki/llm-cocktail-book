@@ -1,3 +1,3 @@
-import * as schema from '@/domain/schema'
+import type * as schema from "@/domain/schema";
 
-export type AggChatbot = schema.Chatbot & { messages: schema.ChatbotMessage[]}
+export type AggChatbot = schema.Chatbot & { messages: schema.ChatbotMessage[] };

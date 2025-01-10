@@ -5,7 +5,7 @@ from .model import MessageType, EmailContent
 
 load_dotenv()
 
-API_BASE_URL = os.environ.get('API_BASE_URL', "http://localhost:8000")
+VIEW_BASE_URL = os.environ.get('VIEW_BASE_URL', "http://localhost:8000")
 
 
 def build_signup_request_content(key: str) -> EmailContent:
@@ -17,7 +17,7 @@ We have received a sign-up request from you.
 
 to complete the sign-up process; visit the link below to open the confirmination page in a new window or device:
 
-{API_BASE_URL}/oauth/signup/verify?key={key}
+{VIEW_BASE_URL}/auth/signup/verify?key={key}
 
 please note that by completing your sign-up you are agreeing to our Terms of Service and Privacy Policy:
 

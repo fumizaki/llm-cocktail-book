@@ -1,2 +1,2 @@
-export { getAllAction } from './action'
-export { type GetAllActionState } from './type'
+export { getAllAction } from "./action";
+export type { GetAllActionState } from "./type";
