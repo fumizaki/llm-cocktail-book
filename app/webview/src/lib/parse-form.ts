@@ -1,53 +1,56 @@
 export function parseFormDataToObject<T>(formData: FormData): T {
-	const result: Record<string, any> = {};
+    const result: Record<string, any> = {};
 
-	formData.forEach((value, key) => {
-		// キーをドット記法で分割
-		const parts = key.split(".");
-		let current = result;
+    formData.forEach((value, key) => {
+        const parts = key.split(".");
+        let current = result;
 
-		// 最後の要素以外をループ
-		for (let i = 0; i < parts.length - 1; i++) {
-			const part = parts[i];
+        for (let i = 0; i < parts.length - 1; i++) {
+            const part = parts[i];
+            const arrayMatch = part.match(/^([^\[]+)\[(\d*)\]$/); // 空のインデックスもキャッチするように変更
 
-			// 配列表記 ([0], [1] など) かチェック
-			const arrayMatch = part.match(/^([^\[]+)\[(\d+)\]$/);
+            if (arrayMatch) {
+                const [, name, index] = arrayMatch;
+                current[name] = current[name] || [];
 
-			if (arrayMatch) {
-				// 配列の場合
-				const [, name, index] = arrayMatch;
-				current[name] = current[name] || [];
-				current[name][Number.parseInt(index)] =
-					current[name][Number.parseInt(index)] || {};
-				current = current[name][Number.parseInt(index)];
-			} else {
-				// オブジェクトの場合
-				current[part] = current[part] || {};
-				current = current[part];
-			}
-		}
+                // indexが空文字列の場合はpushで追加
+                if (index === "") {
+                    current = current[name]; // currentを配列自身に設定
+                } else {
+                  const numIndex = Number.parseInt(index);
+                  current[name][numIndex] = current[name][numIndex] || {};
+                  current = current[name][numIndex];
+                }
+            } else {
+                current[part] = current[part] || {};
+                current = current[part];
+            }
+        }
 
-		// 最後の部分を処理
-		const lastPart = parts[parts.length - 1];
-		const arrayMatch = lastPart.match(/^([^\[]+)\[(\d+)\]$/);
+        const lastPart = parts[parts.length - 1];
+        const arrayMatch = lastPart.match(/^([^\[]+)\[(\d*)\]$/); // 空のインデックスもキャッチするように変更
 
-		if (arrayMatch) {
-			// 配列の最後の要素の場合
-			const [, name, index] = arrayMatch;
-			current[name] = current[name] || [];
-			current[name][Number.parseInt(index)] = value;
-		} else {
-			// 既存の値がある場合は配列に変換
-			if (current[lastPart] !== undefined) {
-				if (!Array.isArray(current[lastPart])) {
-					current[lastPart] = [current[lastPart]];
-				}
-				current[lastPart].push(value);
-			} else {
-				current[lastPart] = value;
-			}
-		}
-	});
+        if (arrayMatch) {
+            const [, name, index] = arrayMatch;
+            current[name] = current[name] || [];
 
-	return result as T;
+            if (index === "") {
+                current[name].push(value);
+            } else {
+              const numIndex = Number.parseInt(index);
+              current[name][numIndex] = value;
+            }
+        } else {
+            if (current[lastPart] !== undefined) {
+                if (!Array.isArray(current[lastPart])) {
+                    current[lastPart] = [current[lastPart]];
+                }
+                current[lastPart].push(value);
+            } else {
+                current[lastPart] = value;
+            }
+        }
+    });
+
+    return result as T;
 }
