@@ -52,6 +52,7 @@ export const CreateChatbotMessageForm = ({ chatbotId }: Props) => {
 					</SelectTrigger>
 					<SelectContent>
 						<SelectItem value="text">Text</SelectItem>
+						<SelectItem value="code">Code</SelectItem>
 					</SelectContent>
 				</Select>
 			</div>

@@ -1,6 +1,17 @@
+from typing import Optional
 from .model import ProgrammingLanguage
 
+GENERAL_PROMPT = """\
+# Task
 
+Generate Only Python code based on the provided text description. The code should be executable and, where appropriate, include basic error handling or input validation.
+
+# Instructions
+
+1. Carefully analyze the input text description to understand the desired functionality.
+2. Generate efficient and readable Python code that fulfills the description.
+3. If applicable, generate corresponding test code using testing code.
+"""
 
 PYTHON_PROMPT = """\
 # Task
@@ -69,8 +80,10 @@ Generate Only Python code based on the provided text description. The code shoul
     ```
 """
 
-def build_code_prompt(lang: ProgrammingLanguage) -> str:
+def build_code_prompt(lang: Optional[ProgrammingLanguage]) -> str:
     prompt = ''
+    if lang is None:
+        prompt += GENERAL_PROMPT
     if lang == ProgrammingLanguage.PYTHON:
         prompt += PYTHON_PROMPT
     return prompt

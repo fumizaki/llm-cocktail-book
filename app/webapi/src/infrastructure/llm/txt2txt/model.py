@@ -1,7 +1,8 @@
 from enum import Enum
-from typing import TypeVar
+from typing import TypeVar, Optional
 from pydantic import BaseModel
 from .code import ProgrammingLanguage
+from .text import Language
 
 
 ResponseFormat = TypeVar("ResponseFormat", bound=BaseModel)
@@ -36,11 +37,11 @@ class GenerationMeta(BaseModel):
 
 
 class TextGenerationMeta(GenerationMeta):
-    pass
+    lang: Optional[Language] = None
 
 
 class CodeGenerationMeta(GenerationMeta):
-    lang: ProgrammingLanguage
+    lang: Optional[ProgrammingLanguage] = None
 
 
 class Txt2TxtModel(BaseModel):

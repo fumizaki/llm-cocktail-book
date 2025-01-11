@@ -5,7 +5,7 @@ from .model import MessageType, EmailContent
 
 load_dotenv()
 
-VIEW_BASE_URL = os.environ.get('VIEW_BASE_URL', "http://localhost:8000")
+VIEW_BASE_URL = os.environ.get('VIEW_BASE_URL', "http://localhost:3000")
 
 
 def build_signup_request_content(key: str) -> EmailContent:
