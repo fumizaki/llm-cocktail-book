@@ -25,7 +25,6 @@ def implement_oauth_signup_usecase(
     return OAuthSignupUsecase(
         jwt,
         ResendEmailClient(),
-        RedisSessionClient(),
         TransactionClient(session),
         account_repository,
         account_secret_repository

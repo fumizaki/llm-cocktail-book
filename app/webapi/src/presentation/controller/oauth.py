@@ -1,4 +1,5 @@
 from fastapi import APIRouter, status, HTTPException, Depends
+from fastapi.responses import RedirectResponse
 from src.presentation.dependency.usecase.oauth import (
     implement_oauth_signup_usecase,
     implement_oauth_password_usecase,
@@ -24,7 +25,7 @@ async def oauth_signup(form: OAuthSignupModel, usecase: OAuthSignupUsecase = Dep
 @router.get("/oauth/signup/verify")
 async def oauth_verify(key: str, usecase: OAuthSignupUsecase = Depends(implement_oauth_signup_usecase)):
     result = usecase.verify_exec(key)
-    return result
+    return RedirectResponse(result)
 
 
 @router.post("/oauth/signin")

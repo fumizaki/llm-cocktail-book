@@ -60,7 +60,7 @@ export const HeaderDropdown = ({}) => {
 						</Link>
 					</DropdownMenuItem>
 					<DropdownMenuItem className={"w-full"} asChild>
-						<Link href={`/api/auth/signup?callbackUrl=${pathname}`}>
+						<Link href={`/auth/signup?callbackUrl=${pathname}`}>
 							<UserPlus2 className={"h-4 w-4 mr-2"} />
 							サインアップ
 						</Link>

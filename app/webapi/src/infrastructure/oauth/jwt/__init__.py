@@ -4,5 +4,6 @@ from .client import (
 from .model import (
     TokenType as TokenType,
     GrantType as GrantType,
-    Payload as Payload
+    Payload as Payload,
+    VerificationPayload as VerificationPayload
 )

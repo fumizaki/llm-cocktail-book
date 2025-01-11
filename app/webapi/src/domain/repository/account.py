@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from datetime import datetime
 from src.domain.entity.account import Account
 
 
@@ -12,6 +13,10 @@ class AccountRepository(ABC):
     def create(self, entity: Account) -> Account:
         raise NotImplementedError
     
+    @abstractmethod
+    def verify(self, id: str, verified_at: datetime) -> Account:
+        raise NotImplementedError
+
     @abstractmethod
     def update(self) -> Account:
         raise NotImplementedError

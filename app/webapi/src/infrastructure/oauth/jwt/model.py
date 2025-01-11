@@ -33,3 +33,7 @@ class Payload(BaseModel):
     scope: Optional[str] = None
     jti: Optional[str] = None
     nonce: Optional[str] = None
+
+
+class VerificationPayload(Payload):
+    url: str

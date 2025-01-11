@@ -1,3 +1,4 @@
+from datetime import datetime
 from sqlalchemy.orm import Session
 from sqlalchemy import select
 from sqlalchemy.engine.row import Row, Tuple
@@ -48,6 +49,24 @@ class AccountRepositoryImpl(AccountRepository):
         self._session.add(obj)
         self._session.flush()
         return self.to_entity(obj)
+    
+
+    def verify(self, id: str, verified_at: datetime) -> Account:
+        result = self._session.execute(
+            select(
+                AccountTable
+            )
+            .filter(
+                AccountTable.id == id,
+                AccountTable.deleted_at == None
+            )
+        )
+        row: Row[Tuple[AccountTable]] = result.one()
+        _in_db: AccountTable = row[0]
+        _in_db.email_verified = verified_at
+        self._session.flush()
+
+        return self.to_entity(_in_db)
     
 
     def update(self) -> Account:
