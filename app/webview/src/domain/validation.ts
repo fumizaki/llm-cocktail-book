@@ -27,7 +27,10 @@ export const signInRequest = signUpRequest.extend({
 
 export const refreshTokenRequest = z.object({
 	grantType: z.nativeEnum(value.AuthorizationGrant),
-	refreshToken: z.string().trim().min(1, { message: "リフレッシュトークンが空です" }),
+	refreshToken: z
+		.string()
+		.trim()
+		.min(1, { message: "リフレッシュトークンが空です" }),
 	scope: z.string().optional(),
 });
 

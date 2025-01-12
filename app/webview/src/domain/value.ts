@@ -33,5 +33,3 @@ export const MessageRole = {
 };
 
 export type MessageRoleType = (typeof MessageRole)[keyof typeof MessageRole];
-
-

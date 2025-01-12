@@ -14,8 +14,6 @@ export async function verifyAction(
 	}
 
 	return {
-		ok: true,
-		status: 200,
 		data: await res.json(),
 	};
 }

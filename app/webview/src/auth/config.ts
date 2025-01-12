@@ -21,9 +21,6 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
 						credentials.email,
 						credentials.password,
 					);
-					if (!res.data) {
-						throw new Error("System Error");
-					}
 					return {
 						email: credentials.email,
 						authorization: res.data,
@@ -50,9 +47,6 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
 			if (accessTokenExpiration < new Date()) {
 				try {
 					const res = await refreshAction(token.authorization.refreshToken);
-					if (!res.data) {
-						throw new Error("Ssytem Error");
-					}
 					token.authorization = res.data;
 				} catch (e) {
 					throw new Error("System Error");

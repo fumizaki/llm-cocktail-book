@@ -17,8 +17,6 @@ export async function getAllAction(): Promise<GetAllActionState> {
 	}
 
 	return {
-		ok: true,
-		status: 200,
 		data: await res.json(),
 	};
 }

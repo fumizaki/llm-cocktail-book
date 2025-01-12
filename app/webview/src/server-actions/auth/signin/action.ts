@@ -27,8 +27,6 @@ export async function signinAction(
 	}
 
 	return {
-		ok: true,
-		status: 200,
 		data: parseSnakeToCamel(await res.json()),
 	};
 }

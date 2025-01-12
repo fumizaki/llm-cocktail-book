@@ -20,8 +20,6 @@ export async function getAllAction(
 		throw new Error("Error get all chatbot: " + res.statusText);
 	}
 	return {
-		ok: true,
-		status: 200,
 		data: await res.json(),
 	};
 }
