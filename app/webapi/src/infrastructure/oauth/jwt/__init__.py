@@ -4,6 +4,7 @@ from .client import (
 from .model import (
     TokenType as TokenType,
     GrantType as GrantType,
-    Payload as Payload,
-    VerificationPayload as VerificationPayload
+    AuthorizationTokenPayload as AuthorizationTokenPayload,
+    VerificationTokenPayload as VerificationTokenPayload
 )
+from .exception import (JWTException as JWTException)

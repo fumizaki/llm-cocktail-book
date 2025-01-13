@@ -1,1 +1,2 @@
 from .scheme import parse_bearer_token as parse_bearer_token
+from .exception import InvalidBearerTokenError as InvalidBearerTokenError

@@ -14,6 +14,7 @@ def session() -> Generator[Session, None, None]:
     finally:
         session.close()
 
+
 @pytest.fixture
 def trancate(session: Session) -> None:
     try:

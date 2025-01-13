@@ -5,7 +5,7 @@ from src.presentation.dependency.repository.account import (
 from src.application.core import Credential
 from src.domain.entity.account import Account
 from src.domain.repository.account import AccountRepository
-from src.infrastructure.oauth import JWTClient, Payload, parse_bearer_token
+from src.infrastructure.oauth import JWTClient, AuthorizationTokenPayload, parse_bearer_token
 
 
 def get_credential_from_header(
@@ -18,7 +18,7 @@ def get_credential_from_header(
         raise Exception
     
     token = parse_bearer_token(authorization)
-    payload: Payload = jwt.decode(token)
+    payload: AuthorizationTokenPayload = jwt.decode_authorization_token(token)
 
     account_in_db: Account = account_repository.get_exclude_deleted(payload.sub)
     return Credential(account_id=account_in_db.id, email=account_in_db.email)
@@ -33,7 +33,7 @@ def get_credential_from_query(
     if header is None:
         raise Exception
     
-    payload: Payload = jwt.decode(header)
+    payload: AuthorizationTokenPayload = jwt.decode_authorization_token(header)
 
     account_in_db: Account = account_repository.get_exclude_deleted(payload.sub)
     return Credential(account_id=account_in_db.id, email=account_in_db.email)

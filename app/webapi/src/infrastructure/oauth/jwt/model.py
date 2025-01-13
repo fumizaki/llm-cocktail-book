@@ -24,7 +24,7 @@ class GrantType(str, Enum):
     REFRESH_TOKEN = 'refresh_token'
 
 
-class Payload(BaseModel):
+class TokenPayload(BaseModel):
     sub: str
     iss: str
     aud: str
@@ -35,5 +35,8 @@ class Payload(BaseModel):
     nonce: Optional[str] = None
 
 
-class VerificationPayload(Payload):
+class AuthorizationTokenPayload(TokenPayload):
+    pass
+
+class VerificationTokenPayload(TokenPayload):
     url: str

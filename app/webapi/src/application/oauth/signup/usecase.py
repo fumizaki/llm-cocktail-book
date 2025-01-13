@@ -10,7 +10,6 @@ from src.infrastructure.database.rdb.transaction import TransactionClient
 from src.infrastructure.hashing import HashingClient
 from src.infrastructure.oauth import JWTClient
 from src.infrastructure.email import build_signup_request_content, EmailClient
-from src.infrastructure.database.kvs.redis.session import RedisSessionClient
 
 class OAuthSignupUsecase:
 
@@ -46,7 +45,7 @@ class OAuthSignupUsecase:
             ))
 
             # TODO: 有効期限を設定したトークンを作成し、メールのcontentに入れる
-            verification_token = self.jwt.encode_verification(
+            verification_token = self.jwt.encode_verification_token(
                 account_in_db.id,
                 self.jwt.verification_token_exp,
                 params.redirect_url
@@ -66,12 +65,12 @@ class OAuthSignupUsecase:
 
     def verify_exec(self, key: str) -> str:
         try:
-            verification_payload = self.jwt.decode_verification(key)
+            payload = self.jwt.decode_verification_token(key)
 
-            account_in_db: Account = self.account_repository.get_exclude_deleted(verification_payload.sub)
+            account_in_db: Account = self.account_repository.get_exclude_deleted(payload.sub)
             self.account_repository.verify(account_in_db.id, datetime.now())
             self.tx.commit()
-            return verification_payload.url
+            return payload.url
 
         except:
             self.tx.rollback()

@@ -3,8 +3,8 @@ from typing import Optional
 from datetime import datetime, timedelta
 import jwt
 from .model import (
-    Payload,
-    VerificationPayload
+    AuthorizationTokenPayload,
+    VerificationTokenPayload
 )
 from .exception import (
     JWTException
@@ -72,7 +72,7 @@ class JWTClient:
 
 
     
-    def encode(
+    def encode_authorization_token(
         self,
         member_id: str,
         expires_in: int,
@@ -89,7 +89,7 @@ class JWTClient:
         Returns:
             str: 生成されたJWTトークン
         """
-        payload = Payload(
+        payload = AuthorizationTokenPayload(
             sub=member_id,
             iss=ISSUER,
             aud=AUDIENCE,
@@ -103,41 +103,31 @@ class JWTClient:
             ALGORITHM
         )
 
-    def decode(
-        self,
-        token: str,
-    ) -> Payload:
-        """
-        JWTトークンをデコード
-
-        Args:
-            token (str): JWTトークン
-
-        Returns:
-            Payload: デコードされたペイロード
-
-        Raises:
-            JWTException: トークンが無効な場合
-        """
+    def decode_authorization_token(self, token: str) -> AuthorizationTokenPayload:
         try:
-            payload = Payload(**jwt.decode(
+            payload = AuthorizationTokenPayload(**jwt.decode(
                 token,
                 TOKEN_SECRET,
                 algorithms=[ALGORITHM],
                 audience=AUDIENCE,
                 issuer=ISSUER
             ))
-            
             if self.is_token_expired(payload.exp):
                 raise JWTException("Token has expired")
-            
             return payload
+        except jwt.InvalidSignatureError: # 具体的な例外をキャッチ
+            raise JWTException("Invalid signature")
+        except jwt.ExpiredSignatureError:
+            raise JWTException("Token has expired")
+        except jwt.InvalidAudienceError:
+            raise JWTException("Invalid audience")
+        except jwt.InvalidIssuerError:
+            raise JWTException("Invalid issuer")
+        except Exception as e: # 他の例外はまとめてキャッチ
+            raise JWTException(f"Invalid token: {e}") # 元のエラーメッセージを含める
 
-        except Exception as e:
-            raise JWTException(str(e))
 
-
-    def encode_verification(
+    def encode_verification_token(
         self,
         member_id: str,
         expires_in: int,
@@ -156,7 +146,7 @@ class JWTClient:
         Returns:
             str: 生成されたJWTトークン
         """
-        payload = VerificationPayload(
+        payload = VerificationTokenPayload(
             sub=member_id,
             iss=ISSUER,
             aud=AUDIENCE,
@@ -171,10 +161,10 @@ class JWTClient:
             ALGORITHM
         )
 
-    def decode_verification(
+    def decode_verification_token(
         self,
         token: str,
-    ) -> VerificationPayload:
+    ) -> VerificationTokenPayload:
         """
         JWTトークンをデコード
 
@@ -182,13 +172,13 @@ class JWTClient:
             token (str): JWTトークン
 
         Returns:
-            VerificationPayload: デコードされたペイロード
+            VerificationTokenPayload: デコードされたペイロード
 
         Raises:
             JWTException: トークンが無効な場合
         """
         try:
-            payload = VerificationPayload(**jwt.decode(
+            payload = VerificationTokenPayload(**jwt.decode(
                 token,
                 TOKEN_SECRET,
                 algorithms=[ALGORITHM],
@@ -201,5 +191,13 @@ class JWTClient:
             
             return payload
 
-        except Exception as e:
-            raise JWTException(str(e))
+        except jwt.InvalidSignatureError: # 具体的な例外をキャッチ
+            raise JWTException("Invalid signature")
+        except jwt.ExpiredSignatureError:
+            raise JWTException("Token has expired")
+        except jwt.InvalidAudienceError:
+            raise JWTException("Invalid audience")
+        except jwt.InvalidIssuerError:
+            raise JWTException("Invalid issuer")
+        except Exception as e: # 他の例外はまとめてキャッチ
+            raise JWTException(f"Invalid token: {e}") # 元のエラーメッセージを含める

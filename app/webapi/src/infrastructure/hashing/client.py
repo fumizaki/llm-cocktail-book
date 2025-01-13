@@ -1,37 +1,21 @@
-from typing import Optional
 import bcrypt
-
+from typing import Optional
 
 class HashingClient:
 
-    def __init__(self, salt: Optional[str] = bcrypt.gensalt().decode(), stretching: Optional[int] = 10) -> None:
-        self.salt: str = salt
+    def __init__(self, salt: Optional[str] = None, stretching: int = 10) -> None:
+        self.salt: str = salt if salt is not None else bcrypt.gensalt().decode()  # strで保存
         self.stretching: int = stretching
 
+    def hash(self, input_str: str) -> str:
+        hashed = input_str.encode()
+        for _ in range(self.stretching):
+            hashed = bcrypt.hashpw(hashed, self.salt.encode())  # encode()でbytesに変換
+        return hashed.decode()
 
-    def hash(self, input: str) -> str:
-        try:
-            for _ in range(self.stretching):
-                _hashed: bytes = bcrypt.hashpw(
-                    input.encode(),
-                    self.salt.encode(),
-                )
-                input = _hashed.decode()
-            return _hashed.decode()
-        
-        except:
-            raise ValueError(f"Invalid hashing")
-
-
-    def verify(self, hashed: str, input: str) -> bool:
-        try:
-            for _ in range(self.stretching):
-                _hashed: bytes = bcrypt.hashpw(
-                    input.encode(),
-                    self.salt.encode(),
-                )
-                input = _hashed.decode()
-            return hashed == input
-        
-        except:
-            raise ValueError(f"Invalid hash verification")
+    def verify(self, hashed_str: str, input_str: str) -> bool:
+        hashed_bytes = hashed_str.encode()
+        input_bytes = input_str.encode()
+        for _ in range(self.stretching):
+            input_bytes = bcrypt.hashpw(input_bytes, self.salt.encode())  # encode()でbytesに変換
+        return hashed_bytes == input_bytes
