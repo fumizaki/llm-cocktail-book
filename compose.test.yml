@@ -24,7 +24,7 @@ services:
       - "${WEBVIEW_PORT}:${WEBVIEW_PORT}"
     restart: always
     env_file:
-      - ./app/webview/.env.dev
+      - ./app/webview/.env.test
     depends_on:
       - webapi
 
@@ -39,7 +39,7 @@ services:
       - "${WEBAPI_PORT}:${WEBAPI_PORT}"
     restart: always
     env_file:
-      - ./app/webapi/.env.dev
+      - ./app/webapi/.env.test
     depends_on:
       - rdb
 
@@ -51,7 +51,7 @@ services:
       dockerfile: ./docker/rdb/Dockerfile
     volumes:
       - type: bind
-        source: ./app/rdb/postgresql/data
+        source: ./app/rdb/postgresql/test
         target: /var/lib/postgresql/data
     environment:
       POSTGRES_DB: ${RDB_NAME}
@@ -73,7 +73,7 @@ services:
       dockerfile: ./docker/kvs/Dockerfile
     volumes:
       - type: bind
-        source: ./app/kvs/redis/data
+        source: ./app/kvs/redis/test
         target: /data
     ports:
       - "${KVS_PORT}:${KVS_PORT}"
@@ -86,7 +86,7 @@ services:
       dockerfile: ./docker/vdb/Dockerfile
     volumes:
       - type: bind
-        source: ./app/vdb/qdrant/data
+        source: ./app/vdb/qdrant/test
         target: /qdrant/storage
     ports:
       - "${VDB_PORT}:${VDB_PORT}"
