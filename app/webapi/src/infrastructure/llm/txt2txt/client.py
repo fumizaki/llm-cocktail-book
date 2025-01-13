@@ -2,8 +2,7 @@ from .text import build_text_prompt
 from .code import build_code_prompt, CodeGenerationResponseFormat
 from .model import Txt2TxtModel, Txt2TxtResult, GenerationMode, Txt2TxtLLM
 from .prompt import build_contextualized_prompt
-from src.infrastructure.llm.openai.chat import AsyncOpenAIChatClient
-from src.infrastructure.llm.openai.chat import OpenAIChatModel, OpenAIChatMessage, OpenAIChatMessageRole
+from src.infrastructure.llm.resource.openai.chat import AsyncOpenAIChatClient, OpenAIChatModel, OpenAIChatMessage, OpenAIChatMessageRole
 
 
 

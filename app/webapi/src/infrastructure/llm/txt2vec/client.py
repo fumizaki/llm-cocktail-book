@@ -1,6 +1,6 @@
 from .model import Txt2VecModel, Txt2VecResult, Txt2VecLLM
 from .prompt import split_prompt
-from src.infrastructure.llm.openai.embeddings import AsyncOpenAIEmbeddingsClient, OpenAIEmbeddingsModel, OpenAIEmbeddingsResult
+from src.infrastructure.llm.resource.openai.embeddings import AsyncOpenAIEmbeddingsClient, OpenAIEmbeddingsModel, OpenAIEmbeddingsResult
 
 class LLMTxt2VecClient:
     def __init__(self) -> None:
