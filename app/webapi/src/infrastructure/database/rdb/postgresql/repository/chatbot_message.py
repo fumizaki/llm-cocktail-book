@@ -56,6 +56,23 @@ class ChatbotMessageRepositoryImpl(ChatbotMessageRepository):
         )
         rows: Sequence[Row[Tuple[ChatbotMessageTable]]] = result.all()
         return [self.to_entity(row[0]) for row in rows]
+    
+
+    def get_latest_list_exclude_deleted(self, chatbot_id: str, limit: int) -> list[ChatbotMessage]:
+        result = self._session.execute(
+            select(
+                ChatbotMessageTable
+            )
+            .filter(
+                ChatbotMessageTable.chatbot_id == chatbot_id,
+                ChatbotMessageTable.deleted_at == None
+            )
+            .order_by(ChatbotMessageTable.created_at.desc())
+            .limit(limit)
+        )
+        rows: Sequence[Row[Tuple[ChatbotMessageTable]]] = result.all()
+        return [self.to_entity(row[0]) for row in rows]
+    
 
 
     def create(self, entity: ChatbotMessage) -> ChatbotMessage:

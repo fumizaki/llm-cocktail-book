@@ -11,6 +11,10 @@ class ChatbotMessageRepository(ABC):
     @abstractmethod
     def get_all_exclude_deleted(self, chat_id: str) -> list[ChatbotMessage]:
         raise NotImplementedError
+    
+    @abstractmethod
+    def get_latest_list_exclude_deleted(self, chatbot_id: str, limit: int) -> list[ChatbotMessage]:
+        raise NotImplementedError
 
     @abstractmethod
     def create(self, entity: ChatbotMessage) -> ChatbotMessage:
