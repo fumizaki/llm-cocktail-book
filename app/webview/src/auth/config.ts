@@ -5,6 +5,9 @@ import { refreshAction } from "@/server-actions/auth/refresh";
 import type { AuthToken } from "@/domain/schema";
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
+	pages: {
+		signIn: "/auth/signin",
+	},
 	providers: [
 		Credentials({
 			credentials: {

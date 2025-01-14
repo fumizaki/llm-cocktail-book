@@ -10,7 +10,7 @@ export default middleware((req) => {
 
 export const config = {
 	matcher: [
-		// `/api`, `auth/signup`, `auth/signup/verify`, `api/auth/signin`、`/_next/static`、`/_next/image`、`/favicon.ico` で始まらない任意のパス
-		"/((?!api|_next/static|auth/signup|auth/signup/verify|api/auth/signin|_next/image|favicon.ico).*)",
+		// `/api`, `auth/signup`, `auth/signup/verify`, `auth/signin`、`/_next/static`、`/_next/image`、`/favicon.ico` で始まらない任意のパス
+		"/((?!api|_next/static|auth/signup|auth/signup/verify|auth/signin|_next/image|favicon.ico).*)",
 	],
 };
