@@ -1,7 +1,9 @@
+import Link from "next/link";
 import { Page, PageHeader, PageTitle, PageSection } from "@/components/page";
 import { Suspense } from "react";
 import { ChatbotCardList } from "@/components/chatbot/card/chatbot-card-list";
 import { getAllAction } from "@/server-actions/chatbot/get-all";
+
 
 export default async function Chatbot() {
 	const state = await getAllAction();
@@ -10,6 +12,7 @@ export default async function Chatbot() {
 		<Page>
 			<PageHeader>
 				<PageTitle title={"Chatbot"} />
+				<Link href={'/chatbot/new'}>Create</Link>
 			</PageHeader>
 			<PageSection id={"chatbot"}>
 				<Suspense key={"chatbot"} fallback={<p>loading...</p>}>

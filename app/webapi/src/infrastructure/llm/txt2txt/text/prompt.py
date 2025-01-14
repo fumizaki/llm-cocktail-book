@@ -1,4 +1,7 @@
-PROMPT = """\
+from typing import Optional
+from .model import Language
+
+GENERAL_PROMPT = """\
 # Steps
 
 1. Carefully analyze the text.
@@ -6,5 +9,9 @@ PROMPT = """\
 
 """
 
-def build_text_prompt() -> str:
-    return PROMPT
+def build_text_prompt(lang: Optional[Language]) -> str:
+    prompt = ''
+    if lang is None:
+        prompt += GENERAL_PROMPT
+    
+    return prompt

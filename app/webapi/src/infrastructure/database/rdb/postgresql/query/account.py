@@ -18,7 +18,7 @@ class AccountQueryImpl(AccountQuery):
         account = (
             self._session.query(AccountTable)
             .options(selectinload(AccountTable.secret))
-            .filter(AccountTable.email == email, AccountTable.deleted_at == None)
+            .filter(AccountTable.email == email, AccountTable.email_verified != None, AccountTable.deleted_at == None)
             .one()
         )
 

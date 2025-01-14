@@ -56,6 +56,8 @@ class OAuthSignupUsecase:
                 to_add=[params.email],
                 content=build_signup_request_content(verification_token)
             )
+
+            self.tx.commit()
             
             return
         

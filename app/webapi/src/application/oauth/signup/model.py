@@ -4,5 +4,5 @@ from src.application.core import CoreModel
 class OAuthSignupModel(CoreModel):
     email: str
     password: str
-    redirect_url: Optional[str] = '/'
+    redirect_url: Optional[str] = 'http://localhost:3000'
 

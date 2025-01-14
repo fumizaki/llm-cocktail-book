@@ -32,7 +32,7 @@ class ChatbotMessageUsecase:
     async def create_exec(self, params: CreateChatbotMessageModel) -> ChatbotMessage:
         try:
             # コンテキストとして履歴を取得
-            context_in_db: AggChatbot = self.chatbot_message_repository.get_latest_list_exclude_deleted(params.chatbot_id, 6)
+            context_in_db: list[ChatbotMessage] = self.chatbot_message_repository.get_latest_list_exclude_deleted(params.chatbot_id, 6)
 
             # DBへ保存
             user_chatbot_message_in_db = self.chatbot_message_repository.create(ChatbotMessage(
@@ -46,7 +46,7 @@ class ChatbotMessageUsecase:
                 Txt2TxtModel(
                     meta=params.meta,
                     prompt=user_chatbot_message_in_db.content,
-                    context=[Txt2TxtLLMMessage(prompt=message.content, role=message.role) for message in context_in_db.messages]
+                    context=[Txt2TxtLLMMessage(prompt=message.content, role=message.role) for message in context_in_db]
                 )
             )
             

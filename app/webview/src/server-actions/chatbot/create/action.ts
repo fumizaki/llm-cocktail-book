@@ -15,11 +15,16 @@ export async function createAction(
 
 	// formDataを変換する
 	const params = parseFormDataToObject<NewChatbot>(formData);
-	const validatedParams = insertChatbot.safeParse(params);
-	if (!validatedParams.success) {
+	const validatedFields = insertChatbot.safeParse(params);
+	
+	if (!validatedFields.success) {
+		// const fieldErrors = validatedFields.error.flatten().fieldErrors;
+		// Object.entries(fieldErrors).forEach(([fieldName, errors]) => {
+		// 	// 
+		// });
 		return {
 			...prevState,
-			validationErrors: validatedParams.error.issues
+			validationErrors: validatedFields.error.issues
 				?.map((issue) => issue.message)
 				?.join("\n"),
 		};

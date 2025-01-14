@@ -21,7 +21,7 @@ class Txt2TxtLLMMessage(BaseModel):
 class Txt2TxtLLM(str, Enum):
     OPENAI = 'openai'
     # TODO: GOOGLE = 'google'
-    # TODO: ANTHROPIC = 'anthropic'
+    ANTHROPIC = 'anthropic'
 
 
 class GenerationMode(str, Enum):

@@ -1,6 +1,7 @@
 "use server";
 
 import type { VerifyActionState } from "./type";
+import { redirect } from "next/navigation";
 
 export async function verifyAction(
 	key: string | string[] | undefined,
@@ -13,7 +14,5 @@ export async function verifyAction(
 		throw new Error("Error get all chatbot: " + res.statusText);
 	}
 
-	return {
-		data: await res.json(),
-	};
+	redirect(await res.json())
 }

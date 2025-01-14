@@ -35,11 +35,12 @@ export const CreateChatbotMessageForm = ({ chatbotId }: Props) => {
 					name={"meta.llm"}
 					defaultValue={state.meta.llm}
 				>
-					<SelectTrigger className="w-[180px]">
+					<SelectTrigger className="w-[120px]">
 						<SelectValue placeholder="LLM" />
 					</SelectTrigger>
 					<SelectContent>
 						<SelectItem value="openai">OpenAI</SelectItem>
+						<SelectItem value="anthropic">Anthropic</SelectItem>
 					</SelectContent>
 				</Select>
 				<Select
@@ -47,7 +48,7 @@ export const CreateChatbotMessageForm = ({ chatbotId }: Props) => {
 					name={"meta.mode"}
 					defaultValue={state.meta.mode}
 				>
-					<SelectTrigger className="w-[180px]">
+					<SelectTrigger className="w-[120px]">
 						<SelectValue placeholder="Mode" />
 					</SelectTrigger>
 					<SelectContent>

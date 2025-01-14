@@ -25,7 +25,7 @@ async def oauth_signup(form: OAuthSignupModel, usecase: OAuthSignupUsecase = Dep
 @router.get("/oauth/signup/verify")
 async def oauth_verify(key: str, usecase: OAuthSignupUsecase = Depends(implement_oauth_signup_usecase)):
     result = usecase.verify_exec(key)
-    return RedirectResponse(result)
+    return result
 
 
 @router.post("/oauth/signin")
