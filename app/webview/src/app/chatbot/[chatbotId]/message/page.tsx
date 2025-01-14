@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { Page, PageHeader, PageTitle, PageSection } from "@/components/page";
+import { LinkButton } from "@/components/ui/link-button";
 import { Suspense } from "react";
 import { getAllAction } from "@/server-actions/chatbot-message/get-all";
 import { ChatbotMessageCardList } from "@/components/chatbot/card/chatbot-message-card-list";
@@ -15,7 +15,7 @@ export default async function ChatbotMessage({
 		<Page>
 			<PageHeader>
 				<PageTitle title={state.data.title} />
-				<Link href={'/chatbot'}>List</Link>
+				<LinkButton href={'/chatbot'}>List</LinkButton>
 			</PageHeader>
 			<PageSection id={"chatbot-message"}>
 				<Suspense key={"chatbot-message"} fallback={<p>loading...</p>}>

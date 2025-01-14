@@ -1,5 +1,7 @@
+import { redirect } from "next/navigation";
 import { Page, PageHeader, PageTitle, PageSection } from "@/components/page";
 import { verifyAction } from "@/server-actions/auth/signup-verify/action";
+import { auth } from "@/auth/config";
 
 export default async function SignupVerify({
 	searchParams,
@@ -8,6 +10,10 @@ export default async function SignupVerify({
 }) {
 	const key = (await searchParams).key;
 	const state = await verifyAction(key);
+	const session = await auth()
+	if (session) {
+		redirect("/")
+	}
 
 	return (
 		<Page>
