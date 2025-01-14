@@ -1,7 +1,7 @@
 from fastapi import HTTPException, status
 from src.application.oauth.core import OAuthTokenModel
 from src.application.oauth.password import OAuthPasswordModel
-from src.domain.query.account import AccountQuery
+from src.application.account.query import AccountQuery
 from src.infrastructure.hashing import HashingClient
 from src.infrastructure.oauth import JWTClient, TokenType
 

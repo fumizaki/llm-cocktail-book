@@ -6,7 +6,7 @@ from src.presentation.dependency.repository.account import (
     implement_account_secret_repository
 )
 from src.application.oauth import OAuthSignupUsecase, OAuthPasswordUsecase, OAuthRefreshUsecase
-from src.domain.query.account import AccountQuery
+from src.application.account.query import AccountQuery
 from src.domain.repository.account import AccountRepository
 from src.domain.repository.account_secret import AccountSecretRepository
 from src.infrastructure.database.rdb.postgresql.session import get_rdb_session
