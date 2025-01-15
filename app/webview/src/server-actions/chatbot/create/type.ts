@@ -1,7 +1,10 @@
 import type { Chatbot, NewChatbot } from "@/domain/schema";
 
-export interface CreateActionState extends NewChatbot {
-	validationErrors?: string | Record<string, string[]>;
-	serverErrors?: string | Record<string, string[]>;
+export interface CreateActionState {
+	success?: boolean;
+	message?: string;
+	validationErrors?: Record<string, string[]>;
+	serverErrors?: string;
+	inputs?: NewChatbot;
 	data?: Chatbot;
 }

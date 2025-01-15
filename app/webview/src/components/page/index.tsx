@@ -14,7 +14,12 @@ export const PageHeader = ({
 	className,
 }: { children: React.ReactNode; className?: string }) => {
 	return (
-		<div className={cn("p-4 border-b flex-none flex gap-3 justify-between", className)}>
+		<div
+			className={cn(
+				"p-4 border-b flex-none flex gap-3 justify-between",
+				className,
+			)}
+		>
 			{children}
 		</div>
 	);

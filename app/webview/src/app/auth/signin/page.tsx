@@ -8,10 +8,10 @@ export default async function Signin({
 }: {
 	searchParams: Promise<{ [key: string]: string | undefined }>;
 }) {
-	const callbackUrl = (await searchParams).callbackUrl
-	const session = await auth()
+	const callbackUrl = (await searchParams).callbackUrl;
+	const session = await auth();
 	if (session) {
-		redirect(callbackUrl ?? "/")
+		redirect(callbackUrl ?? "/");
 	}
 	return (
 		<Page>
@@ -19,7 +19,7 @@ export default async function Signin({
 				<PageTitle title={"Sign in"} />
 			</PageHeader>
 			<PageSection id={"signin"}>
-				<SigninForm callbackUrl={callbackUrl}/>
+				<SigninForm callbackUrl={callbackUrl} />
 			</PageSection>
 		</Page>
 	);

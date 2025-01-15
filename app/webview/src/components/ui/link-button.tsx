@@ -33,17 +33,25 @@ const buttonVariants = cva(
 	},
 );
 
-
 interface Props extends VariantProps<typeof buttonVariants> {
-    className?: string;
-    href: string;
-    children: React.ReactNode;
+	className?: string;
+	href: string;
+	children: React.ReactNode;
 }
 
-export const LinkButton = ({ className, href, children, variant, size }: Props) => {
-    return (
-        <Link href={href} className={cn(buttonVariants({ variant, size, className }))}>
-            {children}
-        </Link>
-    );
+export const LinkButton = ({
+	className,
+	href,
+	children,
+	variant,
+	size,
+}: Props) => {
+	return (
+		<Link
+			href={href}
+			className={cn(buttonVariants({ variant, size, className }))}
+		>
+			{children}
+		</Link>
+	);
 };

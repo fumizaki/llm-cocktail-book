@@ -10,9 +10,9 @@ export default async function SignupVerify({
 }) {
 	const key = (await searchParams).key;
 	const state = await verifyAction(key);
-	const session = await auth()
+	const session = await auth();
 	if (session) {
-		redirect("/")
+		redirect("/");
 	}
 
 	return (

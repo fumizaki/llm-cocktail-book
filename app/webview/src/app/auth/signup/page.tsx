@@ -8,10 +8,10 @@ export default async function Signup({
 }: {
 	searchParams: Promise<{ [key: string]: string | undefined }>;
 }) {
-	const callbackUrl = (await searchParams).callbackUrl
-	const session = await auth()
+	const callbackUrl = (await searchParams).callbackUrl;
+	const session = await auth();
 	if (session) {
-		redirect(callbackUrl ?? "/")
+		redirect(callbackUrl ?? "/");
 	}
 	return (
 		<Page>

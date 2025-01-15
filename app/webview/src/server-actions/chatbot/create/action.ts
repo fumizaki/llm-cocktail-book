@@ -1,7 +1,7 @@
 "use server";
 
 import { auth } from "@/auth/config";
-// import { parseSnakeToCamel } from "@/lib/parse-case";
+import { parseSnakeToCamel } from "@/lib/parse-case";
 import { parseFormDataToObject } from "@/lib/parse-form";
 import type { NewChatbot } from "@/domain/schema";
 import { insertChatbot } from "@/domain/validation";
@@ -14,19 +14,15 @@ export async function createAction(
 	const session = await auth();
 
 	// formDataを変換する
-	const params = parseFormDataToObject<NewChatbot>(formData);
-	const validatedFields = insertChatbot.safeParse(params);
-	
+	const params = parseFormDataToObject<{ inputs: NewChatbot }>(formData);
+	const validatedFields = insertChatbot.safeParse(params.inputs);
+
 	if (!validatedFields.success) {
-		// const fieldErrors = validatedFields.error.flatten().fieldErrors;
-		// Object.entries(fieldErrors).forEach(([fieldName, errors]) => {
-		// 	// 
-		// });
 		return {
-			...prevState,
-			validationErrors: validatedFields.error.issues
-				?.map((issue) => issue.message)
-				?.join("\n"),
+			success: false,
+			message: "Validation Error",
+			validationErrors: validatedFields.error.flatten().fieldErrors,
+			inputs: params.inputs,
 		};
 	}
 	const res = await fetch(`${process.env.API_BASE_URL}/chatbot`, {
@@ -35,18 +31,20 @@ export async function createAction(
 			Authorization: `Bearer ${session?.user.authorization.accessToken}`,
 			"Content-Type": "application/json",
 		},
-		body: JSON.stringify(params),
+		body: JSON.stringify(validatedFields.data),
 	});
 
 	if (!res.ok) {
 		return {
-			...prevState,
-			serverErrors: res.statusText,
+			success: false,
+			message: "Server Error",
+			serverErrors: `[${res.status}] ${res.statusText}`,
+			inputs: params.inputs,
 		};
 	}
 
 	return {
-		title: "",
-		data: await res.json(),
+		success: true,
+		data: parseSnakeToCamel(await res.json()),
 	};
 }

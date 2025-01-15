@@ -1,14 +1,13 @@
 import type { Chatbot } from "@/domain/schema";
-import {
-	ChatbotCard,
-} from "@/components/chatbot/card/chatbot-card";
+import { ChatbotCard } from "@/components/chatbot/card/chatbot-card";
+import { getAllAction } from "@/server-actions/chatbot/get-all";
 
-type Props = {
-	values: Chatbot[];
-};
+type Props = {};
 
-export async function ChatbotCardList({ values }: Props) {
-	if (values.length <= 0) {
+export async function ChatbotCardList({}: Props) {
+	const state = await getAllAction();
+
+	if (state.data.length <= 0) {
 		return (
 			<div className="flex h-full w-96 mx-auto">
 				<p>データがありません</p>
@@ -19,7 +18,7 @@ export async function ChatbotCardList({ values }: Props) {
 		<ul
 			className={"grid grid-cols-3 justify-center items-center gap-x-5 gap-y-8"}
 		>
-			{values.map((value: Chatbot, idx: number) => {
+			{state.data.map((value: Chatbot, idx: number) => {
 				return (
 					<li
 						key={idx}
