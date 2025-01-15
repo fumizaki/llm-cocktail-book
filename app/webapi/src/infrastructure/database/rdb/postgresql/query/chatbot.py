@@ -1,20 +1,22 @@
-from sqlalchemy import select
-from sqlalchemy.orm import Session, selectinload
+from sqlalchemy.orm import Session, contains_eager
 from src.application.chatbot.message.query import ChatbotMessageQuery
 from src.domain.entity.chatbot_message import ChatbotMessage
 from src.domain.aggregate.chatbot import AggChatbot
 from src.infrastructure.database.rdb.postgresql.schema.table import (
     ChatbotTable,
+    ChatbotMessageTable
 )
 class ChatbotMessageQueryImpl(ChatbotMessageQuery):
     def __init__(self, session: Session) -> None:
         self._session = session
-
+    
     def get_agg_chatbot(self, chatbot_id: str, account_id: str) -> AggChatbot:
         chatbot = (
             self._session.query(ChatbotTable)
-            .options(selectinload(ChatbotTable.messages))
+            .join(ChatbotTable.messages, isouter=True)
+            .options(contains_eager(ChatbotTable.messages))
             .filter(ChatbotTable.id == chatbot_id, ChatbotTable.account_id == account_id, ChatbotTable.deleted_at == None)
+            .order_by(ChatbotMessageTable.created_at.asc())
             .one()
         )
 

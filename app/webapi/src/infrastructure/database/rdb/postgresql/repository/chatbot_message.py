@@ -53,6 +53,7 @@ class ChatbotMessageRepositoryImpl(ChatbotMessageRepository):
                 ChatbotMessageTable.chatbot_id == chatbot_id,
                 ChatbotMessageTable.deleted_at == None
             )
+            .order_by(ChatbotMessageTable.created_at.desc())
         )
         rows: Sequence[Row[Tuple[ChatbotMessageTable]]] = result.all()
         return [self.to_entity(row[0]) for row in rows]

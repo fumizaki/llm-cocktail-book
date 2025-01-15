@@ -59,6 +59,8 @@ class ChatbotMessageUsecase:
                     content=params.prompt
                 ))
             
+            self.tx.commit()
+            
             self.logger.info(f"Create Message with LLM")
             txt2txt = LLMTxt2TxtClient()
             res = await txt2txt.generate(
