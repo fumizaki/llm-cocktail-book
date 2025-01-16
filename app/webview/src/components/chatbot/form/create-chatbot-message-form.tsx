@@ -1,7 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useActionState, useCallback } from "react";
+import { useActionState, useEffect } from "react";
+import { useToast } from "@/hooks/use-toast";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -20,6 +21,8 @@ type Props = {
 
 export const CreateChatbotMessageForm = ({ chatbotId }: Props) => {
 	const router = useRouter();
+	const { toast } = useToast();
+
 	const [state, formAction, isPending] = useActionState(createAction, {
 		inputs: {
 			chatbotId: chatbotId,
@@ -31,15 +34,24 @@ export const CreateChatbotMessageForm = ({ chatbotId }: Props) => {
 		},
 	});
 
-	const handleSubmit = async (formData: FormData) => {
-		await formAction(formData);
+	useEffect(() => {
 		if (state.success) {
+			toast({
+				title: "Success",
+				description: "Create Message Successfully",
+			});
 			router.refresh();
+		} else if (state.success === false) {
+			toast({
+				variant: "destructive",
+				title: "Error",
+				description: "Error while Creating Message",
+			});
 		}
-	};
+	}, [state.success]);
 
 	return (
-		<form action={handleSubmit} className={"flex flex-col gap-3"}>
+		<form action={formAction} className={"flex flex-col gap-3"}>
 			<div className={"flex gap-1.5"}>
 				<Label>
 					LLM
