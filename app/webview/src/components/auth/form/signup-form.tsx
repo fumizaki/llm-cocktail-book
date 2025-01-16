@@ -9,8 +9,10 @@ type Props = {};
 
 export const SignupForm = ({}: Props) => {
 	const [state, formAction, isPending] = useActionState(signupAction, {
-		email: "",
-		password: "",
+		inputs: {
+			email: "",
+			password: "",
+		},
 	});
 
 	return (

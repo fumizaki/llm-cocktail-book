@@ -24,6 +24,10 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
 						credentials.email,
 						credentials.password,
 					);
+					if (!res.data || !res.success) {
+						console.error("ログインに失敗しました");
+						return null;
+					}
 					return {
 						email: credentials.email,
 						authorization: res.data,

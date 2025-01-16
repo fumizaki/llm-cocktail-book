@@ -23,10 +23,19 @@ export async function signinAction(
 	});
 
 	if (!res.ok) {
-		throw new Error("Error sign-in: " + res.statusText);
+		return {
+			success: false,
+			message: "Server Error",
+			serverErrors: `[${res.status}] ${res.statusText}`,
+			inputs: {
+				email: email,
+				password: password,
+			},
+		};
 	}
 
 	return {
+		success: true,
 		data: parseSnakeToCamel(await res.json()),
 	};
 }

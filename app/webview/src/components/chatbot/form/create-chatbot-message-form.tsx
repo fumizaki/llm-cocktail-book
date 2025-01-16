@@ -48,7 +48,7 @@ export const CreateChatbotMessageForm = ({ chatbotId }: Props) => {
 				description: "Error while Creating Message",
 			});
 		}
-	}, [state.success]);
+	}, [state]);
 
 	return (
 		<form action={formAction} className={"flex flex-col gap-3"}>

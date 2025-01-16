@@ -1,5 +1,6 @@
 "use server";
 
+import { redirect } from "next/navigation";
 import { parseCamelToSnake } from "@/lib/parse-case";
 import { parseFormDataToObject } from "@/lib/parse-form";
 import type { SignUpRequestParams } from "@/domain/schema";
@@ -11,14 +12,16 @@ export async function signupAction(
 	formData: FormData,
 ): Promise<SignupActionState> {
 	// formDataを変換する
-	const params = parseFormDataToObject<SignUpRequestParams>(formData);
-	const validatedParams = signUpRequest.safeParse(params);
-	if (!validatedParams.success) {
+	const params = parseFormDataToObject<{ inputs: SignUpRequestParams }>(
+		formData,
+	);
+	const validatedFields = signUpRequest.safeParse(params);
+	if (!validatedFields.success) {
 		return {
-			...prevState,
-			validationErrors: validatedParams.error.issues?.map(
-				(issue) => issue.message,
-			),
+			success: false,
+			message: "Validation Error",
+			validationErrors: validatedFields.error.flatten().fieldErrors,
+			inputs: params.inputs,
 		};
 	}
 	const res = await fetch(`${process.env.API_BASE_URL}/oauth/signup`, {
@@ -26,15 +29,17 @@ export async function signupAction(
 		headers: {
 			"Content-Type": "application/json",
 		},
-		body: JSON.stringify(params),
+		body: JSON.stringify(validatedFields.data),
 	});
 
 	if (!res.ok) {
-		throw new Error("Error sign-up: " + res.statusText);
+		return {
+			success: false,
+			message: "Server Error",
+			serverErrors: `[${res.status}] ${res.statusText}`,
+			inputs: params.inputs,
+		};
 	}
 
-	return {
-		email: "",
-		password: "",
-	};
+	redirect("/auth/signup/confirmination");
 }
