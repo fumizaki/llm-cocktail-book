@@ -16,7 +16,7 @@ export async function ChatbotCardList({}: Props) {
 	}
 	return (
 		<ul
-			className={"grid grid-cols-3 justify-center items-center gap-x-5 gap-y-8"}
+			className={"grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 justify-center items-center gap-x-5 gap-y-8"}
 		>
 			{state.data.map((value: Chatbot, idx: number) => {
 				return (

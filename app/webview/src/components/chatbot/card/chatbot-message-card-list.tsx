@@ -4,11 +4,12 @@ import { getAllAction } from "@/server-actions/chatbot-message/get-all";
 
 type Props = {
 	chatbotId: string;
-	// values: ChatbotMessage[];
 };
 
 export async function ChatbotMessageCardList({ chatbotId }: Props) {
+	
 	const state = await getAllAction(chatbotId);
+	
 	if (state.data.messages.length <= 0) {
 		return (
 			<div className="flex h-full w-96 mx-auto">

@@ -10,7 +10,7 @@ export const ChatbotCard = ({
 	return (
 		<Card
 			className={
-				"relative flex flex-col gap-1.5 bg-gradient-to-b py-3.5 pl-3.5 pr-1.5 cursor-pointer overflow-hidden"
+				"relative w-full h-36 flex flex-col gap-1.5 bg-blue-100 hover:bg-blue-300 bg-gradient-to-b py-3.5 pl-3.5 pr-1.5 cursor-pointer overflow-hidden"
 			}
 		>
 			<Link
