@@ -1,3 +1,4 @@
+import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { redirect } from "next/navigation";
@@ -26,9 +27,18 @@ export const SigninForm = ({ callbackUrl }: Props) => {
 					throw error;
 				}
 			}}
+			className={"flex flex-col gap-3"}
 		>
-			<Input type={"text"} name="email" />
-			<Input type={"password"} name="password" />
+			<Label>
+				メールアドレス
+				<Input type={"text"} name={"email"} />
+				
+			</Label>
+			<Label>
+				パスワード
+				<Input type={"password"} name={"password"} />
+				
+			</Label>
 			<Button type="submit">Sign in</Button>
 		</form>
 	);
