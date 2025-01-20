@@ -54,7 +54,7 @@ export const HeaderDropdown = ({}) => {
 			{status === "unauthenticated" && (
 				<DropdownMenuContent align="end" className={"flex flex-col gap-2 p-2"}>
 					<DropdownMenuItem className={"w-full"} asChild>
-						<Link href={`/api/auth/signin?callbackUrl=${pathname}`}>
+						<Link href={`/auth/signin?callbackUrl=${pathname}`}>
 							<LogIn className={"h-4 w-4 mr-2"} />
 							サインイン
 						</Link>
