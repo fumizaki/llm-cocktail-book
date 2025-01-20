@@ -27,8 +27,8 @@ export const CreateChatbotMessageForm = ({ chatbotId }: Props) => {
 		inputs: {
 			chatbotId: chatbotId,
 			meta: {
-				llm: "openai",
-				mode: "text",
+				resource: "openai",
+				mode: "discussion",
 			},
 			prompt: "",
 		},
@@ -56,15 +56,16 @@ export const CreateChatbotMessageForm = ({ chatbotId }: Props) => {
 				<Label>
 					LLM
 					<Select
-						key={state.inputs?.meta.llm}
-						name={"inputs.meta.llm"}
-						defaultValue={state.inputs?.meta.llm}
+						key={state.inputs?.meta.resource}
+						name={"inputs.meta.resource"}
+						defaultValue={state.inputs?.meta.resource}
 					>
 						<SelectTrigger className="w-[120px]">
-							<SelectValue placeholder="LLM" />
+							<SelectValue />
 						</SelectTrigger>
 						<SelectContent>
 							<SelectItem value="openai">OpenAI</SelectItem>
+							<SelectItem value="google">Google</SelectItem>
 							<SelectItem value="anthropic">Anthropic</SelectItem>
 						</SelectContent>
 					</Select>
@@ -80,8 +81,11 @@ export const CreateChatbotMessageForm = ({ chatbotId }: Props) => {
 							<SelectValue placeholder="Mode" />
 						</SelectTrigger>
 						<SelectContent>
-							<SelectItem value="text">Text</SelectItem>
+							<SelectItem value="discussion">Discussion</SelectItem>
 							<SelectItem value="code">Code</SelectItem>
+							<SelectItem value="prompt" disabled>Prompt</SelectItem>
+							<SelectItem value="summary" disabled>Summary</SelectItem>
+							<SelectItem value="translation" disabled>Translation</SelectItem>
 						</SelectContent>
 					</Select>
 				</Label>

@@ -53,6 +53,6 @@ export const selectChatbotMessage = z.object({
 
 export const insertChatbotMessage = z.object({
 	chatbotId: z.string().uuid(),
-	meta: z.object({ llm: z.string(), mode: z.string() }),
+	meta: z.object({ resource: z.string(), mode: z.string() }),
 	prompt: z.string().trim().min(1, { message: "1文字以上で入力してください" }),
 });

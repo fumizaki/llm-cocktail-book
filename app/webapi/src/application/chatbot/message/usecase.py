@@ -1,3 +1,4 @@
+from datetime import datetime
 from fastapi import HTTPException, status
 from .query import ChatbotMessageQuery
 from .model import CreateChatbotMessageModel
@@ -6,7 +7,7 @@ from src.domain.aggregate.chatbot import AggChatbot
 from src.domain.entity.chatbot_message import ChatbotMessage
 from src.domain.repository.chatbot_message import ChatbotMessageRepository
 from src.infrastructure.database.rdb.transaction import TransactionClient
-from src.infrastructure.llm.txt2txt import LLMTxt2TxtClient, Txt2TxtModel, Txt2TxtLLMMessageRole, Txt2TxtLLMMessage
+from src.infrastructure.llm import Txt2TxtClient, Txt2TxtModel, Txt2TxtResult, Txt2TxtMessageRole, Txt2TxtMessage
 from src.infrastructure.logging import JsonLineLoggingClient
 
 class ChatbotMessageUsecase:
@@ -55,27 +56,28 @@ class ChatbotMessageUsecase:
             # DBへ保存
             user_chatbot_message_in_db = self.chatbot_message_repository.create(ChatbotMessage(
                     chatbot_id=params.chatbot_id,
-                    role=Txt2TxtLLMMessageRole.USER,
-                    content=params.prompt
+                    role=Txt2TxtMessageRole.USER,
+                    content=params.prompt,
+                    created_at=datetime.now()
                 ))
             
-            self.tx.commit()
             
             self.logger.info(f"Create Message with LLM")
-            txt2txt = LLMTxt2TxtClient()
-            res = await txt2txt.generate(
+            txt2txt = Txt2TxtClient()
+            res: Txt2TxtResult = await txt2txt.generate(
                 Txt2TxtModel(
                     meta=params.meta,
                     prompt=user_chatbot_message_in_db.content,
-                    context=[Txt2TxtLLMMessage(prompt=message.content, role=message.role) for message in context_in_db]
+                    context=[Txt2TxtMessage(prompt=message.content, role=message.role) for message in context_in_db]
                 )
             )
             
             assistant_chatbot_message_in_db: ChatbotMessage = self.chatbot_message_repository.create(
                 ChatbotMessage(
                     chatbot_id=params.chatbot_id,
-                    role=Txt2TxtLLMMessageRole.ASSISTANT,
-                    content=res.content
+                    role=Txt2TxtMessageRole.ASSISTANT,
+                    content=res.content,
+                    created_at=datetime.now()
                 ))
             
             self.tx.commit()
