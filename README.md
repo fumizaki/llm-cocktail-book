@@ -74,6 +74,8 @@ make docker-up-dev
 
 ### 1. Chatbot
 
+One of the core features of this application is a chatbot that leverages multiple Large Language Models (LLMs) to provide an advanced natural language processing-based conversational experience. Users can select the optimal LLM according to their needs and preferences, enabling high-quality communication based on diverse expressions and contextual understanding.
+
 
 ## Deployment
 
