@@ -5,7 +5,9 @@ from .model import CreateChatbotMessageModel
 from src.application.core import Credential
 from src.domain.aggregate.chatbot import AggChatbot
 from src.domain.entity.chatbot_message import ChatbotMessage
+from src.domain.entity.llm_usage import LLMUsage
 from src.domain.repository.chatbot_message import ChatbotMessageRepository
+from src.domain.repository.llm_usage import LLMUsageRepository
 from src.infrastructure.database.rdb.transaction import TransactionClient
 from src.infrastructure.llm import Txt2TxtClient, Txt2TxtModel, Txt2TxtResult, Txt2TxtMessageRole, Txt2TxtMessage
 from src.infrastructure.logging import JsonLineLoggingClient
@@ -16,12 +18,14 @@ class ChatbotMessageUsecase:
         credential: Credential,
         tx: TransactionClient,
         chatbot_message_query: ChatbotMessageQuery,
-        chatbot_message_repository: ChatbotMessageRepository
+        chatbot_message_repository: ChatbotMessageRepository,
+        llm_usage_repository: LLMUsageRepository
     ) -> None:
         self.credential = credential
         self.tx = tx
         self.chatbot_message_query = chatbot_message_query
         self.chatbot_message_repository = chatbot_message_repository
+        self.llm_usage_repository = llm_usage_repository
         self.logger = JsonLineLoggingClient.get_logger(self.__class__.__name__)
 
 
@@ -71,6 +75,16 @@ class ChatbotMessageUsecase:
                     context=[Txt2TxtMessage(prompt=message.content, role=message.role) for message in context_in_db]
                 )
             )
+
+            self.logger.info(f"Create Usage")
+            self.llm_usage_repository.create(
+                LLMUsage(
+                    account_id=self.credential.account_id,
+                    resource=res.resource,
+                    model=res.model,
+                    task='txt2txt',
+                    usage=res.usage
+                ))
             
             assistant_chatbot_message_in_db: ChatbotMessage = self.chatbot_message_repository.create(
                 ChatbotMessage(

@@ -32,3 +32,12 @@ class ChatbotMessageTable(CoreTable):
     chatbot_id: Mapped[str] = mapped_column(String, ForeignKey('chatbot.id'))
     role: Mapped[str] = mapped_column(String, nullable=False)
     content: Mapped[str] = mapped_column(String, nullable=False)
+
+
+class LLMUsageTable(CoreTable):
+    __tablename__ = 'llm_usage'
+    account_id: Mapped[str] = mapped_column(String, ForeignKey('account.id'))
+    resource: Mapped[str] = mapped_column(String(64), nullable=False)
+    model: Mapped[str] = mapped_column(String(64), nullable=False)
+    task: Mapped[str] = mapped_column(String(64), nullable=False)
+    usage: Mapped[int] = mapped_column(Integer, nullable=False)
