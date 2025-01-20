@@ -44,6 +44,11 @@ export async function createAction(
 	}
 	return {
 		success: true,
+		inputs: {
+			chatbotId: params.inputs.chatbotId,
+			meta: params.inputs.meta,
+			prompt: ''
+		},
 		data: parseSnakeToCamel(await res.json()),
 	};
 }

@@ -6,6 +6,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import {
 	Select,
 	SelectContent,
@@ -98,14 +99,14 @@ export const CreateChatbotMessageForm = ({ chatbotId }: Props) => {
 			/>
 			<Label>
 				プロンプト
-				<Input
-					type={"text"}
+				<Textarea
+					className={'resize-none'}
 					key={state.inputs?.prompt}
 					name={"inputs.prompt"}
 					defaultValue={state.inputs?.prompt}
 					placeholder={"AIに相談"}
 				/>
-				{state.validationErrors?.title && (
+				{state.validationErrors?.prompt && (
 					<small>{state.validationErrors?.prompt}</small>
 				)}
 			</Label>
