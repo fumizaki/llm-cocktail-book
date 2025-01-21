@@ -2,9 +2,8 @@ from fastapi import Depends, Header, Query
 from src.presentation.dependency.repository.account import (
     implement_account_repository,
 )
-from src.application.core import Credential
-from src.domain.entity.account import Account
-from src.domain.repository.account import AccountRepository
+from src.application.credential import Credential
+from src.domain.account import Account, AccountRepository
 from src.infrastructure.oauth import JWTClient, AuthorizationTokenPayload, parse_bearer_token
 
 

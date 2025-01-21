@@ -1,6 +1,6 @@
 import pytest
 import bcrypt
-from src.infrastructure.hashing import HashingClient  # your_module を適切なモジュール名に修正
+from src.infrastructure.hashing import HashingClient
 
 
 SALT_STR = bcrypt.gensalt().decode() # テスト用の固定salt(str)

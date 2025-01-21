@@ -1,8 +1,7 @@
 from sqlalchemy.orm import Session
 from sqlalchemy.orm import selectinload
-from src.domain.entity.account_secret import AccountSecret
-from src.domain.aggregate.account import AccountWithSecret
-from src.application.account.query import AccountQuery
+from src.application.account import AccountQuery
+from src.domain.account import AccountWithSecret, AccountSecret
 from src.infrastructure.database.rdb.postgresql.schema.table import (
     AccountTable,
 )

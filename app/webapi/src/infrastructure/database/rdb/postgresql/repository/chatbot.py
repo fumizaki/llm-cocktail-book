@@ -1,8 +1,7 @@
 from sqlalchemy.orm import Session
 from sqlalchemy import select
 from sqlalchemy.engine.row import Row, Tuple, Sequence
-from src.domain.entity.chatbot import Chatbot
-from src.domain.repository.chatbot import ChatbotRepository
+from src.domain.chatbot import Chatbot, ChatbotRepository
 from src.infrastructure.database.rdb.postgresql.schema.table import ChatbotTable
 
 

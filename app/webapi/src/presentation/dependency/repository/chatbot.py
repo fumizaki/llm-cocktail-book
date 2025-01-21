@@ -1,7 +1,6 @@
 from fastapi import Depends
 from sqlalchemy.orm import Session
-from src.domain.repository.chatbot import ChatbotRepository
-from src.domain.repository.chatbot_message import ChatbotMessageRepository
+from src.domain.chatbot import ChatbotRepository, ChatbotMessageRepository
 from src.infrastructure.database.rdb.postgresql.repository.chatbot import ChatbotRepositoryImpl
 from src.infrastructure.database.rdb.postgresql.repository.chatbot_message import ChatbotMessageRepositoryImpl
 from src.infrastructure.database.rdb.postgresql.session import get_rdb_session

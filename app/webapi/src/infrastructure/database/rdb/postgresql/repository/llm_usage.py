@@ -1,8 +1,7 @@
 from sqlalchemy.orm import Session
 from sqlalchemy import select
 from sqlalchemy.engine.row import Row, Tuple, Sequence
-from src.domain.entity.llm_usage import LLMUsage
-from src.domain.repository.llm_usage import LLMUsageRepository
+from src.domain.llm import LLMUsage, LLMUsageRepository
 from src.infrastructure.database.rdb.postgresql.schema.table import LLMUsageTable
 
 

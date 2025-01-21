@@ -1,7 +1,6 @@
 from fastapi import Depends
 from sqlalchemy.orm import Session
-from src.domain.repository.account import AccountRepository
-from src.domain.repository.account_secret import AccountSecretRepository
+from src.domain.account import AccountRepository, AccountSecretRepository
 from src.infrastructure.database.rdb.postgresql.repository.account import AccountRepositoryImpl
 from src.infrastructure.database.rdb.postgresql.repository.account_secret import AccountSecretRepositoryImpl
 from src.infrastructure.database.rdb.postgresql.session import get_rdb_session

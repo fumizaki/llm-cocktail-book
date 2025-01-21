@@ -5,10 +5,9 @@ from src.presentation.dependency.repository.account import (
     implement_account_repository,
     implement_account_secret_repository
 )
-from src.application.account.secret import AccountSecretUsecase
-from src.application.core import Credential
-from src.domain.repository.account import AccountRepository
-from src.domain.repository.account_secret import AccountSecretRepository
+from src.application.account import AccountSecretUsecase
+from src.application.credential import Credential
+from src.domain.account import AccountRepository, AccountSecretRepository
 from src.infrastructure.database.rdb.postgresql.session import get_rdb_session
 from src.infrastructure.database.rdb.transaction import TransactionClient
 from src.infrastructure.email.resend import ResendEmailClient

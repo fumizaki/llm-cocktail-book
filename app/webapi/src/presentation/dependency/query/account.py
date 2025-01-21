@@ -1,6 +1,6 @@
 from fastapi import Depends, Header
 from sqlalchemy.orm import Session
-from src.application.account.query import AccountQuery
+from src.application.account import AccountQuery
 from src.infrastructure.database.rdb.postgresql.query.account import AccountQueryImpl
 from src.infrastructure.database.rdb.postgresql.session import get_rdb_session
 

@@ -1,4 +1,21 @@
-from .core import OAuthTokenModel as OAuthTokenModel
-from .password import OAuthPasswordModel as OAuthPasswordModel, OAuthPasswordUsecase as OAuthPasswordUsecase
-from .refresh import OAuthRefreshModel as OAuthRefreshModel, OAuthRefreshUsecase as OAuthRefreshUsecase
-from .signup import OAuthSignupModel as OAuthSignupModel, OAuthSignupUsecase as OAuthSignupUsecase
+from .model import (
+    OAuthTokenModel as OAuthTokenModel
+)
+from .oauth_password_model import (
+    OAuthPasswordModel as OAuthPasswordModel
+)
+from .oauth_password_usecase import (
+    OAuthPasswordUsecase as OAuthPasswordUsecase
+)
+from .oauth_refresh_model import (
+    OAuthRefreshModel as OAuthRefreshModel
+)
+from .oauth_refresh_usecase import (
+    OAuthRefreshUsecase as OAuthRefreshUsecase
+)
+from .oauth_signup_model import (
+    OAuthSignupModel as OAuthSignupModel
+)
+from .oauth_signup_usecase import (
+    OAuthSignupUsecase as OAuthSignupUsecase
+)

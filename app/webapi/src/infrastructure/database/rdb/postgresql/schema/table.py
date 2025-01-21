@@ -41,3 +41,23 @@ class LLMUsageTable(CoreTable):
     model: Mapped[str] = mapped_column(String(64), nullable=False)
     task: Mapped[str] = mapped_column(String(64), nullable=False)
     usage: Mapped[int] = mapped_column(Integer, nullable=False)
+
+
+class WorkflowTable(CoreTable):
+    __tablename__ = 'workflow'
+    account_id: Mapped[str] = mapped_column(String, ForeignKey('account.id'))
+    title: Mapped[str] = mapped_column(String(64), nullable=False)
+    status: Mapped[str] = mapped_column(String(64), nullable=False)
+    jobs: Mapped[list[WorkflowJobTable]] = relationship('WorkflowJobTable', viewonly=True)
+
+
+class WorkflowJobTable(CoreTable):
+    __tablename__ = 'workflow_job'
+    workflow_id: Mapped[str] = mapped_column(String, ForeignKey('workflow.id'))
+    on_success: Mapped[str] = mapped_column(String(64), nullable=True)
+    on_failure: Mapped[str] = mapped_column(String(64), nullable=True)
+    title: Mapped[str] = mapped_column(String(64), nullable=False)
+    status: Mapped[str] = mapped_column(String(64), nullable=False)
+    task: Mapped[str] = mapped_column(Text, nullable=False)
+    
+

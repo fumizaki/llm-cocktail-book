@@ -1,12 +1,11 @@
 from sqlalchemy.orm import Session, contains_eager
-from src.application.chatbot.message.query import ChatbotMessageQuery
-from src.domain.entity.chatbot_message import ChatbotMessage
-from src.domain.aggregate.chatbot import AggChatbot
+from src.application.chatbot import ChatbotQuery
+from src.domain.chatbot import AggChatbot, ChatbotMessage
 from src.infrastructure.database.rdb.postgresql.schema.table import (
     ChatbotTable,
     ChatbotMessageTable
 )
-class ChatbotMessageQueryImpl(ChatbotMessageQuery):
+class ChatbotQueryImpl(ChatbotQuery):
     def __init__(self, session: Session) -> None:
         self._session = session
     

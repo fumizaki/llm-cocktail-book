@@ -2,8 +2,7 @@ from datetime import datetime
 from sqlalchemy.orm import Session
 from sqlalchemy import select
 from sqlalchemy.engine.row import Row, Tuple
-from src.domain.entity.account import Account
-from src.domain.repository.account import AccountRepository
+from src.domain.account import Account, AccountRepository
 from src.infrastructure.database.rdb.postgresql.schema.table import AccountTable
 
 

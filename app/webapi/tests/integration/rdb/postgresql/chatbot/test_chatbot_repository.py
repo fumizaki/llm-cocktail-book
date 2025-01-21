@@ -1,6 +1,5 @@
 import pytest
-from src.domain.entity.chatbot import Chatbot
-from src.domain.repository.chatbot import ChatbotRepository
+from src.domain.chatbot import Chatbot, ChatbotRepository
 from src.infrastructure.database.rdb.postgresql.repository.chatbot import ChatbotRepositoryImpl
 
 

@@ -1,5 +1,4 @@
 from fastapi import APIRouter, status, HTTPException, Depends
-from fastapi.responses import RedirectResponse
 from src.presentation.dependency.usecase.oauth import (
     implement_oauth_signup_usecase,
     implement_oauth_password_usecase,
