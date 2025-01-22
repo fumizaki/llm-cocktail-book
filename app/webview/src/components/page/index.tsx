@@ -17,7 +17,7 @@ export const PageHeader = ({
 	return (
 		<div
 			className={cn(
-				"p-4 border-b flex-none flex gap-3 justify-between",
+				"p-4 border-b flex-none flex gap-3 items-center justify-between",
 				className,
 			)}
 		>

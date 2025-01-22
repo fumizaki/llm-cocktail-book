@@ -1,18 +1,16 @@
-import { Page, PageHeader, PageTitle, PageSection } from "@/components/page";
-import Link from "next/link";
+import { Page, PageSection } from "@/components/page";
+import { EyecatchCard } from "@/components/introduction/card/eyecatch-card";
+import { FeatureCardList } from "@/components/introduction/card/feature-card-list";
+
 
 export default function Home() {
 	return (
 		<Page>
-			<PageHeader>
-				<PageTitle title={"Welcome"} />
-			</PageHeader>
-			<PageSection id={"about"}>
-				<div>LLM Cocktail Book is ...</div>
+			<PageSection id={"eyecatch"}>
+				<EyecatchCard/>
 			</PageSection>
 			<PageSection id={"feature"}>
-				<div>01 Chatbot</div>
-				<Link href={"/chatbot"}>Click</Link>
+				<FeatureCardList/>
 			</PageSection>
 		</Page>
 	);
