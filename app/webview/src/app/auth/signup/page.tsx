@@ -19,7 +19,10 @@ export default async function Signup({
 				<PageTitle title={"Sign Up"} />
 			</PageHeader>
 			<PageSection id={"signup"}>
-				<SignupForm callbackUrl={callbackUrl} className={'w-full md:max-w-[780px] mx-auto'}/>
+				<SignupForm
+					callbackUrl={callbackUrl}
+					className={"w-full md:max-w-[780px] mx-auto"}
+				/>
 			</PageSection>
 		</Page>
 	);

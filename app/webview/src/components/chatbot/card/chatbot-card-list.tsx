@@ -4,7 +4,7 @@ import { ChatbotCard } from "@/components/chatbot/card/chatbot-card";
 import { getAllAction } from "@/server-actions/chatbot/get-all";
 
 type Props = {
-	className?: string
+	className?: string;
 };
 
 export async function ChatbotCardList({ className }: Props) {
@@ -19,7 +19,10 @@ export async function ChatbotCardList({ className }: Props) {
 	}
 	return (
 		<ul
-			className={cn("grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 justify-center items-center gap-x-5 gap-y-8", className)}
+			className={cn(
+				"grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 justify-center items-center gap-x-5 gap-y-8",
+				className,
+			)}
 		>
 			{state.data.map((value: Chatbot, idx: number) => {
 				return (

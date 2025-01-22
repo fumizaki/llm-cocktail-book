@@ -14,7 +14,6 @@ export default async function SignupVerify({
 	}
 	const key = (await searchParams).key;
 	await verifyAction(key);
-	
 
 	return (
 		<Page>

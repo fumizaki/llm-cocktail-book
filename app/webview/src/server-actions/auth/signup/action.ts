@@ -15,7 +15,7 @@ export async function signupAction(
 	const params = parseFormDataToObject<{ inputs: SignUpRequestParams }>(
 		formData,
 	);
-	
+
 	const validatedFields = signUpRequest.safeParse(params.inputs);
 	if (!validatedFields.success) {
 		return {

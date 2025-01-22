@@ -3,7 +3,14 @@ import Link from "next/link";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
+import {
+	Card,
+	CardHeader,
+	CardTitle,
+	CardDescription,
+	CardContent,
+	CardFooter,
+} from "@/components/ui/card";
 import { redirect } from "next/navigation";
 import { signIn } from "@/auth/config";
 import { AuthError } from "next-auth";
@@ -31,28 +38,37 @@ export const SigninForm = ({ callbackUrl, className }: Props) => {
 					throw error;
 				}
 			}}
-			className={cn(`w-full flex flex-col justify-center items-center`, className)}
+			className={cn(
+				`w-full flex flex-col justify-center items-center`,
+				className,
+			)}
 		>
 			<Card className={`w-full`}>
 				<CardHeader>
 					<CardTitle>Sign in To LLM Cocktail Book</CardTitle>
-					<CardDescription>Welcome back! Please sign in to continue.</CardDescription>
+					<CardDescription>
+						Welcome back! Please sign in to continue.
+					</CardDescription>
 				</CardHeader>
 				<CardContent className="flex flex-col gap-3">
 					<Label>
 						Email
 						<Input type={"text"} name={"email"} />
-						
 					</Label>
 					<Label>
 						Password
 						<Input type={"password"} name={"password"} />
-						
 					</Label>
 					<Button type="submit">Continue</Button>
 				</CardContent>
-				<CardFooter className={'flex gap-3'}>
-					<p>Don't have an account?</p><Link className={'underline'} href={`/auth/signup${callbackUrl && `?callbackUrl=${callbackUrl}`}`}>Sign up</Link>
+				<CardFooter className={"flex gap-3"}>
+					<p>Don't have an account?</p>
+					<Link
+						className={"underline"}
+						href={`/auth/signup${callbackUrl && `?callbackUrl=${callbackUrl}`}`}
+					>
+						Sign up
+					</Link>
 				</CardFooter>
 			</Card>
 		</form>

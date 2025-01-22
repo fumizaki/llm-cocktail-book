@@ -5,13 +5,12 @@ import { getAllAction } from "@/server-actions/chatbot-message/get-all";
 
 type Props = {
 	chatbotId: string;
-	className?: string
+	className?: string;
 };
 
 export async function ChatbotMessageCardList({ chatbotId, className }: Props) {
-	
 	const state = await getAllAction(chatbotId);
-	
+
 	if (state.data.messages.length <= 0) {
 		return (
 			<div className={cn("flex h-full", className)}>
@@ -22,7 +21,10 @@ export async function ChatbotMessageCardList({ chatbotId, className }: Props) {
 
 	return (
 		<ul
-			className={cn("grid grid-cols-1 justify-center items-center gap-x-5 gap-y-8", className)}
+			className={cn(
+				"grid grid-cols-1 justify-center items-center gap-x-5 gap-y-8",
+				className,
+			)}
 		>
 			{state.data.messages.map((value: ChatbotMessage, idx: number) => {
 				return (

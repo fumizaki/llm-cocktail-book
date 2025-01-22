@@ -47,7 +47,7 @@ export async function createAction(
 		inputs: {
 			chatbotId: params.inputs.chatbotId,
 			meta: params.inputs.meta,
-			prompt: ''
+			prompt: "",
 		},
 		data: parseSnakeToCamel(await res.json()),
 	};

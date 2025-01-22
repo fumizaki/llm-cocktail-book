@@ -55,7 +55,13 @@ export const CreateChatbotMessageForm = ({ chatbotId, className }: Props) => {
 	}, [state]);
 
 	return (
-		<form action={formAction} className={cn(`w-full flex flex-col justify-center items-center`, className)}>
+		<form
+			action={formAction}
+			className={cn(
+				`w-full flex flex-col justify-center items-center`,
+				className,
+			)}
+		>
 			<Card className={`w-full`}>
 				<CardHeader>
 					<CardTitle>Chat</CardTitle>
@@ -92,9 +98,15 @@ export const CreateChatbotMessageForm = ({ chatbotId, className }: Props) => {
 								<SelectContent>
 									<SelectItem value="discussion">Discussion</SelectItem>
 									<SelectItem value="code">Code</SelectItem>
-									<SelectItem value="prompt" disabled>Prompt</SelectItem>
-									<SelectItem value="summary" disabled>Summary</SelectItem>
-									<SelectItem value="translation" disabled>Translation</SelectItem>
+									<SelectItem value="prompt" disabled>
+										Prompt
+									</SelectItem>
+									<SelectItem value="summary" disabled>
+										Summary
+									</SelectItem>
+									<SelectItem value="translation" disabled>
+										Translation
+									</SelectItem>
 								</SelectContent>
 							</Select>
 						</Label>
@@ -108,7 +120,7 @@ export const CreateChatbotMessageForm = ({ chatbotId, className }: Props) => {
 					<Label>
 						プロンプト
 						<Textarea
-							className={'resize-none h-full'}
+							className={"resize-none h-full"}
 							key={state.inputs?.prompt}
 							name={"inputs.prompt"}
 							defaultValue={state.inputs?.prompt}

@@ -21,7 +21,9 @@ export const ChatbotCard = ({
 				className={"absolute inset-0 bg-blue-500/25 hover:bg-blue-700/25"}
 			/>
 			<div className={"flex flex-1 flex-col flex-start gap-1.5"}>
-				<div className={"flex gap-1.5"}><MessagesSquare/></div>
+				<div className={"flex gap-1.5"}>
+					<MessagesSquare />
+				</div>
 				<div
 					className={
 						"font-tiempos line-clamp-1 overflow-hidden text-base md:line-clamp-2 md:h-12 md:pr-2"
@@ -30,9 +32,9 @@ export const ChatbotCard = ({
 					{value.title}
 				</div>
 			</div>
-			<div className={'absolute z-20 right-2 bottom-2 flex'}>
-				<EditChatbotDialog value={value}/>
-				<DeleteChatbotDialog value={value}/>
+			<div className={"absolute z-20 right-2 bottom-2 flex"}>
+				<EditChatbotDialog value={value} />
+				<DeleteChatbotDialog value={value} />
 			</div>
 		</Card>
 	);

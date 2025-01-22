@@ -7,11 +7,17 @@ import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import {
+	Card,
+	CardHeader,
+	CardTitle,
+	CardDescription,
+	CardContent,
+} from "@/components/ui/card";
 import { createAction } from "@/server-actions/chatbot/create";
 
 type Props = {
-	className?: string
+	className?: string;
 };
 
 export const CreateChatbotForm = ({ className }: Props) => {
@@ -41,7 +47,13 @@ export const CreateChatbotForm = ({ className }: Props) => {
 	}, [state]);
 
 	return (
-		<form action={formAction} className={cn(`w-full flex flex-col justify-center items-center`, className)}>
+		<form
+			action={formAction}
+			className={cn(
+				`w-full flex flex-col justify-center items-center`,
+				className,
+			)}
+		>
 			<Card className={`w-full`}>
 				<CardHeader>
 					<CardTitle>Create Chatbot</CardTitle>

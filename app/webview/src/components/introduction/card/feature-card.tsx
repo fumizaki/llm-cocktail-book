@@ -1,6 +1,12 @@
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
+import {
+	Card,
+	CardHeader,
+	CardTitle,
+	CardDescription,
+	CardContent,
+	CardFooter,
+} from "@/components/ui/card";
 import { LinkButton } from "@/components/ui/link-button";
-
 
 type Props = {
 	title: string;
@@ -8,14 +14,14 @@ type Props = {
 	label: string;
 	href: string;
 	children: React.ReactNode;
-}
+};
 
 export const FeatureCard = ({
 	title,
 	description,
 	label,
 	href,
-	children
+	children,
 }: Props) => {
 	return (
 		<Card
@@ -24,16 +30,10 @@ export const FeatureCard = ({
 			}
 		>
 			<CardHeader>
-				<CardTitle>
-					{title}
-				</CardTitle>
-				<CardDescription>
-					{description}
-				</CardDescription>
+				<CardTitle>{title}</CardTitle>
+				<CardDescription>{description}</CardDescription>
 			</CardHeader>
-			<CardContent>
-				{children}
-			</CardContent>
+			<CardContent>{children}</CardContent>
 			<CardFooter>
 				<LinkButton href={href} className={"w-full"}>
 					{label}

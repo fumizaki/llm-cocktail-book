@@ -14,7 +14,9 @@ export default async function SignupConfirmination() {
 				<PageTitle title={"Thank you for Sign up"} />
 			</PageHeader>
 			<PageSection id={"signup-confirmination"}>
-				<SignupConfirminationCard className={'w-full md:max-w-[780px] mx-auto'}/>
+				<SignupConfirminationCard
+					className={"w-full md:max-w-[780px] mx-auto"}
+				/>
 			</PageSection>
 		</Page>
 	);

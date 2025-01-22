@@ -1,5 +1,5 @@
 import { cn } from "@/lib/style";
-import { Loader } from 'lucide-react';
+import { Loader } from "lucide-react";
 
 export const Page = ({
 	children,
@@ -48,13 +48,13 @@ export const PageSection = ({
 	);
 };
 
-export const PageLoading = ({className}: {className?: string}) => {
+export const PageLoading = ({ className }: { className?: string }) => {
 	return (
-		<div className={cn('flex items-center justify-center', className)}>
-            <Loader className={'h-8 w-8 animate-spin'} />
-        </div>
-	)
-} 
+		<div className={cn("flex items-center justify-center", className)}>
+			<Loader className={"h-8 w-8 animate-spin"} />
+		</div>
+	);
+};
 
 export const PageFooter = ({
 	children,
