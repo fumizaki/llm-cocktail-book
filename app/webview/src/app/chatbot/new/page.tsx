@@ -10,7 +10,7 @@ export default async function NewChatbot() {
 				<LinkButton href={"/chatbot"}>List</LinkButton>
 			</PageHeader>
 			<PageSection id={"new-chatbot"}>
-				<CreateChatbotForm />
+				<CreateChatbotForm className={'w-full md:max-w-[780px] mx-auto'}/>
 			</PageSection>
 		</Page>
 	);

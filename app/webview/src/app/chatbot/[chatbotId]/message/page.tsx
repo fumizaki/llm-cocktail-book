@@ -1,4 +1,4 @@
-import { Page, PageHeader, PageTitle, PageSection } from "@/components/page";
+import { Page, PageHeader, PageTitle, PageSection, PageLoading } from "@/components/page";
 import { LinkButton } from "@/components/ui/link-button";
 import { Suspense } from "react";
 import { ChatbotMessageCardList } from "@/components/chatbot/card/chatbot-message-card-list";
@@ -16,10 +16,10 @@ export default async function ChatbotMessage({
 				<LinkButton href={"/chatbot"}>List</LinkButton>
 			</PageHeader>
 			<PageSection id={"chatbot-message"}>
-				<Suspense fallback={<p>loading...</p>}>
-					<ChatbotMessageCardList chatbotId={chatbotId} />
+				<Suspense fallback={<PageLoading className={'h-80'}/>}>
+					<ChatbotMessageCardList chatbotId={chatbotId} className={'w-full md:max-w-[780px] mx-auto'}/>
 				</Suspense>
-				<CreateChatbotMessageForm chatbotId={chatbotId} />
+				<CreateChatbotMessageForm chatbotId={chatbotId}  className={'w-full md:max-w-[780px] mx-auto'}/>
 			</PageSection>
 		</Page>
 	);
