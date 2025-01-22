@@ -11,7 +11,7 @@ export async function verifyAction(
 	);
 
 	if (!res.ok) {
-		throw new Error("Error get all chatbot: " + res.statusText);
+		throw new Error("Error: " + res.statusText);
 	}
 
 	redirect(await res.json());

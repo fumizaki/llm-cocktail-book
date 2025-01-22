@@ -16,10 +16,10 @@ export default async function Signin({
 	return (
 		<Page>
 			<PageHeader>
-				<PageTitle title={"Sign in"} />
+				<PageTitle title={"Sign In"} />
 			</PageHeader>
 			<PageSection id={"signin"}>
-				<SigninForm callbackUrl={callbackUrl} />
+				<SigninForm callbackUrl={callbackUrl} className={'w-full md:max-w-[780px] mx-auto'}/>
 			</PageSection>
 		</Page>
 	);

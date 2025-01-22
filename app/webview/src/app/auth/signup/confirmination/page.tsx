@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { Page, PageHeader, PageTitle, PageSection } from "@/components/page";
-import { SignupForm } from "@/components/auth/form/signup-form";
+import { SignupConfirminationCard } from "@/components/auth/card/signup-confirmination-card";
 import { auth } from "@/auth/config";
 
 export default async function SignupConfirmination() {
@@ -11,12 +11,10 @@ export default async function SignupConfirmination() {
 	return (
 		<Page>
 			<PageHeader>
-				<PageTitle title={"Confirmination"} />
+				<PageTitle title={"Thank you for Sign up"} />
 			</PageHeader>
 			<PageSection id={"signup-confirmination"}>
-				<p>
-					ご登録ありがとうございます。認証メールを送信しました。メール内のリンクをクリックして登録を完了してください。
-				</p>
+				<SignupConfirminationCard className={'w-full md:max-w-[780px] mx-auto'}/>
 			</PageSection>
 		</Page>
 	);
