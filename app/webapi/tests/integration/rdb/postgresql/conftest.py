@@ -1,8 +1,8 @@
 from typing import Generator
 import pytest
 from sqlalchemy.orm import Session
-from src.infrastructure.database.rdb.postgresql import *
-from src.infrastructure.database.rdb.postgresql.session import session_local
+from src.infrastructure.database.rdb import *
+from src.infrastructure.database.rdb.resource.postgresql.psql_session import session_local
 
 
 @pytest.fixture

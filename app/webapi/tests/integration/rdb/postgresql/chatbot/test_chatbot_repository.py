@@ -1,6 +1,6 @@
 import pytest
 from src.domain.chatbot import Chatbot, ChatbotRepository
-from src.infrastructure.database.rdb.postgresql.repository.chatbot import ChatbotRepositoryImpl
+from src.infrastructure.database.rdb import ChatbotRepositoryImpl
 
 
 class NotImplemented(ChatbotRepository):

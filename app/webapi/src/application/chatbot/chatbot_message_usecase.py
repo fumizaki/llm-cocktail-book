@@ -5,7 +5,7 @@ from .chatbot_message_model import CreateChatbotMessageModel
 from ..credential import Credential
 from src.domain.chatbot import AggChatbot, ChatbotMessage, ChatbotMessageRepository
 from src.domain.llm import LLMUsage, LLMUsageRepository
-from src.infrastructure.database.rdb.transaction import TransactionClient
+from src.infrastructure.database.rdb import TransactionClient
 from src.infrastructure.llm import Txt2TxtClient, Txt2TxtModel, Txt2TxtResult, Txt2TxtMessageRole, Txt2TxtMessage
 from src.infrastructure.logging import JsonLineLoggingClient
 

@@ -1,8 +1,8 @@
 from datetime import datetime
 from fastapi import HTTPException, status
 from src.domain.account import Account
-from src.domain.repository.account import AccountRepository
-from src.infrastructure.database.rdb.transaction import TransactionClient
+from src.domain.account import AccountRepository
+from src.infrastructure.database.rdb import TransactionClient
 
 class AccountProfileUsecase:
     def __init__(

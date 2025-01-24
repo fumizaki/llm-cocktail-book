@@ -2,7 +2,7 @@ from fastapi import HTTPException, status
 from .chatbot_model import CreateChatbotModel
 from ..credential import Credential
 from src.domain.chatbot import Chatbot, ChatbotRepository
-from src.infrastructure.database.rdb.transaction import TransactionClient
+from src.infrastructure.database.rdb import TransactionClient
 from src.infrastructure.logging import JsonLineLoggingClient
 
 class ChatbotUsecase:

@@ -2,10 +2,10 @@ from datetime import datetime
 from fastapi import HTTPException, status
 from .oauth_signup_model import OAuthSignupModel
 from src.domain.account import Account, AccountRepository, AccountSecretRepository, AccountSecret
-from src.infrastructure.database.rdb.transaction import TransactionClient
+from src.infrastructure.database.rdb import TransactionClient
 from src.infrastructure.hashing import HashingClient
 from src.infrastructure.oauth import JWTClient
-from src.infrastructure.email import build_signup_request_content, EmailClient
+from src.infrastructure.email import build_signup_request_content, EmailClient, EmailModel
 from src.infrastructure.logging import JsonLineLoggingClient
 
 
@@ -55,10 +55,13 @@ class OAuthSignupUsecase:
 
             # メール送信
             self.logger.info(f"Sending Email for account verification: {account_in_db.email}")
-            self.mailer.send_mail(
-                to_add=[params.email],
-                content=build_signup_request_content(verification_token)
+            result = self.mailer.send(
+                EmailModel(
+                    to=[params.email],
+                    **build_signup_request_content(verification_token).model_dump()
+                )
             )
+            self.logger.info(f"Sent Email to {account_in_db.email}: {result.id}")
 
             self.tx.commit()
 

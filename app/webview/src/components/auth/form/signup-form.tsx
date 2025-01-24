@@ -26,6 +26,7 @@ export const SignupForm = ({ callbackUrl, className }: Props) => {
 		inputs: {
 			email: "",
 			password: "",
+			redirectUrl: callbackUrl
 		},
 	});
 
@@ -45,6 +46,11 @@ export const SignupForm = ({ callbackUrl, className }: Props) => {
 					</CardDescription>
 				</CardHeader>
 				<CardContent className="flex flex-col gap-3">
+					<Input
+						type={'hidden'}
+						key={state.inputs?.redirectUrl}
+						name={"inputs.redirectUrl"}
+						defaultValue={state.inputs?.redirectUrl}/>
 					<Label>
 						Email
 						<Input

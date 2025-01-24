@@ -8,13 +8,12 @@ from src.application.chatbot import ChatbotUsecase, ChatbotMessageUsecase, Chatb
 from src.application.credential import Credential
 from src.domain.chatbot import ChatbotRepository, ChatbotMessageRepository
 from src.domain.llm import LLMUsageRepository
-from src.infrastructure.database.rdb.postgresql.session import get_rdb_session
-from src.infrastructure.database.rdb.transaction import TransactionClient
+from src.infrastructure.database.rdb import get_psql_session, TransactionClient
 
 
 def implement_chatbot_usecase(
         credential: Credential = Depends(get_credential_from_header),
-        session: Session = Depends(get_rdb_session),
+        session: Session = Depends(get_psql_session),
         chatbot_repository: ChatbotRepository = Depends(implement_chatbot_repository)
     ):
     return ChatbotUsecase(
@@ -25,7 +24,7 @@ def implement_chatbot_usecase(
 
 def implement_chatbot_message_usecase(
        credential: Credential = Depends(get_credential_from_header),
-       session: Session = Depends(get_rdb_session),
+       session: Session = Depends(get_psql_session),
        chatbot_query: ChatbotQuery = Depends(implement_chatbot_query),
        chatbot_message_repository: ChatbotMessageRepository = Depends(implement_chatbot_message_repository),
        llm_usage_repository: LLMUsageRepository = Depends(implement_llm_usage_repository)

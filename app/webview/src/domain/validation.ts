@@ -18,6 +18,7 @@ export const signUpRequest = z.object({
 		.string()
 		.trim()
 		.min(8, { message: "パスワードは8文字以上で入力してください" }),
+	redirectUrl: z.string().optional()
 });
 
 export const signInRequest = signUpRequest.extend({

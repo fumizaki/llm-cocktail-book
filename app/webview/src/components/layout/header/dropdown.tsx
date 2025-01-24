@@ -1,7 +1,6 @@
 "use client";
 
 import { useSession, signOut } from "next-auth/react";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
 	DropdownMenu,
@@ -10,13 +9,14 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import { LinkButton } from "@/components/ui/link-button";
 import {
 	Settings,
 	Loader2,
-	User2,
 	LogOut,
 	LogIn,
 	UserPlus2,
+	MessagesSquare
 } from "lucide-react";
 import { HeaderTheme } from "./theme";
 
@@ -43,6 +43,12 @@ export const HeaderDropdown = ({}) => {
 			{status === "authenticated" && (
 				<DropdownMenuContent align="end" className={"flex flex-col gap-2 p-2"}>
 					<DropdownMenuItem className={"w-full"} asChild>
+						<LinkButton href={'/chatbot'}>
+							<MessagesSquare className={"h-4 w-4 mr-2"} />
+							Chatbot
+						</LinkButton>
+					</DropdownMenuItem>
+					<DropdownMenuItem className={"w-full"} asChild>
 						<Button className={"w-full"} onClick={() => signOut()}>
 							<LogOut className={"h-4 w-4 mr-2"} />
 							サインアウト
@@ -54,16 +60,16 @@ export const HeaderDropdown = ({}) => {
 			{status === "unauthenticated" && (
 				<DropdownMenuContent align="end" className={"flex flex-col gap-2 p-2"}>
 					<DropdownMenuItem className={"w-full"} asChild>
-						<Link href={`/auth/signin?callbackUrl=${pathname}`}>
+						<LinkButton href={`/auth/signin?callbackUrl=${pathname}`}>
 							<LogIn className={"h-4 w-4 mr-2"} />
 							サインイン
-						</Link>
+						</LinkButton>
 					</DropdownMenuItem>
 					<DropdownMenuItem className={"w-full"} asChild>
-						<Link href={`/auth/signup?callbackUrl=${pathname}`}>
+						<LinkButton href={`/auth/signup?callbackUrl=${pathname}`}>
 							<UserPlus2 className={"h-4 w-4 mr-2"} />
 							サインアップ
-						</Link>
+						</LinkButton>
 					</DropdownMenuItem>
 					<HeaderTheme />
 				</DropdownMenuContent>

@@ -2,9 +2,9 @@ from fastapi import HTTPException, status
 from .account_secret_model import UpdateAccountSecretModel
 from ..credential import Credential
 from src.domain.account import AccountSecret, AccountSecretRepository
-from src.infrastructure.database.rdb.transaction import TransactionClient
+from src.infrastructure.database.rdb import TransactionClient
 from src.infrastructure.hashing import HashingClient
-from src.infrastructure.email import EmailClient, build_update_password_content
+from src.infrastructure.email import EmailClient, EmailModel, build_update_password_content
 
 class AccountSecretUsecase:
     def __init__(
@@ -37,9 +37,11 @@ class AccountSecretUsecase:
                 hasher.stretching
                 )
             # メール送信
-            self.mailer.send_mail(
-                to_add=[self.credential.email],
-                content=build_update_password_content()
+            self.mailer.send(
+                params=EmailModel(
+                    to=[self.credential.email],
+                    **build_update_password_content().model_dump()
+                )
             )
 
             self.tx.commit()

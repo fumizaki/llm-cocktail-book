@@ -8,14 +8,13 @@ from src.presentation.dependency.repository.account import (
 from src.application.account import AccountSecretUsecase
 from src.application.credential import Credential
 from src.domain.account import AccountRepository, AccountSecretRepository
-from src.infrastructure.database.rdb.postgresql.session import get_rdb_session
-from src.infrastructure.database.rdb.transaction import TransactionClient
-from src.infrastructure.email.resend import ResendEmailClient
+from src.infrastructure.database.rdb import get_psql_session, TransactionClient
+from src.infrastructure.email.resource import ResendEmailClient
 
 
 
 def implement_profile_usecase(
-        session: Session = Depends(get_rdb_session),
+        session: Session = Depends(get_psql_session),
         account_repository: AccountRepository = Depends(implement_account_repository),
     ):
     return
@@ -23,7 +22,7 @@ def implement_profile_usecase(
 
 def implement_secret_usecase(
         credential: Credential = Depends(get_credential_from_header),
-        session: Session = Depends(get_rdb_session),
+        session: Session = Depends(get_psql_session),
         account_secret_repository: AccountSecretRepository = Depends(implement_account_secret_repository),
     ):
     return AccountSecretUsecase(

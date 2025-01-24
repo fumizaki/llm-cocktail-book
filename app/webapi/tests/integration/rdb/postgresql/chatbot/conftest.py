@@ -1,7 +1,7 @@
 from datetime import datetime
 import pytest
 from sqlalchemy.orm import Session
-from src.infrastructure.database.rdb.postgresql import (
+from src.infrastructure.database.rdb import (
     AccountTable,
     ChatbotTable,
     ChatbotMessageTable
