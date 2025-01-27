@@ -39,6 +39,7 @@ make docker-up-dev
 | BASE_URL | Required | setting WebView's running Url | http://webview:3000 |
 | API_BASE_URL | Required | setting WebAPI's running Url | http://webapi:8000 |
 | AUTH_SECRET | Required |  | added by auth.js >> `npx auth` |
+| NEXT_PUBLIC_STRIPE_PUBLIC_KEY | Required | setting Your' Stripe APIKey for Payment | https://stripe.com/ |
 |  |  |  |  |
 
 ##### WebAPI(`/app/webapi/.env*`)
@@ -62,7 +63,6 @@ make docker-up-dev
 | VDB_PORT | Required | setting VDB's running Port | 6333 |
 | EMAIL_FROM_ADDRESS | Required | setting Your' Email Address |  |
 | RESEND_API_KEY | Required | setting Your' Resend APIKey for Sending Email | https://resend.com/ |
-| STRIPE_API_KEY | Required | setting Your' Stripe APIKey for Payment| https://stripe.com/ |
 | STRIPE_SECRET_KEY | Required | setting Your' Stripe SecretKey for Payment | https://stripe.com/ |
 | OPENAI_API_KEY | Required | setting Your' OpenAI APIKey for LLM | https://platform.openai.com/ |
 | GOOGLE_API_KEY | Required | setting Your' Google APIKey for LLM | https://aistudio.google.com/ |
