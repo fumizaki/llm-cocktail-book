@@ -13,7 +13,7 @@ RDB_USER: str = os.environ.get("RDB_USER", 'postgres')
 RDB_PASSWORD: str = os.environ.get("RDB_PASSWORD", 'postgres')
 RDB_HOST: str = os.environ.get("RDB_HOST", 'postgres')
 RDB_PORT: str = os.environ.get("RDB_PORT", '5432')
-RDB_DB: str = os.environ.get("RDB_DB", 'postgres')
+RDB_NAME: str = os.environ.get("RDB_NAME", 'postgres')
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -72,7 +72,7 @@ def run_migrations_online() -> None:
     config.set_section_option("alembic", "DB_PASSWORD", RDB_PASSWORD)
     config.set_section_option("alembic", "DB_HOST", RDB_HOST)
     config.set_section_option("alembic", "DB_PORT", RDB_PORT)
-    config.set_section_option("alembic", "DB_NAME", RDB_DB)
+    config.set_section_option("alembic", "DB_NAME", RDB_NAME)
 
     connectable = engine_from_config(
         config.get_section(config.config_ini_section, {}),

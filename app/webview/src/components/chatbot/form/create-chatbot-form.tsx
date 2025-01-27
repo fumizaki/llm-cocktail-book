@@ -60,7 +60,7 @@ export const CreateChatbotForm = ({ className }: Props) => {
 					<CardDescription>Chat with LLM</CardDescription>
 				</CardHeader>
 				<CardContent className="flex flex-col gap-3">
-					<Label>
+					<Label className={'flex flex-col gap-1.5'}>
 						Title
 						<Input
 							type={"text"}

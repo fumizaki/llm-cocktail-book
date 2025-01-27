@@ -68,7 +68,7 @@ export const CreateChatbotMessageForm = ({ chatbotId, className }: Props) => {
 				</CardHeader>
 				<CardContent className="flex flex-col gap-3">
 					<div className={"flex gap-1.5"}>
-						<Label>
+						<Label className={'flex flex-col gap-1.5'}>
 							LLM
 							<Select
 								key={state.inputs?.meta.resource}
@@ -85,7 +85,7 @@ export const CreateChatbotMessageForm = ({ chatbotId, className }: Props) => {
 								</SelectContent>
 							</Select>
 						</Label>
-						<Label>
+						<Label className={'flex flex-col gap-1.5'}>
 							Mode
 							<Select
 								key={state.inputs?.meta.mode}
@@ -117,7 +117,7 @@ export const CreateChatbotMessageForm = ({ chatbotId, className }: Props) => {
 						name={"inputs.chatbotId"}
 						defaultValue={state.inputs?.chatbotId}
 					/>
-					<Label>
+					<Label className={'flex flex-col gap-1.5'}>
 						プロンプト
 						<Textarea
 							className={"resize-none h-full"}

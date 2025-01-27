@@ -57,3 +57,10 @@ export const insertChatbotMessage = z.object({
 	meta: z.object({ resource: z.string(), mode: z.string() }),
 	prompt: z.string().trim().min(1, { message: "1文字以上で入力してください" }),
 });
+
+// Credit
+
+export const chargeCredit = z.object({
+	amount: z.number().min(500, { message: "500円以上で入力してください" }),
+	currency: z.string().trim().min(3, { message: "3文字で入力してください" }).max(3, { message: "3文字で入力してください" })
+});

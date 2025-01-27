@@ -51,7 +51,7 @@ export const SignupForm = ({ callbackUrl, className }: Props) => {
 						key={state.inputs?.redirectUrl}
 						name={"inputs.redirectUrl"}
 						defaultValue={state.inputs?.redirectUrl}/>
-					<Label>
+					<Label className={'flex flex-col gap-1.5'}>
 						Email
 						<Input
 							type={"text"}
@@ -62,7 +62,7 @@ export const SignupForm = ({ callbackUrl, className }: Props) => {
 							<small>{state.validationErrors?.email}</small>
 						)}
 					</Label>
-					<Label>
+					<Label className={'flex flex-col gap-1.5'}>
 						Password
 						<Input
 							type={"password"}

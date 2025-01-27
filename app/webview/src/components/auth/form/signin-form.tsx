@@ -51,11 +51,11 @@ export const SigninForm = ({ callbackUrl, className }: Props) => {
 					</CardDescription>
 				</CardHeader>
 				<CardContent className="flex flex-col gap-3">
-					<Label>
+					<Label className={'flex flex-col gap-1.5'}>
 						Email
 						<Input type={"text"} name={"email"} />
 					</Label>
-					<Label>
+					<Label className={'flex flex-col gap-1.5'}>
 						Password
 						<Input type={"password"} name={"password"} />
 					</Label>
