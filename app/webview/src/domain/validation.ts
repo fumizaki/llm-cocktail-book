@@ -64,3 +64,8 @@ export const chargeCredit = z.object({
 	amount: z.number().min(500, { message: "500円以上で入力してください" }),
 	currency: z.string().trim().min(3, { message: "3文字で入力してください" }).max(3, { message: "3文字で入力してください" })
 });
+export const orderedCredit = z.object({
+	amount: z.number().min(500, { message: "500円以上で入力してください" }),
+	currency: z.string().trim().min(3, { message: "3文字で入力してください" }).max(3, { message: "3文字で入力してください" }),
+	clientSecret: z.string()
+})

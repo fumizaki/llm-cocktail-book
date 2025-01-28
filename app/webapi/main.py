@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from src.presentation.controller import (
     oauth,
     chatbot,
-    payment
+    credit,
 )
 
 
@@ -18,7 +18,7 @@ app.include_router(
 )
 
 app.include_router(
-    payment.router
+    credit.router
 )
 
 

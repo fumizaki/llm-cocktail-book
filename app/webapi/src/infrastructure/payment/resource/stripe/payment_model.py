@@ -1,20 +1,11 @@
 from pydantic import BaseModel
 
-class StripeCheckoutLineItem(BaseModel):
+class StripePaymentIntentModel(BaseModel):
     amount: int
-    title: str
-    quantity: int
-
-class StripeCheckoutSessionModel(BaseModel):
     currency: str
-    line_items: list[StripeCheckoutLineItem]
-
-
-class StripeCheckoutSessionResult(BaseModel):
-    session_id: str
-    checkout_url: str
-    status: str
-
 
 class StripePaymentIntentResult(BaseModel):
+    id: str
+    amount: int
+    currency: str
     client_secret: str

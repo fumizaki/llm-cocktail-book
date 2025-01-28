@@ -8,23 +8,23 @@ import {
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { ChargeCreditPaymentConfirminationForm } from '../form/charge-credit-payment-confirmination-form';
-
+import { OrderedCredit } from "@/domain/schema";
 
 type Props = {
-    clientSecret: string
+    value: OrderedCredit
 }
 
-export const ChargeCreditPaymentConfirminationCard = ({ clientSecret }: Props) => {
+export const ChargeCreditPaymentConfirminationCard = ({ value }: Props) => {
     // https://docs.stripe.com/payments/accept-a-payment?=&ui=elements
-    
     const stripePublicKey = process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY ?? '';
+    console.log(stripePublicKey)
     const stripePromise = loadStripe(stripePublicKey);
     
 
 
     const options = {
         // passing the client secret obtained in step 3
-        clientSecret: clientSecret,
+        clientSecret: value.clientSecret,
         // Fully customizable with appearance API.
         appearance: {},
       };
@@ -32,7 +32,7 @@ export const ChargeCreditPaymentConfirminationCard = ({ clientSecret }: Props) =
         <Card className={`w-full`}>
             <CardHeader>
                 <CardTitle>お支払い</CardTitle>
-                <CardDescription></CardDescription>
+                <CardDescription>{value.amount}({value.currency})</CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col gap-3">
                 <Elements stripe={stripePromise} options={options}>

@@ -8,7 +8,7 @@ load_dotenv()
 STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY', '')
 
 class StripeClient:
-    def __init__(self, api_key: Optional[str] = STRIPE_SECRET_KEY) -> None:
+    def __init__(self) -> None:
         self.client = StripeAPIClient(STRIPE_SECRET_KEY)
 
 '''

@@ -4,6 +4,15 @@ from .account_repository import (
 from .account_secret_repository import (
     AccountSecretRepositoryImpl as AccountSecretRepositoryImpl
 )
+from .credit_repository import (
+    CreditRepositoryImpl as CreditRepositoryImpl
+)
+from .credit_transaction_repository import (
+    CreditTransactionRepositoryImpl as CreditTransactionRepositoryImpl
+)
+from .credit_order_repository import (
+    CreditOrderRepositoryImpl as CreditOrderRepositoryImpl
+)
 from .chatbot_repository import (
     ChatbotRepositoryImpl as ChatbotRepositoryImpl
 )

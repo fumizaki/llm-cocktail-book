@@ -15,7 +15,7 @@ type Props = {
 	className?: string;
 }
 
-export const ChargeCreditPaymentConfirminationForm = ({className}: Props) => {
+export const ChargeCreditPaymentConfirminationForm = ({ className }: Props) => {
 	return (
 		<form
 			className={cn(

@@ -23,6 +23,7 @@ class CreditOrderRepositoryImpl(CreditOrderRepository):
             id=str(obj.id),
             account_id=obj.account_id,
             provider=obj.provider,
+            reference_id=obj.reference_id,
             credit=obj.credit,
             amount=obj.amount,
             currency=obj.currency,

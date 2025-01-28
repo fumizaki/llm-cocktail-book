@@ -12,11 +12,11 @@ import {
 	CardContent,
 } from "@/components/ui/card";
 import { chargeAction } from "@/server-actions/credit/charge";
-import type { ChargeCredit } from "@/domain/schema";
+import type { ChargeCredit, OrderedCredit } from "@/domain/schema";
 
 type Props = {
 	className?: string;
-	onSuccess?: ({ data }: { data?: { clientSecret: string } }) => void
+	onSuccess?: ({ data }: { data?: OrderedCredit }) => void
 	onFailure?: ({ inputs, message }: { inputs?: ChargeCredit,  message?: string }) => void
 };
 

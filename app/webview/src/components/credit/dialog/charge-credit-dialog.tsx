@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Pencil } from "lucide-react";
+import { OrderedCredit } from "@/domain/schema";
 import { ChargeCreditPaymentCheckoutForm } from "@/components/credit/form/charge-credit-payment-checkout-form";
 import { ChargeCreditPaymentConfirminationCard } from "@/components/credit/card/charge-credit-payment-confirmination-card";
 
@@ -19,10 +20,10 @@ type Props = {
 
 export const ChargeCreditDialog = ({  }: Props) => {
 	
-	const [clientSecret, setClientSecret] = useState<string | null>(null)
-	const handleSuccessChargeCredit = ({ data }: { data?: { clientSecret: string } }) => {
+	const [value, setValue] = useState<OrderedCredit | null>(null)
+	const handleSuccessChargeCredit = ({ data }: { data?: OrderedCredit }) => {
 		if (data) {
-			setClientSecret(data.clientSecret)
+			setValue(data)
 		}
 	}
 	
@@ -37,8 +38,8 @@ export const ChargeCreditDialog = ({  }: Props) => {
 				<DialogHeader>
 					<DialogTitle>Confirm Payment</DialogTitle>
 				</DialogHeader>
-				{clientSecret ? (
-					<ChargeCreditPaymentConfirminationCard clientSecret={clientSecret}/>
+				{value ? (
+					<ChargeCreditPaymentConfirminationCard value={value}/>
 				):(
 					<ChargeCreditPaymentCheckoutForm onSuccess={handleSuccessChargeCredit}/>
 				)}

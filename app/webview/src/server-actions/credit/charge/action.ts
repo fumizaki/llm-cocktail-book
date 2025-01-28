@@ -25,13 +25,13 @@ export async function chargeAction(
 			inputs: parsedParams,
 		};
 	}
-	const res = await fetch(`${process.env.API_BASE_URL}/credit`, {
+	const res = await fetch(`${process.env.API_BASE_URL}/credit/order`, {
 		method: "POST",
 		headers: {
 			Authorization: `Bearer ${session?.user.authorization.accessToken}`,
 			"Content-Type": "application/json",
 		},
-		// body: JSON.stringify(validatedFields.data),
+		body: JSON.stringify(validatedFields.data),
 	});
 
 	if (!res.ok) {
@@ -42,7 +42,6 @@ export async function chargeAction(
 			inputs: parsedParams,
 		};
 	}
-
 	return {
 		success: true,
 		data: parseSnakeToCamel(await res.json()),

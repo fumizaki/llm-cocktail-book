@@ -17,3 +17,4 @@ export type NewChatbotMessage = z.infer<typeof validation.insertChatbotMessage>;
 
 // Credit
 export type ChargeCredit = z.infer<typeof validation.chargeCredit>
+export type OrderedCredit = z.infer<typeof validation.orderedCredit>

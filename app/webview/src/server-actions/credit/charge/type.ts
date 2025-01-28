@@ -1,4 +1,4 @@
-import type { ChargeCredit } from "@/domain/schema";
+import type { ChargeCredit, OrderedCredit } from "@/domain/schema";
 
 export interface ChargeActionState {
 	success?: boolean;
@@ -6,5 +6,5 @@ export interface ChargeActionState {
 	validationErrors?: Record<string, string[]>;
 	serverErrors?: string;
 	inputs?: ChargeCredit;
-	data?: { clientSecret: string };
+	data?: OrderedCredit;
 }
