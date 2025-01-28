@@ -17,8 +17,7 @@ type Props = {
 export const ChargeCreditPaymentConfirminationCard = ({ value }: Props) => {
     // https://docs.stripe.com/payments/accept-a-payment?=&ui=elements
     const stripePublicKey = process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY ?? '';
-    console.log(stripePublicKey)
-    const stripePromise = loadStripe(stripePublicKey);
+    const stripePromise = loadStripe(stripePublicKey, { locale: 'ja' });
     
 
 
@@ -27,7 +26,8 @@ export const ChargeCreditPaymentConfirminationCard = ({ value }: Props) => {
         clientSecret: value.clientSecret,
         // Fully customizable with appearance API.
         appearance: {},
-      };
+    };
+
     return (
         <Card className={`w-full`}>
             <CardHeader>
