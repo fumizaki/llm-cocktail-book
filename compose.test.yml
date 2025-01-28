@@ -58,7 +58,7 @@ services:
       POSTGRES_USER: ${RDB_USER}
       POSTGRES_PASSWORD: ${RDB_PASSWORD}
     ports:
-      - "${RDB_PORT}:${RDB_PORT}"
+      - "127.0.0.1:${RDB_PORT}:${RDB_PORT}"
     restart: always
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${RDB_USER} -d ${RDB_NAME}"]
@@ -76,7 +76,7 @@ services:
         source: ./app/kvs/redis/test
         target: /data
     ports:
-      - "${KVS_PORT}:${KVS_PORT}"
+      - "127.0.0.1:${KVS_PORT}:${KVS_PORT}"
     restart: always
 
   vdb:
@@ -89,5 +89,5 @@ services:
         source: ./app/vdb/qdrant/test
         target: /qdrant/storage
     ports:
-      - "${VDB_PORT}:${VDB_PORT}"
+      - "127.0.0.1:${VDB_PORT}:${VDB_PORT}"
     restart: always
