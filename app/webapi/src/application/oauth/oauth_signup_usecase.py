@@ -2,6 +2,7 @@ from datetime import datetime
 from fastapi import HTTPException, status
 from .oauth_signup_model import OAuthSignupModel
 from src.domain.account import Account, AccountRepository, AccountSecretRepository, AccountSecret
+from src.domain.credit import Credit, CreditRepository
 from src.infrastructure.database.rdb import TransactionClient
 from src.infrastructure.hashing import HashingClient
 from src.infrastructure.oauth import JWTClient
@@ -18,12 +19,14 @@ class OAuthSignupUsecase:
         tx: TransactionClient,
         account_repository: AccountRepository,
         account_secret_repository: AccountSecretRepository,
+        credit_repository: CreditRepository
     ) -> None:
         self.jwt = jwt
         self.mailer = mailer
         self.tx = tx
         self.account_repository = account_repository
         self.account_secret_repository = account_secret_repository
+        self.credit_repository = credit_repository
         self.logger = JsonLineLoggingClient.get_logger(self.__class__.__name__)
 
 
@@ -45,6 +48,14 @@ class OAuthSignupUsecase:
                 salt=hasher.salt,
                 stretching=hasher.stretching
             ))
+
+            self.logger.info(f"Credit created for account: {account_in_db.id}")
+            self.credit_repository.create(Credit(
+                account_id=account_in_db.id,
+                balance=0
+            ))
+
+            
 
             self.logger.debug(f"Verification Token generated for account: {account_in_db.id}")
             verification_token = self.jwt.encode_verification_token(

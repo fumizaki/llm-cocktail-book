@@ -10,7 +10,7 @@ import {
 	DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Pencil } from "lucide-react";
+import { Plus } from "lucide-react";
 import { OrderedCredit } from "@/domain/schema";
 import { ChargeCreditPaymentCheckoutForm } from "@/components/credit/form/charge-credit-payment-checkout-form";
 import { ChargeCreditPaymentConfirminationCard } from "@/components/credit/card/charge-credit-payment-confirmination-card";
@@ -30,8 +30,8 @@ export const ChargeCreditDialog = ({  }: Props) => {
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
-				<Button size={"icon"} variant={"ghost"}>
-					<Pencil />
+				<Button>
+					<Plus />Charge
 				</Button>
 			</DialogTrigger>
 			<DialogContent>

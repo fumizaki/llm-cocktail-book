@@ -29,13 +29,13 @@ class CreditRepositoryImpl(CreditRepository):
         )
 
 
-    def get_exclude_deleted(self, id: str) -> Credit:
+    def get_exclude_deleted(self, account_id: str) -> Credit:
         result = self._session.execute(
             select(
                 CreditTable
             )
             .filter(
-                CreditTable.id == id,
+                CreditTable.account_id == account_id,
                 CreditTable.deleted_at == None
             )
         )

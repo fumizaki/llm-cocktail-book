@@ -16,6 +16,7 @@ import {
 	LogOut,
 	LogIn,
 	UserPlus2,
+	Coins,
 	MessagesSquare
 } from "lucide-react";
 import { HeaderTheme } from "./theme";
@@ -42,6 +43,12 @@ export const HeaderDropdown = ({}) => {
 			)}
 			{status === "authenticated" && (
 				<DropdownMenuContent align="end" className={"flex flex-col gap-2 p-2"}>
+					<DropdownMenuItem className={"w-full"} asChild>
+						<LinkButton href={'/credit'}>
+							<Coins className={"h-4 w-4 mr-2"} />
+							Credit
+						</LinkButton>
+					</DropdownMenuItem>
 					<DropdownMenuItem className={"w-full"} asChild>
 						<LinkButton href={'/chatbot'}>
 							<MessagesSquare className={"h-4 w-4 mr-2"} />

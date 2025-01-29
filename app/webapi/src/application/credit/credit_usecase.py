@@ -17,7 +17,7 @@ class CreditUsecase:
         self.logger = JsonLineLoggingClient.get_logger(self.__class__.__name__)
 
 
-    def get_exec(self) -> Credit:
+    async def get_exec(self) -> Credit:
         
         self.logger.info(f"Get Credit execution started for account: {self.credential.account_id}")
         try:
