@@ -6,3 +6,9 @@ from .payment_model import (
 from .payment_exception import (
     StripePaymentError as StripePaymentError
 )
+from .webhook_client import (
+    StripeWebhookClient as StripeWebhookClient
+)
+from .webhook_model import (
+    StripePaymentIntentStatusResult as StripePaymentIntentStatusResult
+)

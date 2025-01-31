@@ -64,6 +64,7 @@ make docker-up-dev
 | EMAIL_FROM_ADDRESS | Required | setting Your' Email Address |  |
 | RESEND_API_KEY | Required | setting Your' Resend APIKey for Sending Email | https://resend.com/ |
 | STRIPE_SECRET_KEY | Required | setting Your' Stripe SecretKey for Payment | https://stripe.com/ |
+| STRIPE_ENDPOINT_SECRET | Required | setting Your' Stripe Endpoint Secret for Payment | https://stripe.com/ |
 | OPENAI_API_KEY | Required | setting Your' OpenAI APIKey for LLM | https://platform.openai.com/ |
 | GOOGLE_API_KEY | Required | setting Your' Google APIKey for LLM | https://aistudio.google.com/ |
 | ANTHROPIC_API_KEY | Required | setting Your' Anthropic APIKey for LLM | https://console.anthropic.com/ |

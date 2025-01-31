@@ -3,6 +3,7 @@ from src.presentation.controller import (
     oauth,
     chatbot,
     credit,
+    webhook
 )
 
 
@@ -19,6 +20,9 @@ app.include_router(
 
 app.include_router(
     credit.router
+)
+app.include_router(
+    webhook.router
 )
 
 
