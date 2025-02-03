@@ -29,20 +29,6 @@ class CreditTransactionRepositoryImpl(CreditTransactionRepository):
             updated_at=obj.updated_at,
             deleted_at=obj.deleted_at
         )
-
-
-    def get_exclude_deleted(self, id: str) -> CreditTransaction:
-        result = self._session.execute(
-            select(
-                CreditTransactionTable
-            )
-            .filter(
-                CreditTransactionTable.id == id,
-                CreditTransactionTable.deleted_at == None
-            )
-        )
-        row: Row[Tuple[CreditTransactionTable]] = result.one()
-        return self.to_entity(row[0])
     
 
     def get_all_exclude_deleted(self, account_id: str) -> list[CreditTransaction]:

@@ -5,7 +5,7 @@ from .credit_transaction_entity import CreditTransaction
 class CreditTransactionRepository(ABC):
 
     @abstractmethod
-    def get_exclude_deleted(self, account_id: str) -> CreditTransaction:
+    def get_all_exclude_deleted(self, account_id: str) -> list[CreditTransaction]:
         raise NotImplementedError
 
     @abstractmethod
