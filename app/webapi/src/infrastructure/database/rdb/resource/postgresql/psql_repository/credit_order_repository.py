@@ -63,6 +63,20 @@ class CreditOrderRepositoryImpl(CreditOrderRepository):
         return [self.to_entity(row[0]) for row in rows]
     
 
+    def get_by_reference_exclude_deleted(self, provider: str, reference_id: str) -> CreditOrder:
+        result = self._session.execute(
+            select(
+                CreditOrderTable
+            )
+            .filter(
+                CreditOrderTable.provider == provider,
+                CreditOrderTable.reference_id == reference_id,
+                CreditOrderTable.deleted_at == None
+            )
+        )
+        row: Row[Tuple[CreditOrderTable]] = result.one()
+        return self.to_entity(row[0])
+
 
     def create(self, entity: CreditOrder) -> CreditOrder:
         obj = self.to_table(entity)
@@ -78,6 +92,24 @@ class CreditOrderRepositoryImpl(CreditOrderRepository):
             )
             .filter(
                 CreditOrderTable.id == id,
+                CreditOrderTable.deleted_at == None
+            )
+        )
+        row: Row[Tuple[CreditOrderTable]] = result.one()
+        _in_db: CreditOrderTable = row[0]
+        _in_db.status = status
+        self._session.flush()
+
+        return self.to_entity(_in_db)   
+
+    def update_by_reference(self, provider: str, reference_id: str, status: str) -> CreditOrder:
+        result = self._session.execute(
+            select(
+                CreditOrderTable
+            )
+            .filter(
+                CreditOrderTable.provider == provider,
+                CreditOrderTable.reference_id == reference_id,
                 CreditOrderTable.deleted_at == None
             )
         )

@@ -10,5 +10,5 @@ from .webhook_client import (
     StripeWebhookClient as StripeWebhookClient
 )
 from .webhook_model import (
-    StripePaymentIntentStatusResult as StripePaymentIntentStatusResult
+    StripePaymentIntentWebhook as StripePaymentIntentWebhook
 )

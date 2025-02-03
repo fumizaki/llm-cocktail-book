@@ -65,19 +65,19 @@ class CreditRepositoryImpl(CreditRepository):
         return self.to_entity(obj)
     
 
-    def update(self, id: str, balance: int) -> Credit:
+    def charge(self, account_id: str, balance: int) -> Credit:
         result = self._session.execute(
             select(
                 CreditTable
             )
             .filter(
-                CreditTable.id == id,
+                CreditTable.account_id == account_id,
                 CreditTable.deleted_at == None
             )
         )
         row: Row[Tuple[CreditTable]] = result.one()
         _in_db: CreditTable = row[0]
-        _in_db.balance = balance
+        _in_db.balance = _in_db.balance + balance
         self._session.flush()
 
         return self.to_entity(_in_db)

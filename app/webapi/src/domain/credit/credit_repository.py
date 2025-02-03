@@ -13,7 +13,7 @@ class CreditRepository(ABC):
         raise NotImplementedError
     
     @abstractmethod
-    def update(self, id: str, balance: int) -> Credit:
+    def charge(self, account_id: str, balance: int) -> Credit:
         raise NotImplementedError
 
     @abstractmethod

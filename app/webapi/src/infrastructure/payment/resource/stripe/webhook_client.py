@@ -1,38 +1,45 @@
-from typing import Optional
+from __future__ import annotations
 from fastapi import Request, HTTPException
 from .client import StripeClient
-from .webhook_model import StripePaymentIntentStatusResult
+from .webhook_model import StripePaymentIntentWebhook
 import stripe
 
 class StripeWebhookClient(StripeClient):
     def __init__(self) -> None:
         super().__init__()
 
-    async def _handle_payment_intent_succeeded(self, payment_intent: stripe.PaymentIntent) -> StripePaymentIntentStatusResult:
+
+    async def _handle_payment_intent_succeeded(self, payment_intent: stripe.PaymentIntent) -> StripePaymentIntentWebhook:
         """payment_intent.succeededイベントの処理"""
-        return StripePaymentIntentStatusResult(
+        print(payment_intent.id, payment_intent.client_secret)
+        return StripePaymentIntentWebhook(
                 id=payment_intent.id,
+                event='payment_intent',
                 client_secret=payment_intent.client_secret,
                 status='succeeded'
             )
     
-    async def _handle_payment_intent_processing(self, payment_intent: stripe.PaymentIntent) -> StripePaymentIntentStatusResult:
+    async def _handle_payment_intent_processing(self, payment_intent: stripe.PaymentIntent) -> StripePaymentIntentWebhook:
         """payment_intent.processiongイベントの処理"""
-        return StripePaymentIntentStatusResult(
+        return StripePaymentIntentWebhook(
                 id=payment_intent.id,
+                event='payment_intent',
                 client_secret=payment_intent.client_secret,
                 status='processing'
             )
 
-    async def _handle_payment_intent_payment_failed(self, payment_intent: stripe.PaymentIntent) -> StripePaymentIntentStatusResult:
+    async def _handle_payment_intent_payment_failed(self, payment_intent: stripe.PaymentIntent) -> StripePaymentIntentWebhook:
         """payment_intent.payment_failedイベントの処理"""
-        return StripePaymentIntentStatusResult(
+        return StripePaymentIntentWebhook(
                 id=payment_intent.id,
+                event='payment_intent',
                 client_secret=payment_intent.client_secret,
                 status='failed'
             )
+    
 
-    async def handle_webhook(self, request: Request) -> StripePaymentIntentStatusResult | None:
+
+    async def handle_webhook(self, request: Request) -> StripePaymentIntentWebhook | None:
         """Webhookリクエストを処理する"""
         try:
             payload = await request.body()
@@ -49,7 +56,8 @@ class StripeWebhookClient(StripeClient):
             elif event.type == "payment_intent.payment_failed":
                 return await self._handle_payment_intent_payment_failed(event.data.object)
             else:
-                print(f"Skip processing event: {event.type}")
+                # print(f"Skip processing event: {event.type}")
+                return
 
         except ValueError as e:
             # Invalid payload

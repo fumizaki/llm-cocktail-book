@@ -45,7 +45,7 @@ class CreditOrderUsecase:
                 ))
             self.logger.info(f"Create Credit Order: {credit_order_in_db.id}")
             self.tx.commit()
-            
+
             return CreateCreditOrderResult(
                 amount=result.amount,
                 currency=result.currency,
