@@ -6,11 +6,11 @@ This is Fullstack Web Application Using LLM.
 
 ### Command
 ```
-make init-app
+make init
 
 # >> Setup Environment variables in `.env*` files
 
-make docker-up-dev
+make docker-up
 ```
 
 ### Setup
