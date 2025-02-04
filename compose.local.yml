@@ -4,7 +4,7 @@ services:
     container_name: webview
     build:
       context: .
-      dockerfile: ./docker/webview/Dockerfile
+      dockerfile: ./docker/webview/Dockerfile.local
     volumes:
       - ./app/webview/src/:/webview/src/
     ports:
