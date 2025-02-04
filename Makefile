@@ -1,8 +1,8 @@
 .PHONY: init docker-up docker-down docker-free
 
 
-# デフォルトの環境を dev に設定
-ENV ?= dev
+# デフォルトの環境を local に設定
+ENV ?= local
 
 # rootの.envファイル作成
 create_root_env:
@@ -23,10 +23,10 @@ create_root_env:
 # webviewの.envファイル作成
 create_webview_env:
 	@if [ ! -f ./app/webview/.env.example ]; then \
-		echo "NODE_ENV=DEV" > ./app/webview/.env.example; \
+		echo "NODE_ENV=local" > ./app/webview/.env.example; \
 	fi
-	@if [ ! -f ./app/webview/.env.dev ]; then \
-		cp -f ./app/webview/.env.example ./app/webview/.env.dev; \
+	@if [ ! -f ./app/webview/.env.local ]; then \
+		cp -f ./app/webview/.env.example ./app/webview/.env.local; \
 	fi
 	@if [ ! -f ./app/webview/.env.test ]; then \
 		cp -f ./app/webview/.env.example ./app/webview/.env.test; \
@@ -36,10 +36,10 @@ create_webview_env:
 # webapiの.envファイル作成
 create_webapi_env:
 	@if [ ! -f ./app/webapi/.env.example ]; then \
-		echo "PYTHON_ENV=DEV" > ./app/webview/.env.example; \
+		echo "PYTHON_ENV=local" > ./app/webview/.env.example; \
 	fi
-	@if [ ! -f ./app/webapi/.env.dev ]; then \
-		cp -f ./app/webapi/.env.example ./app/webapi/.env.dev; \
+	@if [ ! -f ./app/webapi/.env.local ]; then \
+		cp -f ./app/webapi/.env.example ./app/webapi/.env.local; \
 	fi
 	@if [ ! -f ./app/webapi/.env.test ]; then \
 		cp -f ./app/webapi/.env.example ./app/webapi/.env.test; \
@@ -48,8 +48,8 @@ create_webapi_env:
 
 # rdbのdataディレクトリ作成
 create_rdb_data:
-	@if [ ! -d ./app/rdb/postgresql/dev ]; then \
-		mkdir -p ./app/rdb/postgresql/dev; \
+	@if [ ! -d ./app/rdb/postgresql/local ]; then \
+		mkdir -p ./app/rdb/postgresql/local; \
 	fi
 	@if [ ! -d ./app/rdb/postgresql/test ]; then \
 		mkdir -p ./app/rdb/postgresql/test; \
@@ -57,8 +57,8 @@ create_rdb_data:
 
 # kvsのdataディレクトリ作成
 create_kvs_data:
-	@if [ ! -d ./app/kvs/redis/dev ]; then \
-		mkdir -p ./app/kvs/redis/dev; \
+	@if [ ! -d ./app/kvs/redis/local ]; then \
+		mkdir -p ./app/kvs/redis/local; \
 	fi
 	@if [ ! -d ./app/kvs/redis/test ]; then \
 		mkdir -p ./app/kvs/redis/test; \
@@ -66,8 +66,8 @@ create_kvs_data:
 
 # vdbのdataディレクトリ作成
 create_vdb_data:
-	@if [ ! -d ./app/vdb/qdrant/dev ]; then \
-		mkdir -p ./app/rdb/qdrant/dev; \
+	@if [ ! -d ./app/vdb/qdrant/local ]; then \
+		mkdir -p ./app/rdb/qdrant/local; \
 	fi
 	@if [ ! -d ./app/vdb/qdrant/test ]; then \
 		mkdir -p ./app/rdb/qdrant/test; \

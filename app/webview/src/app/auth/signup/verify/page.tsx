@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { Page, PageHeader, PageTitle } from "@/components/page";
-import { verifyAction } from "@/server-actions/auth/signup-verify/action";
+import { verifyAction } from "@/server-actions/auth/signup-verify";
 import { auth } from "@/auth/config";
 
 export default async function SignupVerify({
