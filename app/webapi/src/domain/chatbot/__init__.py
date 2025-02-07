@@ -13,3 +13,12 @@ from .chatbot_message_entity import (
 from .chatbot_message_repository import (
     ChatbotMessageRepository as ChatbotMessageRepository
 )
+from .chatbot_vector_collection_entity import (
+    ChatbotVectorCollection as ChatbotVectorCollection
+)
+from .chatbot_vector_point_entity import (
+    ChatbotVectorPoint as ChatbotVectorPoint
+)
+from .chatbot_vector_repository import (
+    ChatbotVectorRepository as ChatbotVectorRepository
+)
