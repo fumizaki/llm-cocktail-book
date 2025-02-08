@@ -13,3 +13,9 @@ from .chatbot_message_usecase import (
 from .chatbot_message_model import (
     CreateChatbotMessageModel as CreateChatbotMessageModel
 )
+from .chatbot_index_usecase import (
+    ChatbotIndexUsecase as ChatbotIndexUsecase,
+)
+from .chatbot_index_model import (
+    CreateChatbotIndexModel as CreateChatbotIndexModel
+)

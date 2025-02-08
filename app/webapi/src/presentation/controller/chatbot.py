@@ -1,6 +1,6 @@
 from fastapi import APIRouter, status, HTTPException, Depends
-from src.presentation.dependency.usecase.chatbot import implement_chatbot_usecase, implement_chatbot_message_usecase
-from src.application.chatbot import CreateChatbotModel, ChatbotUsecase, ChatbotMessageUsecase, CreateChatbotMessageModel
+from src.presentation.dependency.usecase.chatbot import implement_chatbot_usecase, implement_chatbot_message_usecase, implement_chatbot_index_usecase
+from src.application.chatbot import CreateChatbotModel, ChatbotUsecase, ChatbotMessageUsecase, CreateChatbotMessageModel, ChatbotIndexUsecase, CreateChatbotIndexModel
 
 
 router = APIRouter()
@@ -25,3 +25,14 @@ async def get_chatbot_message(chatbot_id: str, usecase: ChatbotMessageUsecase = 
 async def create_chatbot_message(form: CreateChatbotMessageModel, usecase: ChatbotMessageUsecase = Depends(implement_chatbot_message_usecase)):
     result = await usecase.create_exec(form)
     return result
+
+@router.get("/chatbot/index/{chatbot_id}")
+async def get_chatbot_index(chatbot_id: str, usecase: ChatbotIndexUsecase = Depends(implement_chatbot_index_usecase)):
+    result = await usecase.get_all_exec(chatbot_id)
+    return result
+
+@router.post("/chatbot/index")
+async def create_chatbot_index(form: CreateChatbotIndexModel, usecase: ChatbotIndexUsecase = Depends(implement_chatbot_index_usecase)):
+    result = await usecase.create_exec(form)
+    return result
+

@@ -95,12 +95,19 @@ class ChatbotTable(Table):
     account_id: Mapped[str] = mapped_column(String, ForeignKey('account.id'))
     title: Mapped[str] = mapped_column(String(64), nullable=False)
     messages: Mapped[list[ChatbotMessageTable]] = relationship('ChatbotMessageTable', viewonly=True)
+    indexes: Mapped[list[ChatbotIndexTable]] = relationship('ChatbotIndexTable', viewonly=True)
 
 
 class ChatbotMessageTable(Table):
     __tablename__ = 'chatbot_message'
     chatbot_id: Mapped[str] = mapped_column(String, ForeignKey('chatbot.id'))
     role: Mapped[str] = mapped_column(String, nullable=False)
+    content: Mapped[str] = mapped_column(String, nullable=False)
+
+
+class ChatbotIndexTable(Table):
+    __tablename__ = 'chatbot_index'
+    chatbot_id: Mapped[str] = mapped_column(String, ForeignKey('chatbot.id'))
     content: Mapped[str] = mapped_column(String, nullable=False)
 
 

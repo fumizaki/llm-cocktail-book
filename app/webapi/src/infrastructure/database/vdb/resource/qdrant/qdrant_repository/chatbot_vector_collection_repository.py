@@ -15,15 +15,17 @@ class ChatbotVectorRepositoryImpl(ChatbotVectorRepository):
     
 
     def create(self, entity: ChatbotVectorCollection) -> ChatbotVectorCollection:
-        collection_result = self._client.create_collection(
-            collection_name=entity.chatbot_id,
-            vectors_config=VectorParams(
-                size=entity.size,
-                distance=Distance.COSINE
+
+        if not self.is_exists:
+            collection_result = self._client.create_collection(
+                collection_name=entity.chatbot_id,
+                vectors_config=VectorParams(
+                    size=entity.size,
+                    distance=Distance.COSINE
+                )
             )
-        )
-        if not collection_result:
-            raise
+            if not collection_result:
+                raise
 
         self._client.upload_points(
             collection_name=entity.chatbot_id,

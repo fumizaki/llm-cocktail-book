@@ -10,6 +10,7 @@ from .psql_table import (
     CreditOrderTable as CreditOrderTable,
     ChatbotTable as ChatbotTable,
     ChatbotMessageTable as ChatbotMessageTable,
+    ChatbotIndexTable as ChatbotIndexTable,
     LLMUsageTable as LLMUsageTable,
     WorkflowTable as WorkflowTable,
     WorkflowJobTable as WorkflowJobTable

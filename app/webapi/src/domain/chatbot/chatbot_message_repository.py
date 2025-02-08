@@ -9,7 +9,7 @@ class ChatbotMessageRepository(ABC):
         raise NotImplementedError
     
     @abstractmethod
-    def get_all_exclude_deleted(self, chat_id: str) -> list[ChatbotMessage]:
+    def get_all_exclude_deleted(self, chatbot_id: str) -> list[ChatbotMessage]:
         raise NotImplementedError
     
     @abstractmethod

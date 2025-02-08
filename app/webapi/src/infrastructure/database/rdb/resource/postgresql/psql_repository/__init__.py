@@ -19,6 +19,9 @@ from .chatbot_repository import (
 from .chatbot_message_repository import (
     ChatbotMessageRepositoryImpl as ChatbotMessageRepositoryImpl
 )
+from .chatbot_index_repository import (
+    ChatbotIndexRepositoryImpl as ChatbotIndexRepositoryImpl
+)
 from .llm_usage_repository import (
     LLMUsageRepositoryImpl as LLMUsageRepositoryImpl
 )

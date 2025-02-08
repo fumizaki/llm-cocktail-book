@@ -13,6 +13,12 @@ from .chatbot_message_entity import (
 from .chatbot_message_repository import (
     ChatbotMessageRepository as ChatbotMessageRepository
 )
+from .chatbot_index_entity import (
+    ChatbotIndex as ChatbotIndex
+)
+from .chatbot_index_repository import (
+    ChatbotIndexRepository as ChatbotIndexRepository
+)
 from .chatbot_vector_collection_entity import (
     ChatbotVectorCollection as ChatbotVectorCollection
 )
