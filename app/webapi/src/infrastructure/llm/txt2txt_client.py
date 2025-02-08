@@ -25,7 +25,7 @@ class Txt2TxtClient:
                 client = AsyncOpenAIChatClient()
                 res = await client.chat(
                     OpenAIChatModel(
-                        model='o1-mini',
+                        model='o3-mini',
                         messages=[
                             OpenAIChatMessage(content=system_prompt, role=OpenAIChatMessageRole.ASSISTANT),
                             OpenAIChatMessage(content=params.prompt, role=OpenAIChatMessageRole.USER)

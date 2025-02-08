@@ -5,12 +5,12 @@ class Txt2VecLLMMessage(BaseModel):
     prompt: str
 
 
-class Txt2VecLLM(str, Enum):
+class Txt2VecResource(str, Enum):
     OPENAI = 'openai'
     
 
 class GenerationMeta(BaseModel):
-    llm: Txt2VecLLM
+    resource: Txt2VecResource
 
 
 class VectorGenerationMeta(GenerationMeta):
@@ -23,8 +23,8 @@ class Txt2VecModel(BaseModel):
 
 
 class Txt2VecResult(BaseModel):
-    llm: Txt2VecLLM
+    resource: Txt2VecResource
     model: str
     usage: int
     chunks: list[str]
-    content: list[float]
+    vector: list[float]

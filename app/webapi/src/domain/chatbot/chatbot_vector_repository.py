@@ -6,17 +6,18 @@ class ChatbotVectorRepository(ABC):
     
 
     @abstractmethod
-    def is_exists(self, account_id: str) -> bool:
+    def is_exists(self, chatbot_id: str) -> bool:
         raise NotImplementedError
 
     @abstractmethod
-    def create_collection(self, entity: ChatbotVectorCollection) -> ChatbotVectorCollection:
-        raise NotImplementedError
-
-    @abstractmethod
-    def delete_collection(self, account_id: str) -> bool:
+    def create(self, entity: ChatbotVectorCollection) -> ChatbotVectorCollection:
         raise NotImplementedError
     
     @abstractmethod
-    def upload_points(self, entity: ChatbotVectorPoint) -> ChatbotVectorPoint:
+    def update(self, chatbot_id: str, points: list[ChatbotVectorPoint]) -> bool:
         raise NotImplementedError
+
+    @abstractmethod
+    def delete(self, chatbot_id: str) -> bool:
+        raise NotImplementedError
+    

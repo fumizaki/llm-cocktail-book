@@ -1,7 +1,6 @@
 from qdrant_client import QdrantClient
 from qdrant_client.models import VectorParams, Distance, PointStruct
-from app.webapi.src.domain.chatbot.chatbot_vector_point_entity import ChatbotVectorPoint
-from src.domain.chatbot import ChatbotVectorCollection, ChatbotVectorRepository
+from src.domain.chatbot import ChatbotVectorCollection, ChatbotVectorPoint, ChatbotVectorRepository
 
 
 
@@ -11,34 +10,48 @@ class ChatbotVectorRepositoryImpl(ChatbotVectorRepository):
         self._client = qdrant
 
 
-    def is_exists(self, account_id: str) -> bool:
-        return self._client.collection_exists(account_id)
+    def is_exists(self, chatbot_id: str) -> bool:
+        return self._client.collection_exists(chatbot_id)
     
 
-    def create_collection(self, entity: ChatbotVectorCollection) -> ChatbotVectorCollection:
-        self._client.create_collection(
-            collection_name=entity.account_id,
+    def create(self, entity: ChatbotVectorCollection) -> ChatbotVectorCollection:
+        collection_result = self._client.create_collection(
+            collection_name=entity.chatbot_id,
             vectors_config=VectorParams(
                 size=entity.size,
                 distance=Distance.COSINE
             )
         )
-        return entity
-    
+        if not collection_result:
+            raise
 
-    def delete_collection(self, account_id: str) -> bool:
-        return self._client.delete_collection(account_id)
-    
-
-    def upload_points(self, entity: ChatbotVectorPoint) -> ChatbotVectorPoint:
         self._client.upload_points(
-            collection_name=entity.account_id,
+            collection_name=entity.chatbot_id,
             points=[
                 PointStruct(
-                    id=idx,
-                    vector=vector,
-                    payload={"chunk": chunk}
-                ) for idx, (vector, chunk) in enumerate(zip(entity.vector, entity.chunks))
+                    id=point.id,
+                    vector=point.vector,
+                    payload={ "chunk": point.chunks }
+                ) for point in entity.points
             ]
         )
         return entity
+    
+
+    def update(self, chatbot_id: str, points: list[ChatbotVectorPoint]) -> bool:
+        self._client.upsert(
+            collection_name=chatbot_id,
+            points=[
+                PointStruct(
+                    id=point.id,
+                    vector=point.vector,
+                    payload={ "chunk": point.chunks }
+                ) for point in points
+            ]
+        )
+        return True
+    
+
+    def delete(self, chatbot_id: str) -> bool:
+        return self._client.delete_collection(chatbot_id)
+    

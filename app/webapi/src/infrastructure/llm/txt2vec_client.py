@@ -1,4 +1,4 @@
-from .txt2vec_model import Txt2VecModel, Txt2VecResult, Txt2VecLLM
+from .txt2vec_model import Txt2VecModel, Txt2VecResult, Txt2VecResource
 from .txt2vec_prompt import split_prompt
 from .resource.openai import AsyncOpenAIEmbeddingsClient, OpenAIEmbeddingsModel, OpenAIEmbeddingsResult
 
@@ -13,7 +13,7 @@ class Txt2VecClient:
 
     
             result: Txt2VecResult
-            if params.meta.llm == Txt2VecLLM.OPENAI:
+            if params.meta.resource == Txt2VecResource.OPENAI:
                 client = AsyncOpenAIEmbeddingsClient()
                 res = await client.vectorize(
                     OpenAIEmbeddingsModel(
@@ -23,7 +23,7 @@ class Txt2VecClient:
                     )
                 
                 result = Txt2VecResult(
-                    llm=Txt2VecLLM.OPENAI,
+                    resource=Txt2VecResource.OPENAI,
                     model=res.model,
                     usage=res.usage,
                     chunks=chunks,
