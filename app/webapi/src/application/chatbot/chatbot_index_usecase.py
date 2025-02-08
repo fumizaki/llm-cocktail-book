@@ -70,7 +70,7 @@ class ChatbotIndexUsecase:
 
             self.logger.info(f"Create Index")
             chatbot_index_in_db: ChatbotIndex = self.chatbot_index_repository.create(
-                ChatbotIndex(chatbot_id=params.chatbot_id, content=params.content)
+                ChatbotIndex(chatbot_id=params.chatbot_id, title=params.title, content=params.content)
                 )
             
             self.logger.info(f"Create Vector Collection")

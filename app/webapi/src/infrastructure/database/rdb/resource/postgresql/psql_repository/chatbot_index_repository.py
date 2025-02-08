@@ -22,6 +22,7 @@ class ChatbotIndexRepositoryImpl(ChatbotIndexRepository):
         return ChatbotIndex(
             id=str(obj.id),
             chatbot_id=obj.chatbot_id,
+            title=obj.title,
             content=obj.content,
             created_at=obj.created_at,
             updated_at=obj.updated_at,

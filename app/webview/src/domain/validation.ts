@@ -58,6 +58,20 @@ export const insertChatbotMessage = z.object({
 	prompt: z.string().trim().min(1, { message: "1文字以上で入力してください" }),
 });
 
+export const selectChatbotIndex = z.object({
+	id: z.string().uuid(),
+	chatbotId: z.string().uuid(),
+	title: z.string().trim().min(1, { message: "1文字以上で入力してください" }),
+	content: z.string().trim().min(1, { message: "1文字以上で入力してください" }),
+});
+
+export const insertChatbotIndex = z.object({
+	chatbotId: z.string().uuid(),
+	meta: z.object({ resource: z.string() }),
+	title: z.string().trim().min(1, { message: "1文字以上で入力してください" }),
+	content: z.string().trim().min(1, { message: "1文字以上で入力してください" }),
+});
+
 // Credit
 export const selectCredit = z.object({
 	id: z.string().uuid(),

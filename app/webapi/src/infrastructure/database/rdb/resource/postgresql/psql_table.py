@@ -108,6 +108,7 @@ class ChatbotMessageTable(Table):
 class ChatbotIndexTable(Table):
     __tablename__ = 'chatbot_index'
     chatbot_id: Mapped[str] = mapped_column(String, ForeignKey('chatbot.id'))
+    title: Mapped[str] = mapped_column(String, nullable=False)
     content: Mapped[str] = mapped_column(String, nullable=False)
 
 

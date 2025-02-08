@@ -4,6 +4,8 @@ import { MessagesSquare } from "lucide-react";
 import type { Chatbot } from "@/domain/schema";
 import { EditChatbotDialog } from "@/components/chatbot/dialog/edit-chatbot-dialog";
 import { DeleteChatbotDialog } from "@/components/chatbot/dialog/delete-chatbot-dialog";
+import { LinkButton } from "@/components/ui/link-button";
+import { BookPlus } from "lucide-react";
 
 export const ChatbotCard = ({
 	value,
@@ -31,6 +33,11 @@ export const ChatbotCard = ({
 				>
 					{value.title}
 				</div>
+			</div>
+			<div className={"absolute z-20 left-2 bottom-2 flex"}>
+				<LinkButton href={`/chatbot/${value.id}/index`} variant={'ghost'} size={'icon'}>
+					<BookPlus/>
+				</LinkButton>
 			</div>
 			<div className={"absolute z-20 right-2 bottom-2 flex"}>
 				<EditChatbotDialog value={value} />

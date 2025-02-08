@@ -14,6 +14,8 @@ export type Chatbot = z.infer<typeof validation.selectChatbot>;
 export type NewChatbot = z.infer<typeof validation.insertChatbot>;
 export type ChatbotMessage = z.infer<typeof validation.selectChatbotMessage>;
 export type NewChatbotMessage = z.infer<typeof validation.insertChatbotMessage>;
+export type ChatbotIndex = z.infer<typeof validation.selectChatbotIndex>;
+export type NewChatbotIndex = z.infer<typeof validation.insertChatbotIndex>;
 
 // Credit
 export type Credit = z.infer<typeof validation.selectCredit>
