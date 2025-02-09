@@ -76,7 +76,7 @@ class ChatbotIndexUsecase:
             self.logger.info(f"Create Vector Collection")
             self.chatbot_vector_repository.create(
                 ChatbotVectorCollection(
-                    chatbot_id=chatbot_index_in_db.id,
+                    chatbot_index_id=chatbot_index_in_db.id,
                     size=len(res.vector),
                     points=[ChatbotVectorPoint(chunks=res.chunks, vector=res.vector)]
                 )

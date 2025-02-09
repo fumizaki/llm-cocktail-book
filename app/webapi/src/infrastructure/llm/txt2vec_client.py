@@ -11,13 +11,13 @@ class Txt2VecClient:
         try:
             chunks = split_prompt(params.prompt)
 
-    
+            print(params)
             result: Txt2VecResult
             if params.meta.resource == Txt2VecResource.OPENAI:
                 client = AsyncOpenAIEmbeddingsClient()
                 res = await client.vectorize(
                     OpenAIEmbeddingsModel(
-                        input=chunks,
+                        prompt=chunks,
                         model='text-embedding-3-small'
                         )
                     )

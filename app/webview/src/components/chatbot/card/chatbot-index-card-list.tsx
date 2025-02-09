@@ -1,6 +1,6 @@
 import { cn } from "@/lib/style";
 import type { ChatbotIndex } from "@/domain/schema";
-import { ChatbotCard } from "@/components/chatbot/card/chatbot-card";
+import { ChatbotIndexCard } from "@/components/chatbot/card/chatbot-index-card";
 import { getAllAction } from "@/server-actions/chatbot-index/get-all";
 
 type Props = {
@@ -33,7 +33,7 @@ export async function ChatbotIndexCardList({ chatbotId, className }: Props) {
 							"w-full group relative flex justify-center items-center "
 						}
 					>
-						<></>
+						<ChatbotIndexCard value={value}/>
 					</li>
 				);
 			})}

@@ -25,7 +25,7 @@ export async function createAction(
 		};
 	}
 
-	const res = await fetch(`${process.env.API_BASE_URL}/chatbot/Index`, {
+	const res = await fetch(`${process.env.API_BASE_URL}/chatbot/index`, {
 		method: "POST",
 		headers: {
 			Authorization: `Bearer ${session?.user.authorization.accessToken}`,
@@ -47,6 +47,7 @@ export async function createAction(
 		inputs: {
 			chatbotId: params.inputs.chatbotId,
 			meta: params.inputs.meta,
+			title: "",
 			content: "",
 		},
 		data: parseSnakeToCamel(await res.json()),

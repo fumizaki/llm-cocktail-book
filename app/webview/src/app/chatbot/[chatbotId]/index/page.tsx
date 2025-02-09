@@ -18,7 +18,7 @@ export default async function ChatbotIndex({
 		<Page>
 			<PageHeader>
 				<PageTitle title={"Chatbot"} />
-				<LinkButton href={"/chatbot"}>List</LinkButton>
+				<LinkButton href={`/chatbot/${chatbotId}/index/new`}>New</LinkButton>
 			</PageHeader>
 			<PageSection id={"chatbot-index"}>
 				<Suspense fallback={<PageLoading className={"h-80"} />}>
