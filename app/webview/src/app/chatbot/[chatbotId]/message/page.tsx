@@ -19,7 +19,10 @@ export default async function ChatbotMessage({
 		<Page>
 			<PageHeader>
 				<PageTitle title={"Chatbot"} />
-				<LinkButton href={"/chatbot"}>List</LinkButton>
+				<div className={'flex gap-3'}>
+					<LinkButton href={"/chatbot"}>List</LinkButton>
+					<LinkButton href={`/chatbot/${chatbotId}/index`}>Index</LinkButton>
+				</div>
 			</PageHeader>
 			<PageSection id={"chatbot-message"}>
 				<Suspense fallback={<PageLoading className={"h-80"} />}>

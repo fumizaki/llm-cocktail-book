@@ -14,7 +14,7 @@ export default async function Chatbot() {
 		<Page>
 			<PageHeader>
 				<PageTitle title={"Chatbot"} />
-				<LinkButton href={"/chatbot/new"}>Create</LinkButton>
+				<LinkButton href={"/chatbot/new"}>New</LinkButton>
 			</PageHeader>
 			<PageSection id={"chatbot"}>
 				<Suspense key={"chatbot"} fallback={<PageLoading className={"h-80"} />}>
