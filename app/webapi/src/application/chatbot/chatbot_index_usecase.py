@@ -51,7 +51,7 @@ class ChatbotIndexUsecase:
 
             self.logger.info(f"Create Vector with LLM")
             txt2vec = Txt2VecClient()
-            res : Txt2VecResult = await txt2vec.generate(
+            txt2vec_res : Txt2VecResult = await txt2vec.generate(
                 Txt2VecModel(
                     meta=params.meta,
                     prompt=prompt
@@ -62,10 +62,10 @@ class ChatbotIndexUsecase:
             self.llm_usage_repository.create(
                 LLMUsage(
                     account_id=self.credential.account_id,
-                    resource=res.resource,
-                    model=res.model,
+                    resource=txt2vec_res.resource,
+                    model=txt2vec_res.model,
                     task='txt2vec',
-                    usage=res.usage
+                    usage=txt2vec_res.usage
                 ))
 
             self.logger.info(f"Create Index")
@@ -76,9 +76,9 @@ class ChatbotIndexUsecase:
             self.logger.info(f"Create Vector Collection")
             self.chatbot_vector_repository.create(
                 ChatbotVectorCollection(
-                    chatbot_index_id=chatbot_index_in_db.id,
-                    size=len(res.vector),
-                    points=[ChatbotVectorPoint(chunks=res.chunks, vector=res.vector)]
+                    chatbot_id=params.chatbot_id,
+                    size=len(txt2vec_res.vector),
+                    points=[ChatbotVectorPoint(id=chatbot_index_in_db.id, chunks=txt2vec_res.chunks, vector=txt2vec_res.vector)]
                 )
             )
 

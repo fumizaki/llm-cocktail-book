@@ -16,6 +16,14 @@ async def create_chatbot(form: CreateChatbotModel, usecase: ChatbotUsecase = Dep
     result = await usecase.create_exec(form)
     return result
 
+@router.patch("/chatbot")
+async def update_chatbot():
+    pass
+
+@router.delete("/chatbot")
+async def delete_chatbot():
+    pass
+
 @router.get("/chatbot/message/{chatbot_id}")
 async def get_chatbot_message(chatbot_id: str, usecase: ChatbotMessageUsecase = Depends(implement_chatbot_message_usecase)):
     result = await usecase.get_all_exec(chatbot_id)
@@ -27,7 +35,7 @@ async def create_chatbot_message(form: CreateChatbotMessageModel, usecase: Chatb
     return result
 
 @router.get("/chatbot/index/{chatbot_id}")
-async def get_chatbot_index(chatbot_id: str, usecase: ChatbotIndexUsecase = Depends(implement_chatbot_index_usecase)):
+async def get_all_chatbot_index(chatbot_id: str, usecase: ChatbotIndexUsecase = Depends(implement_chatbot_index_usecase)):
     result = await usecase.get_all_exec(chatbot_id)
     return result
 
@@ -36,3 +44,10 @@ async def create_chatbot_index(form: CreateChatbotIndexModel, usecase: ChatbotIn
     result = await usecase.create_exec(form)
     return result
 
+@router.patch("/chatbot/index")
+async def update_chatbot_index():
+    pass
+
+@router.delete("/chatbot/index")
+async def delete_chatbot_index():
+    pass

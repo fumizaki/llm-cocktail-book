@@ -65,16 +65,16 @@ create_kvs_data:
 	fi
 
 # vdbのdataディレクトリ作成
-create_vdb_data:
-	@if [ ! -d ./app/vdb/qdrant/local ]; then \
-		mkdir -p ./app/rdb/qdrant/local; \
+create_vector_data:
+	@if [ ! -d ./app/vector/qdrant/local ]; then \
+		mkdir -p ./app/vector/qdrant/local; \
 	fi
-	@if [ ! -d ./app/vdb/qdrant/test ]; then \
-		mkdir -p ./app/rdb/qdrant/test; \
+	@if [ ! -d ./app/vector/qdrant/test ]; then \
+		mkdir -p ./app/vector/qdrant/test; \
 	fi
 
 # 初期セットアップコマンド
-init: create_root_env create_webapi_env create_webview_env create_rdb_data create_kvs_data create_vdb_data
+init: create_root_env create_webapi_env create_webview_env create_rdb_data create_kvs_data create_vector_data
 
 # Dockerコンテナ起動
 docker-up:

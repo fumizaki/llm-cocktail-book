@@ -3,10 +3,24 @@ from fastapi import HTTPException, status
 from .chatbot_query import ChatbotQuery
 from .chatbot_message_model import CreateChatbotMessageModel
 from ..credential import Credential
-from src.domain.chatbot import AggChatbot, ChatbotMessage, ChatbotMessageRepository
+from src.domain.chatbot import (
+    AggChatbot,
+    ChatbotMessage,
+    ChatbotMessageRepository,
+    ChatbotVectorRepository
+)
 from src.domain.llm import LLMUsage, LLMUsageRepository
 from src.infrastructure.database.rdb import TransactionClient
-from src.infrastructure.llm import Txt2TxtClient, Txt2TxtModel, Txt2TxtResult, Txt2TxtMessageRole, Txt2TxtMessage
+from src.infrastructure.llm import (
+    Txt2TxtClient,
+    Txt2TxtModel,
+    Txt2TxtResult,
+    Txt2TxtMessageRole,
+    Txt2TxtMessage,
+    Txt2VecClient,
+    Txt2VecModel,
+    Txt2VecResult
+)
 from src.infrastructure.logging import JsonLineLoggingClient
 
 class ChatbotMessageUsecase:
@@ -16,12 +30,14 @@ class ChatbotMessageUsecase:
         tx: TransactionClient,
         chatbot_query: ChatbotQuery,
         chatbot_message_repository: ChatbotMessageRepository,
+        chatbot_vector_repository: ChatbotVectorRepository,
         llm_usage_repository: LLMUsageRepository
     ) -> None:
         self.credential = credential
         self.tx = tx
         self.chatbot_query = chatbot_query
         self.chatbot_message_repository = chatbot_message_repository
+        self.chatbot_vector_repository = chatbot_vector_repository
         self.llm_usage_repository = llm_usage_repository
         self.logger = JsonLineLoggingClient.get_logger(self.__class__.__name__)
 
@@ -53,22 +69,55 @@ class ChatbotMessageUsecase:
             # コンテキストとして履歴を取得
             context_in_db: list[ChatbotMessage] = self.chatbot_message_repository.get_latest_list_exclude_deleted(params.chatbot_id, 6)
 
+            prompt = params.prompt
             self.logger.info(f"Create Message with prompt")
             # DBへ保存
-            user_chatbot_message_in_db = self.chatbot_message_repository.create(ChatbotMessage(
+            self.chatbot_message_repository.create(ChatbotMessage(
                     chatbot_id=params.chatbot_id,
                     role=Txt2TxtMessageRole.USER,
-                    content=params.prompt,
+                    content=prompt,
                     created_at=datetime.now()
                 ))
             
-            
+
+            if self.chatbot_vector_repository.is_exists(params.chatbot_id):
+                txt2vec = Txt2VecClient()
+                txt2vec_result: Txt2VecResult = await txt2vec.generate(
+                    Txt2VecModel(
+                        meta={'resource': 'openai'},
+                        prompt=prompt
+                    )
+                )
+
+                self.llm_usage_repository.create(
+                    LLMUsage(
+                        account_id=self.credential.account_id,
+                        resource=txt2vec_result.resource,
+                        model=txt2vec_result.model,
+                        task='txt2vec',
+                        usage=txt2vec_result.usage
+                    )
+                )
+
+                vector_points = self.chatbot_vector_repository.search(
+                    chatbot_id=params.chatbot_id,
+                    vector=txt2vec_result.vector,
+                    top_k=4
+                )
+                reference = "\n".join(["\n".join([chunk for chunk in point.chunks]) for point in vector_points])
+
+                prompt = f"""\
+                {prompt}
+                事前知識だけではなく、提供された以下のコンテキストも使用してクエリに回答してください。\
+                {reference}
+                """
+                
             self.logger.info(f"Create Message with LLM")
             txt2txt = Txt2TxtClient()
             res: Txt2TxtResult = await txt2txt.generate(
                 Txt2TxtModel(
                     meta=params.meta,
-                    prompt=user_chatbot_message_in_db.content,
+                    prompt=prompt,
                     context=[Txt2TxtMessage(prompt=message.content, role=message.role) for message in context_in_db]
                 )
             )

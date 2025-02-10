@@ -79,15 +79,15 @@ services:
       - "127.0.0.1:${KVS_PORT}:${KVS_PORT}"
     restart: always
 
-  vdb:
-    container_name: vdb
+  vector:
+    container_name: vector
     build:
       context: .
-      dockerfile: ./docker/vdb/Dockerfile
+      dockerfile: ./docker/vector/Dockerfile
     volumes:
       - type: bind
-        source: ./app/vdb/qdrant/test
+        source: ./app/vector/qdrant/test
         target: /qdrant/storage
     ports:
-      - "127.0.0.1:${VDB_PORT}:${VDB_PORT}"
+      - "127.0.0.1:${VECTOR_PORT}:${VECTOR_PORT}"
     restart: always

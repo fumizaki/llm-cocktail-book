@@ -1,4 +1,3 @@
-from typing import Type, Optional
 from .client import (
     AsyncAnthropicClient,
 )
@@ -18,7 +17,7 @@ class AsyncAnthropicChatClient(AsyncAnthropicClient):
     async def chat(self, params: AnthropicChatModel) -> AnthropicChatResult:
         try:
             res = await self.client.messages.create(
-                max_tokens=1024,
+                max_tokens=8192,
                 model=params.model,
                 messages=params.messages,
             )

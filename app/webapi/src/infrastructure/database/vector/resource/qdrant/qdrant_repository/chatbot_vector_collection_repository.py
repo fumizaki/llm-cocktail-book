@@ -10,15 +10,15 @@ class ChatbotVectorRepositoryImpl(ChatbotVectorRepository):
         self._client = qdrant
 
 
-    def is_exists(self, chatbot_index_id: str) -> bool:
-        return self._client.collection_exists(chatbot_index_id)
+    def is_exists(self, chatbot_id: str) -> bool:
+        return self._client.collection_exists(chatbot_id)
     
 
     def create(self, entity: ChatbotVectorCollection) -> ChatbotVectorCollection:
 
-        if not self.is_exists(entity.chatbot_index_id):
+        if not self.is_exists(entity.chatbot_id):
             collection_result = self._client.create_collection(
-                collection_name=entity.chatbot_index_id,
+                collection_name=entity.chatbot_id,
                 vectors_config=VectorParams(
                     size=entity.size,
                     distance=Distance.COSINE
@@ -27,8 +27,9 @@ class ChatbotVectorRepositoryImpl(ChatbotVectorRepository):
             if not collection_result:
                 raise
 
+        print(entity.points)
         self._client.upload_points(
-            collection_name=entity.chatbot_index_id,
+            collection_name=entity.chatbot_id,
             points=[
                 PointStruct(
                     id=point.id,
@@ -40,9 +41,9 @@ class ChatbotVectorRepositoryImpl(ChatbotVectorRepository):
         return entity
     
 
-    def update(self, chatbot_index_id: str, points: list[ChatbotVectorPoint]) -> bool:
+    def update(self, chatbot_id: str, points: list[ChatbotVectorPoint]) -> bool:
         self._client.upsert(
-            collection_name=chatbot_index_id,
+            collection_name=chatbot_id,
             points=[
                 PointStruct(
                     id=point.id,
@@ -54,20 +55,20 @@ class ChatbotVectorRepositoryImpl(ChatbotVectorRepository):
         return True
     
 
-    def delete(self, chatbot_index_id: str) -> bool:
-        return self._client.delete_collection(chatbot_index_id)
+    def delete(self, chatbot_id: str) -> bool:
+        return self._client.delete_collection(chatbot_id)
     
 
-    def search(self, chatbot_index_id: str, vector: list[float], top_k: int) -> list[ChatbotVectorPoint]:
+    def search(self, chatbot_id: str, vector: list[float], top_k: int) -> list[ChatbotVectorPoint]:
         res: list[ScoredPoint] = self._client.search(
-            collection_name=chatbot_index_id,
+            collection_name=chatbot_id,
             query_vector=vector,
             limit=top_k
         )
         return [
             ChatbotVectorPoint(
                 id=p.id,
-                vector=p.vector,
+                vector=vector,
                 chunks=p.payload['chunk']
             ) for p in res
         ]

@@ -28,7 +28,7 @@ make docker-up
 | RDB_PASSWORD | Required | setting RDB's Password | rdb |
 | RDB_PORT | Required | setting RDB's running Port | 5432 |
 | KVS_PORT | Required | setting KVS's running Port | 6379 |
-| VDB_PORT | Required | setting VDB's running Port | 6333 |
+| VECTOR_PORT | Required | setting Vector's running Port | 6333 |
 |  |  |  |  |
 
 ##### WebView(`/app/webview/.env*`)
@@ -59,8 +59,8 @@ make docker-up
 | RDB_PORT | Required | setting RDB's running Port | 5432 |
 | KVS_HOST | Required | setting KVS's Host | kvs |
 | KVS_PORT | Required | setting KVS's running Port | 6379 |
-| VDB_HOST | Required | setting VDB's Host | vdb |
-| VDB_PORT | Required | setting VDB's running Port | 6333 |
+| VECTOR_HOST | Required | setting Vector's Host | vector |
+| VECTOR_PORT | Required | setting Vector's running Port | 6333 |
 | EMAIL_FROM_ADDRESS | Required | setting Your' Email Address |  |
 | RESEND_API_KEY | Required | setting Your' Resend APIKey for Sending Email | https://resend.com/ |
 | STRIPE_SECRET_KEY | Required | setting Your' Stripe SecretKey for Payment | https://stripe.com/ |

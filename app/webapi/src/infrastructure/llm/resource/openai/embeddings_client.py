@@ -16,7 +16,6 @@ class AsyncOpenAIEmbeddingsClient(AsyncOpenAIClient):
                 input=params.prompt,
                 model=params.model
             )
-        
         return OpenAIEmbeddingsResult(
             model=res.model,
             usage=res.usage.prompt_tokens,

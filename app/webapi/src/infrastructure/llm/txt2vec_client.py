@@ -11,7 +11,6 @@ class Txt2VecClient:
         try:
             chunks = split_prompt(params.prompt)
 
-            print(params)
             result: Txt2VecResult
             if params.meta.resource == Txt2VecResource.OPENAI:
                 client = AsyncOpenAIEmbeddingsClient()
@@ -30,7 +29,6 @@ class Txt2VecClient:
                     vector=res.vector
                 )
                 
-            
             return result
         except Exception as e:
             print(f"Error during embedding generation: {e}")

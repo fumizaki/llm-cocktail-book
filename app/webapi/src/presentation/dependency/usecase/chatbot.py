@@ -27,6 +27,7 @@ def implement_chatbot_message_usecase(
        session: Session = Depends(get_psql_session),
        chatbot_query: ChatbotQuery = Depends(implement_chatbot_query),
        chatbot_message_repository: ChatbotMessageRepository = Depends(implement_chatbot_message_repository),
+       chatbot_vector_repository: ChatbotVectorRepository = Depends(implement_chatbot_vector_repository),
        llm_usage_repository: LLMUsageRepository = Depends(implement_llm_usage_repository)
     ):
     return ChatbotMessageUsecase(
@@ -34,6 +35,7 @@ def implement_chatbot_message_usecase(
         TransactionClient(session),
         chatbot_query,
         chatbot_message_repository,
+        chatbot_vector_repository,
         llm_usage_repository
         )
 
