@@ -1,11 +1,11 @@
 from datetime import datetime
 from fastapi import HTTPException, status
 from .chatbot_query import ChatbotQuery
-from .chatbot_message_model import CreateChatbotMessageModel
-from ..credential import Credential
+from src.domain.account import AccountCredentialModel
 from src.domain.chatbot import (
     AggChatbot,
     ChatbotMessage,
+    CreateChatbotMessageModel,
     ChatbotMessageRepository,
     ChatbotVectorRepository
 )
@@ -26,7 +26,7 @@ from src.infrastructure.logging import JsonLineLoggingClient
 class ChatbotMessageUsecase:
     def __init__(
         self,
-        credential: Credential,
+        credential: AccountCredentialModel,
         tx: TransactionClient,
         chatbot_query: ChatbotQuery,
         chatbot_message_repository: ChatbotMessageRepository,

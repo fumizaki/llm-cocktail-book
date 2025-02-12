@@ -19,5 +19,5 @@ class AsyncOpenAIEmbeddingsClient(AsyncOpenAIClient):
         return OpenAIEmbeddingsResult(
             model=res.model,
             usage=res.usage.prompt_tokens,
-            vector=res.data[0].embedding
+            vector=[d.embedding for d in res.data]
         )

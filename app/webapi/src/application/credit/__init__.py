@@ -7,7 +7,3 @@ from .credit_transaction_usecase import (
 from .credit_order_usecase import (
     CreditOrderUsecase as CreditOrderUsecase
 )
-from .credit_order_model import (
-    CreateCreditOrderModel as CreateCreditOrderModel,
-    CreateCreditOrderResult as CreateCreditOrderResult
-)

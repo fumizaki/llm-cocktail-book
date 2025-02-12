@@ -1,14 +1,13 @@
 from fastapi import HTTPException, status
-from .chatbot_model import CreateChatbotModel
-from ..credential import Credential
-from src.domain.chatbot import Chatbot, ChatbotRepository
+from src.domain.account import AccountCredentialModel
+from src.domain.chatbot import Chatbot, CreateChatbotModel, ChatbotRepository
 from src.infrastructure.database.rdb import TransactionClient
 from src.infrastructure.logging import JsonLineLoggingClient
 
 class ChatbotUsecase:
     def __init__(
         self,
-        credential: Credential,
+        credential: AccountCredentialModel,
         tx: TransactionClient,
         chatbot_repository: ChatbotRepository,
     ) -> None:

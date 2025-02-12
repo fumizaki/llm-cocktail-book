@@ -1,7 +1,6 @@
 from fastapi import HTTPException, status
-from ..credential import Credential
-from .credit_order_model import CreateCreditOrderModel, CreateCreditOrderResult
-from src.domain.credit import CreditOrder, CreditOrderRepository
+from src.domain.account import AccountCredentialModel
+from src.domain.credit import CreditOrder, CreditOrderRepository, CreateCreditOrderModel, CreateCreditOrderResult
 from src.infrastructure.database.rdb import TransactionClient
 from src.infrastructure.payment import StripePaymentClient, StripePaymentIntentModel
 from src.infrastructure.logging import JsonLineLoggingClient
@@ -9,7 +8,7 @@ from src.infrastructure.logging import JsonLineLoggingClient
 class CreditOrderUsecase:
     def __init__(
         self,
-        credential: Credential,
+        credential: AccountCredentialModel,
         tx: TransactionClient,
         credit_order_repository: CreditOrderRepository,
     ) -> None:

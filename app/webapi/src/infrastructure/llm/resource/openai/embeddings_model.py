@@ -8,4 +8,4 @@ class OpenAIEmbeddingsModel(BaseModel):
 class OpenAIEmbeddingsResult(BaseModel):
     model: EmbeddingModel
     usage: int
-    vector: list[float]
+    vector: list[list[float]]

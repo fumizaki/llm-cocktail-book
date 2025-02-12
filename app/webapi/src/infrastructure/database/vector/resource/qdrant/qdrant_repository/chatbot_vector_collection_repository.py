@@ -27,7 +27,6 @@ class ChatbotVectorRepositoryImpl(ChatbotVectorRepository):
             if not collection_result:
                 raise
 
-        print(entity.points)
         self._client.upload_points(
             collection_name=entity.chatbot_id,
             points=[

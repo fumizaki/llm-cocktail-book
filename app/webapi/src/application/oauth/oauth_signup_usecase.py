@@ -1,6 +1,6 @@
 from datetime import datetime
 from fastapi import HTTPException, status
-from .oauth_signup_model import OAuthSignupModel
+from src.domain.oauth import OAuthSignupModel
 from src.domain.account import Account, AccountRepository, AccountSecretRepository, AccountSecret
 from src.domain.credit import Credit, CreditRepository
 from src.infrastructure.database.rdb import TransactionClient

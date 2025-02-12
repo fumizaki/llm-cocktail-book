@@ -13,6 +13,10 @@ from .credit_transaction_repository import (
 from .credit_order_entity import (
     CreditOrder as CreditOrder
 )
+from .credit_order_model import (
+    CreateCreditOrderModel as CreateCreditOrderModel,
+    CreateCreditOrderResult as CreateCreditOrderResult
+)
 from .credit_order_repository import (
     CreditOrderRepository as CreditOrderRepository
 )

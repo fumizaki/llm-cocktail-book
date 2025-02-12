@@ -1,6 +1,8 @@
 from fastapi import APIRouter, status, HTTPException, Depends, Request
 from src.presentation.dependency.usecase.credit import implement_credit_usecase, implement_credit_transaction_usecase, implement_credit_order_usecase
-from src.application.credit import CreditUsecase, CreditTransactionUsecase, CreditOrderUsecase, CreateCreditOrderModel
+from src.application.credit import CreditUsecase, CreditTransactionUsecase, CreditOrderUsecase
+from src.domain.credit import CreateCreditOrderModel
+
 
 router = APIRouter()
 

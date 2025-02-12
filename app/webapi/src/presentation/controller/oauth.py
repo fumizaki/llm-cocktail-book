@@ -6,10 +6,12 @@ from src.presentation.dependency.usecase.oauth import (
 )
 from src.application.oauth import (
     OAuthSignupUsecase,
-    OAuthSignupModel,
     OAuthPasswordUsecase,
+    OAuthRefreshUsecase
+)
+from src.domain.oauth import (
+    OAuthSignupModel,
     OAuthPasswordModel,
-    OAuthRefreshUsecase,
     OAuthRefreshModel
 )
 

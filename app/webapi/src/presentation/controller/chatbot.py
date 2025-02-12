@@ -1,7 +1,7 @@
 from fastapi import APIRouter, status, HTTPException, Depends
 from src.presentation.dependency.usecase.chatbot import implement_chatbot_usecase, implement_chatbot_message_usecase, implement_chatbot_index_usecase
-from src.application.chatbot import CreateChatbotModel, ChatbotUsecase, ChatbotMessageUsecase, CreateChatbotMessageModel, ChatbotIndexUsecase, CreateChatbotIndexModel
-
+from src.application.chatbot import ChatbotUsecase, ChatbotMessageUsecase, ChatbotIndexUsecase
+from src.domain.chatbot import CreateChatbotModel, CreateChatbotMessageModel, CreateChatbotIndexModel
 
 router = APIRouter()
 

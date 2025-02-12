@@ -4,6 +4,9 @@ from .account_entity import (
 from .account_repository import (
     AccountRepository as AccountRepository
 )
+from .account_credential_model import (
+    AccountCredentialModel as AccountCredentialModel
+)
 from .account_aggregate import (
     AccountWithSecret as AccountWithSecret
 )
@@ -12,4 +15,7 @@ from .account_secret_entity import (
 )
 from .account_secret_repository import (
     AccountSecretRepository as AccountSecretRepository
+)
+from .account_secret_model import (
+    UpdateAccountSecretModel as UpdateAccountSecretModel
 )

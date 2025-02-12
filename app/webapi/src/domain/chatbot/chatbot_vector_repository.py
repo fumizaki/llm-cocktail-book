@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
-from .chatbot_vector_collection_entity import ChatbotVectorCollection
-from .chatbot_vector_point_entity import ChatbotVectorPoint
+from .chatbot_vector_collection_model import ChatbotVectorCollection
+from .chatbot_vector_point_model import ChatbotVectorPoint
 
 
 class ChatbotVectorRepository(ABC):

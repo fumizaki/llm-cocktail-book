@@ -1,7 +1,6 @@
 from fastapi import HTTPException, status
-from .model import OAuthTokenModel
-from .oauth_password_model import OAuthPasswordModel
 from src.application.account import AccountQuery
+from src.domain.oauth import OAuthTokenModel, OAuthPasswordModel
 from src.infrastructure.hashing import HashingClient
 from src.infrastructure.oauth import JWTClient, TokenType
 from src.infrastructure.logging import JsonLineLoggingClient

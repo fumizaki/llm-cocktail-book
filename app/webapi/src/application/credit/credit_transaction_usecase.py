@@ -1,5 +1,5 @@
 from fastapi import HTTPException, status
-from ..credential import Credential
+from src.domain.account import AccountCredentialModel
 from src.domain.credit import CreditTransaction, CreditTransactionRepository
 from src.infrastructure.database.rdb import TransactionClient
 from src.infrastructure.logging import JsonLineLoggingClient
@@ -7,7 +7,7 @@ from src.infrastructure.logging import JsonLineLoggingClient
 class CreditTransactionUsecase:
     def __init__(
         self,
-        credential: Credential,
+        credential: AccountCredentialModel,
         tx: TransactionClient,
         credit_transaction_repository: CreditTransactionRepository,
     ) -> None:

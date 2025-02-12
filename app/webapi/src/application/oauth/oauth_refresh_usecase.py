@@ -1,6 +1,5 @@
 from fastapi import HTTPException, status
-from .model import OAuthTokenModel
-from .oauth_refresh_model import OAuthRefreshModel
+from src.domain.oauth import OAuthTokenModel, OAuthRefreshModel
 from src.domain.account import AccountRepository
 from src.infrastructure.oauth import JWTClient, TokenType, AuthorizationTokenPayload
 from src.infrastructure.logging import JsonLineLoggingClient

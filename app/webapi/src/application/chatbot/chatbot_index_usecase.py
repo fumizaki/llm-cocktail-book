@@ -1,7 +1,6 @@
 from fastapi import HTTPException, status
-from ..credential import Credential
-from .chatbot_index_model import CreateChatbotIndexModel
-from src.domain.chatbot import ChatbotIndex, ChatbotIndexRepository, ChatbotVectorRepository, ChatbotVectorCollection, ChatbotVectorPoint
+from src.domain.account import AccountCredentialModel
+from src.domain.chatbot import ChatbotIndex, CreateChatbotIndexModel, ChatbotIndexRepository, ChatbotVectorRepository, ChatbotVectorCollection, ChatbotVectorPoint
 from src.domain.llm import LLMUsage, LLMUsageRepository
 from src.infrastructure.database.rdb import TransactionClient
 from src.infrastructure.llm import Txt2VecClient, Txt2VecModel, Txt2VecResult
@@ -11,7 +10,7 @@ from src.infrastructure.logging import JsonLineLoggingClient
 class ChatbotIndexUsecase:
     def __init__(
         self,
-        credential: Credential,
+        credential: AccountCredentialModel,
         tx: TransactionClient,
         chatbot_index_repository: ChatbotIndexRepository,
         chatbot_vector_repository: ChatbotVectorRepository,

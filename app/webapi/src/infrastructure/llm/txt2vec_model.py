@@ -27,4 +27,4 @@ class Txt2VecResult(BaseModel):
     model: str
     usage: int
     chunks: list[str]
-    vector: list[float]
+    vector: list[list[float]]
