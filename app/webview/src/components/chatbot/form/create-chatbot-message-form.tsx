@@ -30,10 +30,8 @@ export const CreateChatbotMessageForm = ({ chatbotId, className }: Props) => {
 	const [state, formAction, isPending] = useActionState(createAction, {
 		inputs: {
 			chatbotId: chatbotId,
-			meta: {
-				resource: "openai",
-				mode: "discussion",
-			},
+			resource: "openai",
+			mode: "discussion",
 			prompt: "",
 		},
 	});
@@ -71,9 +69,9 @@ export const CreateChatbotMessageForm = ({ chatbotId, className }: Props) => {
 						<Label className={'flex flex-col gap-1.5'}>
 							LLM
 							<Select
-								key={state.inputs?.meta.resource}
-								name={"inputs.meta.resource"}
-								defaultValue={state.inputs?.meta.resource}
+								key={state.inputs?.resource}
+								name={"inputs.resource"}
+								defaultValue={state.inputs?.resource}
 							>
 								<SelectTrigger className="w-[120px]">
 									<SelectValue />
@@ -88,9 +86,9 @@ export const CreateChatbotMessageForm = ({ chatbotId, className }: Props) => {
 						<Label className={'flex flex-col gap-1.5'}>
 							Mode
 							<Select
-								key={state.inputs?.meta.mode}
-								name={"inputs.meta.mode"}
-								defaultValue={state.inputs?.meta.mode}
+								key={state.inputs?.mode}
+								name={"inputs.mode"}
+								defaultValue={state.inputs?.mode}
 							>
 								<SelectTrigger className="w-[120px]">
 									<SelectValue placeholder="Mode" />

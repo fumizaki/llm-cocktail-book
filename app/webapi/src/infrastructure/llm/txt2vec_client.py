@@ -1,18 +1,18 @@
-from .txt2vec_model import Txt2VecModel, Txt2VecResult, Txt2VecResource
+from .txt2vec_model import Txt2VecResult, Txt2VecResource
 from .txt2vec_prompt import split_prompt
-from .resource.openai import AsyncOpenAIEmbeddingsClient, OpenAIEmbeddingsModel, OpenAIEmbeddingsResult
+from .resource.openai import AsyncOpenAIEmbeddingsClient, OpenAIEmbeddingsModel
 
 
 class Txt2VecClient:
-    def __init__(self) -> None:
-        pass
+    def __init__(self, resource: Txt2VecResource) -> None:
+        self.resource = resource
 
-    async def generate(self, params: Txt2VecModel) -> Txt2VecResult:
+    async def generate(self, prompt: str) -> Txt2VecResult:
         try:
-            chunks = split_prompt(params.prompt)
+            chunks = split_prompt(prompt)
 
             result: Txt2VecResult
-            if params.meta.resource == Txt2VecResource.OPENAI:
+            if self.resource == Txt2VecResource.OPENAI:
                 client = AsyncOpenAIEmbeddingsClient()
                 res = await client.vectorize(
                     OpenAIEmbeddingsModel(

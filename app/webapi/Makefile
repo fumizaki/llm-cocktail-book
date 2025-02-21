@@ -1,4 +1,7 @@
-.PHONY: migration migrate test test-unit test-integration test-e2e
+.PHONY: migration migrate test
+
+# デフォルトのPATHを / に設定
+PATH ?= /
 
 # make migration file (ex: make migration MESSAGE="init")
 migration:
@@ -7,14 +10,6 @@ migration:
 migrate:
 	docker exec -it -w /webapi webapi alembic upgrade head
 
+# run test (ex: make test PATH="/unit")
 test:
-	docker exec -it -w /webapi webapi pytest --cov --cov-branch -vs tests
-
-test-unit:
-	docker exec -it -w /webapi webapi pytest --cov --cov-branch -vs tests/unit
-
-test-integration:
-	docker exec -it -w /webapi webapi pytest --cov --cov-branch -vs tests/integration
-
-test-e2e:
-	docker exec -it -w /webapi webapi pytest --cov --cov-branch -vs tests/e2e
+	docker exec -it -w /webapi webapi pytest --cov --cov-branch -vs tests${PATH}

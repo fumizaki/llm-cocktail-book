@@ -33,6 +33,7 @@ google-generativeai = "^0.8.3"
 anthropic = "^0.42.0"
 pillow = "^11.1.0"
 celery = "^5.4.0"
+neo4j = "^5.28.1"
 
 
 [tool.poetry.group.dev.dependencies]

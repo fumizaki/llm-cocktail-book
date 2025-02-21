@@ -36,9 +36,7 @@ export const CreateChatbotIndexForm = ({ chatbotId, className }: Props) => {
 	const [state, formAction, isPending] = useActionState(createAction, {
 		inputs: {
 			chatbotId: chatbotId,
-			meta: {
-				resource: "openai"
-			},
+			resource: "openai",
 			title: "",
 			content: ""
 		},
@@ -78,17 +76,15 @@ export const CreateChatbotIndexForm = ({ chatbotId, className }: Props) => {
 						<Label className={'flex flex-col gap-1.5'}>
 							LLM
 							<Select
-								key={state.inputs?.meta.resource}
-								name={"inputs.meta.resource"}
-								defaultValue={state.inputs?.meta.resource}
+								key={state.inputs?.resource}
+								name={"inputs.resource"}
+								defaultValue={state.inputs?.resource}
 							>
 								<SelectTrigger className="w-[120px]">
 									<SelectValue />
 								</SelectTrigger>
 								<SelectContent>
 									<SelectItem value="openai">OpenAI</SelectItem>
-									<SelectItem value="google">Google</SelectItem>
-									<SelectItem value="anthropic">Anthropic</SelectItem>
 								</SelectContent>
 							</Select>
 						</Label>

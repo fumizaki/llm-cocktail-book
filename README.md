@@ -29,6 +29,7 @@ make docker-up
 | RDB_PORT | Required | setting RDB's running Port | 5432 |
 | KVS_PORT | Required | setting KVS's running Port | 6379 |
 | VECTOR_PORT | Required | setting Vector's running Port | 6333 |
+| GRAPH_PORT | Required | setting Graph's running Port | 7474 |
 |  |  |  |  |
 
 ##### WebView(`/app/webview/.env*`)

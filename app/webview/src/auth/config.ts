@@ -1,5 +1,5 @@
 import NextAuth from "next-auth";
-import Credentials from "next-auth/providers/credentials";
+import AccountCredentialModels from "next-auth/providers/credentials";
 import { signinAction } from "@/server-actions/auth/signin";
 import { refreshAction } from "@/server-actions/auth/refresh";
 import type { AuthToken } from "@/domain/schema";
@@ -9,7 +9,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
 		signIn: "/auth/signin",
 	},
 	providers: [
-		Credentials({
+		AccountCredentialModels({
 			credentials: {
 				email: { label: "Email", type: "email" },
 				password: { label: "Password", type: "password" },

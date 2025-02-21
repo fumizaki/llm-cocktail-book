@@ -3,5 +3,6 @@ from ..model import Model
 
 class CreateChatbotMessageModel(Model):
     chatbot_id: str
-    meta: dict[str, str]
+    resource: str
+    mode: str
     prompt: str

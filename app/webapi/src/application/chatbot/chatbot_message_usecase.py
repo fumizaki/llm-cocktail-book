@@ -13,12 +13,10 @@ from src.domain.llm import LLMUsage, LLMUsageRepository
 from src.infrastructure.database.rdb import TransactionClient
 from src.infrastructure.llm import (
     Txt2TxtClient,
-    Txt2TxtModel,
     Txt2TxtResult,
     Txt2TxtMessageRole,
     Txt2TxtMessage,
     Txt2VecClient,
-    Txt2VecModel,
     Txt2VecResult
 )
 from src.infrastructure.logging import JsonLineLoggingClient
@@ -65,7 +63,7 @@ class ChatbotMessageUsecase:
         self.logger.info(f"Create Chatbot Message execution started for account: {self.credential.account_id}")
 
         try:
-            self.logger.info(f"Get messages as context in CHatbot: {params.chatbot_id}")
+            self.logger.info(f"Get messages as context in Chatbot: {params.chatbot_id}")
             # コンテキストとして履歴を取得
             context_in_db: list[ChatbotMessage] = self.chatbot_message_repository.get_latest_list_exclude_deleted(params.chatbot_id, 6)
 
@@ -81,13 +79,8 @@ class ChatbotMessageUsecase:
             
 
             if self.chatbot_vector_repository.is_exists(params.chatbot_id):
-                txt2vec = Txt2VecClient()
-                txt2vec_result: Txt2VecResult = await txt2vec.generate(
-                    Txt2VecModel(
-                        meta={'resource': 'openai'},
-                        prompt=prompt
-                    )
-                )
+                txt2vec = Txt2VecClient(resource='openai')
+                txt2vec_result: Txt2VecResult = await txt2vec.generate(prompt)
 
                 self.llm_usage_repository.create(
                     LLMUsage(
@@ -102,7 +95,7 @@ class ChatbotMessageUsecase:
                 vector_points = self.chatbot_vector_repository.search(
                     chatbot_id=params.chatbot_id,
                     vector=txt2vec_result.vector,
-                    top_k=4
+                    top_k=40
                 )
                 reference = "\n".join(["\n".join([chunk for chunk in point.chunks]) for point in vector_points])
 
@@ -113,13 +106,10 @@ class ChatbotMessageUsecase:
                 """
                 
             self.logger.info(f"Create Message with LLM")
-            txt2txt = Txt2TxtClient()
+            txt2txt = Txt2TxtClient(resource=params.resource, mode=params.mode)
             res: Txt2TxtResult = await txt2txt.generate(
-                Txt2TxtModel(
-                    meta=params.meta,
-                    prompt=prompt,
-                    context=[Txt2TxtMessage(prompt=message.content, role=message.role) for message in context_in_db]
-                )
+                prompt=prompt,
+                context=[Txt2TxtMessage(prompt=message.content, role=message.role) for message in context_in_db]
             )
 
             self.logger.info(f"Create Usage")

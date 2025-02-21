@@ -46,7 +46,7 @@ export async function createAction(
 		success: true,
 		inputs: {
 			chatbotId: params.inputs.chatbotId,
-			meta: params.inputs.meta,
+			resource: params.inputs.resource,
 			title: "",
 			content: "",
 		},

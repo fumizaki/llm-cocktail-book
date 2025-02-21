@@ -8,13 +8,14 @@ ENV ?= local
 create_root_env:
 	@if [ ! -f ./.env.example ]; then \
 		echo "WEBVIEW_PORT=3000" > ./.env.example; \
-		echo "WEBAPI_PORT=8000" > ./.env.example; \
-		echo "RDB_NAME=rdb" > ./.env.example; \
-		echo "RDB_USER=rdb" > ./.env.example; \
-		echo "RDB_PASSWORD=rdb" > ./.env.example; \
-		echo "RDB_PORT=5432" > ./.env.example; \
-		echo "KVS_PORT=6379" > ./.env.example; \
-		echo "VDB_PORT=6333" > ./.env.example; \
+		echo "WEBAPI_PORT=8000" >> ./.env.example; \
+		echo "RDB_NAME=rdb" >> ./.env.example; \
+		echo "RDB_USER=rdb" >> ./.env.example; \
+		echo "RDB_PASSWORD=rdb" >> ./.env.example; \
+		echo "RDB_PORT=5432" >> ./.env.example; \
+		echo "KVS_PORT=6379" >> ./.env.example; \
+		echo "VECTOR_PORT=6333" >> ./.env.example; \
+		echo "GRAPH_PORT=7474" >> ./.env.example; \
 	fi
 	@if [ ! -f .env ]; then \
 		cp -f .env.example .env; \
@@ -64,7 +65,7 @@ create_kvs_data:
 		mkdir -p ./app/kvs/redis/test; \
 	fi
 
-# vdbのdataディレクトリ作成
+# vectorのdataディレクトリ作成
 create_vector_data:
 	@if [ ! -d ./app/vector/qdrant/local ]; then \
 		mkdir -p ./app/vector/qdrant/local; \
@@ -73,8 +74,17 @@ create_vector_data:
 		mkdir -p ./app/vector/qdrant/test; \
 	fi
 
+# graphのdataディレクトリ作成
+create_graph_data:
+	@if [ ! -d ./app/graph/neo4j/local ]; then \
+		mkdir -p ./app/graph/neo4j/local; \
+	fi
+	@if [ ! -d ./app/graph/neo4j/test ]; then \
+		mkdir -p ./app/graph/neo4j/test; \
+	fi
+
 # 初期セットアップコマンド
-init: create_root_env create_webapi_env create_webview_env create_rdb_data create_kvs_data create_vector_data
+init: create_root_env create_webapi_env create_webview_env create_rdb_data create_kvs_data create_vector_data create_graph_data
 
 # Dockerコンテナ起動
 docker-up:

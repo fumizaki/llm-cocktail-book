@@ -2,6 +2,6 @@ from ..model import Model
 
 class CreateChatbotIndexModel(Model):
     chatbot_id: str
-    meta: dict[str, str]
+    resource: str
     title: str
     content: str

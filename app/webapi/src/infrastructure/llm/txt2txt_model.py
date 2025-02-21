@@ -1,6 +1,6 @@
 from enum import Enum
-from typing import TypeVar, Optional
 from pydantic import BaseModel
+
 
 class Txt2TxtMessageRole(str, Enum):
     ASSISTANT = 'assistant'
@@ -26,26 +26,6 @@ class GenerationMode(str, Enum):
     # TODO: TRANSLATION = 'translation'
     # TODO: SUMMARY = 'summary'
     
-    
-
-class GenerationMeta(BaseModel):
-    resource: Txt2TxtResource
-    mode: GenerationMode
-
-
-class DiscussionGenerationMeta(GenerationMeta):
-    pass
-
-
-class CodeGenerationMeta(GenerationMeta):
-    pass
-
-
-class Txt2TxtModel(BaseModel):
-    meta: DiscussionGenerationMeta | CodeGenerationMeta
-    prompt: str
-    context: list[Txt2TxtMessage]
-
 
 class Txt2TxtResult(BaseModel):
     resource: Txt2TxtResource

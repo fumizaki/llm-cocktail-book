@@ -78,3 +78,17 @@ services:
     ports:
       - "127.0.0.1:${VECTOR_PORT}:${VECTOR_PORT}"
     restart: always
+
+
+  graph:
+    container_name: graph
+    build:
+      context: .
+      dockerfile: ./docker/graph/Dockerfile
+    volumes:
+      - type: bind
+        source: ./app/graph/neo4j/local
+        target: /data
+    ports:
+      - "127.0.0.1:${GRAPH_PORT}:${GRAPH_PORT}"
+    restart: always

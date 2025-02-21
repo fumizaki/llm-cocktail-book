@@ -3,7 +3,7 @@ from src.domain.account import AccountCredentialModel
 from src.domain.chatbot import ChatbotIndex, CreateChatbotIndexModel, ChatbotIndexRepository, ChatbotVectorRepository, ChatbotVectorCollection, ChatbotVectorPoint
 from src.domain.llm import LLMUsage, LLMUsageRepository
 from src.infrastructure.database.rdb import TransactionClient
-from src.infrastructure.llm import Txt2VecClient, Txt2VecModel, Txt2VecResult
+from src.infrastructure.llm import Txt2VecClient, Txt2VecResult
 from src.infrastructure.logging import JsonLineLoggingClient
 
 
@@ -49,13 +49,8 @@ class ChatbotIndexUsecase:
             prompt = params.content
 
             self.logger.info(f"Create Vector with LLM")
-            txt2vec = Txt2VecClient()
-            txt2vec_res : Txt2VecResult = await txt2vec.generate(
-                Txt2VecModel(
-                    meta=params.meta,
-                    prompt=prompt
-                )
-            )
+            txt2vec = Txt2VecClient(params.resource)
+            txt2vec_res : Txt2VecResult = await txt2vec.generate(prompt)
 
             self.logger.info(f"Create Usage")
             self.llm_usage_repository.create(
@@ -69,8 +64,12 @@ class ChatbotIndexUsecase:
 
             self.logger.info(f"Create Index")
             chatbot_index_in_db: ChatbotIndex = self.chatbot_index_repository.create(
-                ChatbotIndex(chatbot_id=params.chatbot_id, title=params.title, content=params.content)
+                ChatbotIndex(
+                    chatbot_id=params.chatbot_id,
+                    title=params.title,
+                    content=params.content
                 )
+            )
             
             self.logger.info(f"Create Vector Collection")
             self.chatbot_vector_repository.create(
