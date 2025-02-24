@@ -50,6 +50,7 @@ class ChatbotIndexUsecase:
 
             self.logger.info(f"Create Vector with LLM")
             txt2vec = Txt2VecClient(params.resource)
+            
             txt2vec_res : Txt2VecResult = await txt2vec.generate(prompt)
 
             self.logger.info(f"Create Usage")

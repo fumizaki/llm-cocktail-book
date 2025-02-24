@@ -1,3 +1,10 @@
+from .text_generation_client import TextGenerationClient as TextGenerationClient
+from .text_generation_model import (
+    TextGenerationResponse as TextGenerationResponse,
+    TextGenerationMessageRole as TextGenerationMessageRole,
+    TextGenerationMessage as TextGenerationMessage
+)
+
 from .txt2txt_client import (
     Txt2TxtClient as Txt2TxtClient
 )
