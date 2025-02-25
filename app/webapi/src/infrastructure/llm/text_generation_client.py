@@ -28,17 +28,26 @@ class TextGenerationClient(GenerationClient):
     ) -> None:
         super().__init__()
         self.resource: TextGenerationResource = resource
-        self.model = self.get_default_model(self.resource)
+        self.model = self.get_default_model()
         self.mode: TextGenerationMode = mode
         self.system_prompt: str = build_specialized_prompt(self.mode) + context_to_prompt(context)
 
-    def get_default_model(self, resource: TextGenerationResource) -> str:
+    def get_default_model(self) -> str:
         models = {
             TextGenerationResource.OPENAI: "o1-mini",
             TextGenerationResource.ANTHROPIC: "claude-3-5-sonnet-latest",
             TextGenerationResource.GOOGLE: "gemini-pro",
         }
-        return models.get(resource)
+        return models.get(self.resource)
+
+
+    def get_api_key(self) -> str:
+        api_keys = {
+            TextGenerationResource.OPENAI: self._openai_api_key,
+            TextGenerationResource.ANTHROPIC: self._anthropic_api_key,
+            TextGenerationResource.GOOGLE: self._google_api_key,
+        }
+        return api_keys.get(self.resource)
 
     def get_client(
         self,
@@ -83,38 +92,26 @@ class TextGenerationClient(GenerationClient):
         if resource is None:
             if contains_image:
                 # imageの場合は自動でOpenAIのo1-miniを利用する
-                resource = TextGenerationResource.OPENAI
+                self.resource = TextGenerationResource.OPENAI
                 model = "o1-mini"
             elif contains_audio:
                 # audioの場合は自動でGoogleのgemini-pro-visionを利用する
-                resource = TextGenerationResource.GOOGLE
+                self.resource = TextGenerationResource.GOOGLE
                 model = "gemini-pro-vision"
-            else:
-                resource = self.resource  # デフォルトのリソースを使用
 
         # `model` が指定されていれば設定
         if model:
             self.model = model
 
-        # クライアント取得
-        api_keys = {
-            TextGenerationResource.OPENAI: self._openai_api_key,
-            TextGenerationResource.ANTHROPIC: self._anthropic_api_key,
-            TextGenerationResource.GOOGLE: self._google_api_key,
-        }
-        api_key = api_keys.get(resource)
-
-        if api_key is None:
-            raise ValueError(f"API key for {resource} is not set.")
-
-        if resource == TextGenerationResource.OPENAI:
-            return ChatOpenAI(api_key=api_key, model=self.model)
-        elif resource == TextGenerationResource.ANTHROPIC:
+        if self.resource == TextGenerationResource.OPENAI:
+            return ChatOpenAI(api_key=self.get_api_key(), model=self.model)
+        elif self.resource == TextGenerationResource.ANTHROPIC:
             if contains_image or contains_audio:
                 raise ValueError("Anthropic does not support image/audio input.")
-            return ChatAnthropic(api_key=api_key, model=self.model)
-        elif resource == TextGenerationResource.GOOGLE:
-            return ChatGoogleGenerativeAI(api_key=api_key, model=self.model)
+            return ChatAnthropic(api_key=self.get_api_key(), model=self.model)
+        elif self.resource == TextGenerationResource.GOOGLE:
+            return ChatGoogleGenerativeAI(api_key=self.get_api_key(), model=self.model)
+
 
     def format_input_data(self, input_data: Union[str, bytes]) -> Union[str, dict[str, dict[str, str]]]:
         """
@@ -174,7 +171,7 @@ class TextGenerationClient(GenerationClient):
             response = await client.ainvoke(messages)
 
             return TextGenerationResponse(
-                resource=resource or self.resource,
+                resource=self.resource,
                 model=self.model,
                 content=response.text()
             )
