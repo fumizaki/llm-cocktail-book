@@ -16,12 +16,6 @@ from src.infrastructure.llm import (
     TextGenerationMessage,
     TextGenerationMessageRole,
     TextGenerationResponse,
-    # Txt2TxtClient,
-    # Txt2TxtResult,
-    # Txt2TxtMessageRole,
-    # Txt2TxtMessage,
-    # Txt2VecClient,
-    # Txt2VecResult
 )
 from src.infrastructure.logging import JsonLineLoggingClient
 
@@ -115,7 +109,7 @@ class ChatbotMessageUsecase:
                 mode=params.mode,
                 context=[TextGenerationMessage(content=message.content, role=message.role) for message in context_in_db]
                 )
-            res: TextGenerationResponse = await gen_text.generate(content=prompt)
+            res: TextGenerationResponse = await gen_text.generate(content=[prompt])
 
             # self.logger.info(f"Create Usage")
             # self.llm_usage_repository.create(
