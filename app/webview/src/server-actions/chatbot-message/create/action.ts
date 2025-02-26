@@ -49,6 +49,8 @@ export async function createAction(
 			resource: params.inputs.resource,
 			mode: params.inputs.mode,
 			prompt: "",
+			images: [],
+			docs: []
 		},
 		data: parseSnakeToCamel(await res.json()),
 	};

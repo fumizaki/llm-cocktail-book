@@ -57,6 +57,8 @@ export const insertChatbotMessage = z.object({
 	resource: z.string(),
 	mode: z.string(),
 	prompt: z.string().trim().min(1, { message: "1文字以上で入力してください" }),
+	images: z.array(z.string()),
+	docs: z.array(z.string())
 });
 
 export const selectChatbotIndex = z.object({
