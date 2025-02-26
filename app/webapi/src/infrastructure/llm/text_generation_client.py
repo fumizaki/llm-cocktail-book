@@ -39,6 +39,18 @@ class TextGenerationClient(GenerationClient):
             TextGenerationResource.GOOGLE: "gemini-pro",
         }
         return models.get(self.resource)
+    
+    def get_image_model(self) -> str:
+        models = {
+            TextGenerationResource.OPENAI: "o1-mini"
+        }
+        return models.get(self.resource)
+    
+    def get_audio_model(self) -> str:
+        models = {
+            TextGenerationResource.GOOGLE: "gemini-pro-vision",
+        }
+        return models.get(self.resource)
 
 
     def get_api_key(self) -> str:
@@ -91,13 +103,13 @@ class TextGenerationClient(GenerationClient):
         # `resource` が未指定なら自動選択
         if resource is None:
             if contains_image:
-                # imageの場合は自動でOpenAIのo1-miniを利用する
+                # imageの場合は自動でOpenAIを利用する
                 self.resource = TextGenerationResource.OPENAI
-                model = "o1-mini"
+                model = self.get_image_model()
             elif contains_audio:
-                # audioの場合は自動でGoogleのgemini-pro-visionを利用する
+                # audioの場合は自動でGoogleを利用する
                 self.resource = TextGenerationResource.GOOGLE
-                model = "gemini-pro-vision"
+                model = self.get_audio_model()
 
         # `model` が指定されていれば設定
         if model:
