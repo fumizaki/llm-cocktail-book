@@ -8,7 +8,7 @@ from .text_generation_model import (
     TextGenerationMode,
     TextGenerationMessage,
 )
-from .text_generation_prompt import context_to_prompt, build_specialized_prompt
+from .text_generation_prompt import build_specialized_prompt
 from langchain_openai import ChatOpenAI
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_anthropic import ChatAnthropic
@@ -30,7 +30,16 @@ class TextGenerationClient(GenerationClient):
         self.resource: TextGenerationResource = resource
         self.model = self.get_default_model()
         self.mode: TextGenerationMode = mode
-        self.system_prompt: str = build_specialized_prompt(self.mode) + context_to_prompt(context)
+        self.system_prompt: str = build_specialized_prompt(self.mode) + self.build_context(context)
+
+    def build_context(self, context: list[TextGenerationMessage]) -> str:
+        prompt = ''
+
+        messages = context[::-1]
+        for message in messages:
+            prompt += f"{message.role}: {message.content}"
+
+        return prompt
 
     def get_default_model(self) -> str:
         models = {

@@ -40,9 +40,9 @@ class TextGenerationResource(str, Enum):
 class TextGenerationMode(str, Enum):
     DISCUSSION = 'discussion'
     CODE = 'code'
-    # TODO: PROMPT = 'prompt'
-    # TODO: TRANSLATION = 'translation'
-    # TODO: SUMMARY = 'summary'
+    PROMPT = 'prompt'
+    TRANSLATION = 'translation'
+    SUMMARY = 'summary'
 
     @classmethod
     def names(cls) -> list[str]:

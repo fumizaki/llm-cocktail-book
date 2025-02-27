@@ -106,7 +106,7 @@ export const CreateChatbotMessageForm = ({ chatbotId, className }: Props) => {
 			<Card className={`w-full`}>
 				<CardHeader className={'flex flex-row items-center justify-between'}>
 					<CardTitle>Chat with AI</CardTitle>
-					<div className={"flex gap-1.5"}>
+					<div className={"flex gap-3"}>
 						<Label className={'flex items-center justify-between gap-1.5'}>
 							LLM
 							<Select
@@ -137,13 +137,13 @@ export const CreateChatbotMessageForm = ({ chatbotId, className }: Props) => {
 								<SelectContent>
 									<SelectItem value="discussion">Discussion</SelectItem>
 									<SelectItem value="code">Code</SelectItem>
-									<SelectItem value="prompt" disabled>
+									<SelectItem value="prompt">
 										Prompt
 									</SelectItem>
-									<SelectItem value="summary" disabled>
+									<SelectItem value="summary">
 										Summary
 									</SelectItem>
-									<SelectItem value="translation" disabled>
+									<SelectItem value="translation">
 										Translation
 									</SelectItem>
 								</SelectContent>
