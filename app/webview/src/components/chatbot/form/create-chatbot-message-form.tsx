@@ -3,7 +3,7 @@
 import { cn } from "@/lib/style";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useActionState, useEffect, useState } from "react";
+import { useActionState, startTransition, useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -16,16 +16,9 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { createAction } from "@/server-actions/chatbot-message/create";
-import { Settings, X, ImagePlus, SendHorizonal, FileText } from "lucide-react"
-import { parseFilesToBase64, Base64File } from "@/lib/parse-file";
+import { X, ImagePlus, SendHorizonal, FileText } from "lucide-react"
 
 type Props = {
 	chatbotId: string;
@@ -35,8 +28,8 @@ type Props = {
 export const CreateChatbotMessageForm = ({ chatbotId, className }: Props) => {
 	const router = useRouter();
 	const { toast } = useToast();
-	const [images, setImages] = useState<Base64File[]>([]);
-	const [docs, setDocs] = useState<Base64File[]>([]);
+	const [images, setImages] = useState<File[]>([]);
+	const [docs, setDocs] = useState<File[]>([]);
 
 	const [state, formAction, isPending] = useActionState(createAction, {
 		inputs: {
@@ -44,8 +37,8 @@ export const CreateChatbotMessageForm = ({ chatbotId, className }: Props) => {
 			resource: "openai",
 			mode: "discussion",
 			prompt: "",
-			images: [],
-			docs: []
+			images: images,
+			docs: docs
 		},
 	});
 
@@ -55,6 +48,8 @@ export const CreateChatbotMessageForm = ({ chatbotId, className }: Props) => {
 				title: "Success",
 				description: "Create Message Successfully",
 			});
+			setImages([])
+			setDocs([])
 			router.refresh();
 		} else if (state.success === false) {
 			toast({
@@ -65,43 +60,39 @@ export const CreateChatbotMessageForm = ({ chatbotId, className }: Props) => {
 		}
 	}, [state]);
 
-	const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const selected = e.target.files;
 		if (!selected) return; // null チェック
-		const parsed = await parseFilesToBase64(selected)
-		setImages((prev) => [...prev, ...parsed]);
+		setImages((prev) => [...prev, ...Array.from(selected)]);
 	};
 
 	const handleRemoveImage = (index: number) => {
 		setImages((prev) => prev.filter((_, i) => i !== index));
 	};
 
-	const handleDocsChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleDocsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const selected = e.target.files;
 		if (!selected) return; // null チェック
-		const parsed = await parseFilesToBase64(selected)
-		setDocs((prev) => [...prev, ...parsed]);
+		setDocs((prev) => [...prev, ...Array.from(selected)]);
 	};
 
 	const handleRemoveDoc = (index: number) => {
 		setDocs((prev) => prev.filter((_, i) => i !== index));
 	};
 
-	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		const formData = new FormData(e.currentTarget);
-	
+
 		// 画像ファイルを追加
-		if (images.length > 0) {
-			Array.from(images).forEach((image) => formData.append("images", image.base64));
-		}
+		Array.from(images).forEach((image) => formData.append("inputs.images[]", image));
 
 		// 書類ファイルを追加
-		if (docs.length > 0) {
-			Array.from(docs).forEach((doc) => formData.append("docs", doc.base64));
-		}
-	
-		formAction(formData);
+		Array.from(docs).forEach((doc) => formData.append("inputs.docs[]", doc));
+
+		startTransition(() => {
+			formAction(formData);
+		})
 	};
 
 	return (
@@ -115,61 +106,50 @@ export const CreateChatbotMessageForm = ({ chatbotId, className }: Props) => {
 			<Card className={`w-full`}>
 				<CardHeader className={'flex flex-row items-center justify-between'}>
 					<CardTitle>Chat with AI</CardTitle>
-					<DropdownMenu>
-						<DropdownMenuTrigger asChild>
-							<Button type="button" variant="outline" size="icon">
-								<Settings size={24} />
-							</Button>
-						</DropdownMenuTrigger>
-						<DropdownMenuContent align="end" className={"flex flex-col gap-2 p-2"}>
-							<DropdownMenuItem className={"w-full"} asChild>
-								<Label className={'flex justify-between gap-1.5'}>
-									LLM
-									<Select
-										key={state.inputs?.resource}
-										name={"inputs.resource"}
-										defaultValue={state.inputs?.resource}
-									>
-										<SelectTrigger className="w-[120px]">
-											<SelectValue />
-										</SelectTrigger>
-										<SelectContent>
-											<SelectItem value="openai">OpenAI</SelectItem>
-											<SelectItem value="google">Google</SelectItem>
-											<SelectItem value="anthropic">Anthropic</SelectItem>
-										</SelectContent>
-									</Select>
-								</Label>
-							</DropdownMenuItem>
-							<DropdownMenuItem className={"w-full"} asChild>
-								<Label className={'flex gap-1.5'}>
-									Mode
-									<Select
-										key={state.inputs?.mode}
-										name={"inputs.mode"}
-										defaultValue={state.inputs?.mode}
-									>
-										<SelectTrigger className="w-[120px]">
-											<SelectValue placeholder="Mode" />
-										</SelectTrigger>
-										<SelectContent>
-											<SelectItem value="discussion">Discussion</SelectItem>
-											<SelectItem value="code">Code</SelectItem>
-											<SelectItem value="prompt" disabled>
-												Prompt
-											</SelectItem>
-											<SelectItem value="summary" disabled>
-												Summary
-											</SelectItem>
-											<SelectItem value="translation" disabled>
-												Translation
-											</SelectItem>
-										</SelectContent>
-									</Select>
-								</Label>
-							</DropdownMenuItem>
-						</DropdownMenuContent>
-					</DropdownMenu>
+					<div className={"flex gap-1.5"}>
+						<Label className={'flex items-center justify-between gap-1.5'}>
+							LLM
+							<Select
+								key={state.inputs?.resource}
+								name={"inputs.resource"}
+								defaultValue={state.inputs?.resource}
+							>
+								<SelectTrigger className="w-[120px]">
+									<SelectValue />
+								</SelectTrigger>
+								<SelectContent>
+									<SelectItem value="openai">OpenAI</SelectItem>
+									<SelectItem value="google">Google</SelectItem>
+									<SelectItem value="anthropic">Anthropic</SelectItem>
+								</SelectContent>
+							</Select>
+						</Label>
+						<Label className={'flex items-center justify-between gap-1.5'}>
+							Mode
+							<Select
+								key={state.inputs?.mode}
+								name={"inputs.mode"}
+								defaultValue={state.inputs?.mode}
+							>
+								<SelectTrigger className="w-[120px]">
+									<SelectValue placeholder="Mode" />
+								</SelectTrigger>
+								<SelectContent>
+									<SelectItem value="discussion">Discussion</SelectItem>
+									<SelectItem value="code">Code</SelectItem>
+									<SelectItem value="prompt" disabled>
+										Prompt
+									</SelectItem>
+									<SelectItem value="summary" disabled>
+										Summary
+									</SelectItem>
+									<SelectItem value="translation" disabled>
+										Translation
+									</SelectItem>
+								</SelectContent>
+							</Select>
+						</Label>
+					</div>
 				</CardHeader>
 				<CardContent className="flex flex-col gap-3">
 					<Input
@@ -197,11 +177,12 @@ export const CreateChatbotMessageForm = ({ chatbotId, className }: Props) => {
 					{images.length > 0 && (
 						<div className="flex flex-wrap gap-2">
 						{images.map((image, index) => {
+							const imageUrl = URL.createObjectURL(image);
 							return (
 								<div key={index} className="relative w-24 h-24">
 									{/* プレビュー画像 */}
 									<Image
-										src={`data:${image.type};base64,${image.base64}`}
+										src={imageUrl}
 										alt={image.name}
 										fill
 										className="object-cover rounded-md" />

@@ -57,7 +57,7 @@ class ChatbotMessageUsecase:
 
 
 
-    async def create_exec(self, params: CreateChatbotMessageModel) -> ChatbotMessage:
+    async def create_exec(self, params: CreateChatbotMessageModel, files: list[bytes]) -> ChatbotMessage:
         self.logger.info(f"Create Chatbot Message execution started for account: {self.credential.account_id}")
 
         try:
@@ -109,7 +109,8 @@ class ChatbotMessageUsecase:
                 mode=params.mode,
                 context=[TextGenerationMessage(content=message.content, role=message.role) for message in context_in_db]
                 )
-            res: TextGenerationResponse = await gen_text.generate(content=[prompt])
+            
+            res: TextGenerationResponse = await gen_text.generate(content=[prompt] + files)
 
             # self.logger.info(f"Create Usage")
             # self.llm_usage_repository.create(

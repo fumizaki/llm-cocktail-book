@@ -35,20 +35,21 @@ class TextGenerationClient(GenerationClient):
     def get_default_model(self) -> str:
         models = {
             TextGenerationResource.OPENAI: "o1-mini",
-            TextGenerationResource.ANTHROPIC: "claude-3-5-sonnet-latest",
-            TextGenerationResource.GOOGLE: "gemini-pro",
+            TextGenerationResource.ANTHROPIC: "claude-3-7-sonnet-latest",
+            TextGenerationResource.GOOGLE: "gemini-2.0-flash",
         }
         return models.get(self.resource)
     
     def get_image_model(self) -> str:
         models = {
-            TextGenerationResource.OPENAI: "o1-mini"
+            TextGenerationResource.OPENAI: "gpt-4o",
+            TextGenerationResource.GOOGLE: "gemini-2.0-flash",
         }
         return models.get(self.resource)
     
     def get_audio_model(self) -> str:
         models = {
-            TextGenerationResource.GOOGLE: "gemini-pro-vision",
+            TextGenerationResource.GOOGLE: "gemini-2.0-flash",
         }
         return models.get(self.resource)
 
@@ -128,9 +129,9 @@ class TextGenerationClient(GenerationClient):
     def format_input_data(self, input_data: Union[str, bytes]) -> Union[str, dict[str, dict[str, str]]]:
         """
         入力データを適切なフォーマットに変換する。
-        - 画像 → `{"image_url": {"url": "data:image/png;base64,..."}}`
-        - 音声 → `{"audio_url": {"url": "data:audio/mp3;base64,..."}}`
-        - テキストはそのまま返す
+        - 画像 → `{"type": "image_url", "image_url": { "url": f"data:{mime_type};base64,{base64_encoded}"}}`
+        - 音声 → `{"type": "audio_url", "audio_url": { "url": f"data:{mime_type};base64,{base64_encoded}"}}`
+        - テキスト → `{"type": "text", "text": input_data}`
 
         Args:
             input_data (Union[str, bytes]): 変換対象のデータ
@@ -139,7 +140,7 @@ class TextGenerationClient(GenerationClient):
             Union[str, Dict[str, Dict[str, str]]]: フォーマット済みデータ
         """
         if isinstance(input_data, str):
-            return input_data  # テキストはそのまま返す
+            return {"type": "text", "text": input_data}
 
         if isinstance(input_data, bytes):
             mime_checker = magic.Magic(mime=True)
@@ -149,9 +150,9 @@ class TextGenerationClient(GenerationClient):
 
             base64_encoded = base64.b64encode(input_data).decode("utf-8")
             if mime_type.startswith("image/"):
-                return {"image_url": {"url": f"data:{mime_type};base64,{base64_encoded}"}}
+                return {"type": "image_url", "image_url": { "url": f"data:{mime_type};base64,{base64_encoded}"}}
             elif mime_type.startswith("audio/"):
-                return {"audio_url": {"url": f"data:{mime_type};base64,{base64_encoded}"}}
+                return {"type": "audio_url", "audio_url": { "url": f"data:{mime_type};base64,{base64_encoded}"}}
             else:
                 raise ValueError("Unsupported media type.")
 
@@ -176,9 +177,10 @@ class TextGenerationClient(GenerationClient):
             client = self.get_client(content, resource, model)
             messages = [AIMessage(content=self.system_prompt)]
 
-            for input_data in content:
-                formatted_data = self.format_input_data(input_data)
-                messages.append(HumanMessage(content=formatted_data))
+            # for input_data in content:
+            #     formatted_data = self.format_input_data(input_data)
+            #     print(formatted_data)
+            messages.append(HumanMessage(content=[self.format_input_data(input_data) for input_data in content]))
 
             response = await client.ainvoke(messages)
 

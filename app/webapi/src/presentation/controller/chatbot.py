@@ -1,4 +1,4 @@
-from fastapi import APIRouter, status, HTTPException, Depends
+from fastapi import APIRouter, UploadFile, Form, File, status, HTTPException, Depends
 from src.presentation.dependency.usecase.chatbot import implement_chatbot_usecase, implement_chatbot_message_usecase, implement_chatbot_index_usecase
 from src.application.chatbot import ChatbotUsecase, ChatbotMessageUsecase, ChatbotIndexUsecase
 from src.domain.chatbot import CreateChatbotModel, CreateChatbotMessageModel, CreateChatbotIndexModel
@@ -30,8 +30,24 @@ async def get_chatbot_message(chatbot_id: str, usecase: ChatbotMessageUsecase = 
     return result
 
 @router.post("/chatbot/message")
-async def create_chatbot_message(form: CreateChatbotMessageModel, usecase: ChatbotMessageUsecase = Depends(implement_chatbot_message_usecase)):
-    result = await usecase.create_exec(form)
+async def create_chatbot_message(
+    chatbot_id: str = Form(...),
+    resource: str = Form(...),
+    mode: str = Form(...),
+    prompt: str = Form(...),
+    images: list[UploadFile] = File(default=[]),
+    docs: list[UploadFile] = File(default=[]),
+    usecase: ChatbotMessageUsecase = Depends(implement_chatbot_message_usecase)
+    ):
+    form = CreateChatbotMessageModel(
+        chatbot_id=chatbot_id,
+        resource=resource,
+        mode=mode,
+        prompt=prompt
+    )
+    bytes_images = [img.file.read() for img in images]
+    files = bytes_images
+    result = await usecase.create_exec(form, files)
     return result
 
 @router.get("/chatbot/index/{chatbot_id}")

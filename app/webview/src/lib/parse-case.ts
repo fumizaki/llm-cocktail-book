@@ -103,3 +103,65 @@ export function parseCamelToSnake<T extends ObjectOrArray>(input: T): T {
 
 	return input;
 }
+
+export function parseFormDataSnakeToCamel(formData: FormData): FormData {
+	const result = new FormData();
+	
+	// FormDataの各エントリーを処理
+	for (const [key, value] of formData.entries()) {
+	  const camelKey = parseSnakeStrToCamelStr(key);
+	  
+	  // 値の型を確認
+	  if (value instanceof File) {
+		// Fileオブジェクトの場合はそのまま追加
+		result.append(camelKey, value);
+	  } else if (getType(value) === 'object' || Array.isArray(value)) {
+		// オブジェクトや配列の場合は再帰的に変換
+		try {
+		  // JSONとして解析可能な文字列の場合
+		  const parsedValue = JSON.parse(value as string);
+		  const convertedValue = JSON.stringify(parseSnakeToCamel(parsedValue));
+		  result.append(camelKey, convertedValue);
+		} catch (e) {
+		  // 解析できない場合はそのまま追加
+		  result.append(camelKey, value);
+		}
+	  } else {
+		// その他の値はそのまま追加
+		result.append(camelKey, value);
+	  }
+	}
+	
+	return result;
+}
+
+export function parseFormDataCamelToSnake(formData: FormData): FormData {
+	const result = new FormData();
+	
+	// FormDataの各エントリーを処理
+	for (const [key, value] of formData.entries()) {
+		const snakeKey = parseCamelStrToSnakeStr(key);
+		
+		// 値の型を確認
+		if (value instanceof File) {
+			// Fileオブジェクトの場合はそのまま追加
+			result.append(snakeKey, value);
+		} else if (getType(value) === 'object' || Array.isArray(value)) {
+			// オブジェクトや配列の場合は再帰的に変換
+			try {
+			// JSONとして解析可能な文字列の場合
+			const parsedValue = JSON.parse(value as string);
+			const convertedValue = JSON.stringify(parseCamelToSnake(parsedValue));
+			result.append(snakeKey, convertedValue);
+			} catch (e) {
+			// 解析できない場合はそのまま追加
+			result.append(snakeKey, value);
+			}
+		} else {
+			// その他の値はそのまま追加
+			result.append(snakeKey, value);
+		}
+	}
+	
+	return result;
+}
