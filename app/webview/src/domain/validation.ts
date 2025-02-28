@@ -73,6 +73,7 @@ export const insertChatbotIndex = z.object({
 	resource: z.string(),
 	title: z.string().trim().min(1, { message: "1文字以上で入力してください" }),
 	content: z.string().trim().min(1, { message: "1文字以上で入力してください" }),
+	docs: z.array(z.custom<File>()).optional()
 });
 
 // Credit

@@ -2,7 +2,7 @@
 
 import { auth } from "@/auth/config";
 import { parseSnakeToCamel, parseCamelToSnake } from "@/lib/parse-case";
-import { parseFormDataToObject } from "@/lib/parse-form";
+import { parseFormDataToObject, parseObjectToFormData } from "@/lib/parse-form";
 import type { NewChatbotIndex } from "@/domain/schema";
 import { insertChatbotIndex } from "@/domain/validation";
 import type { CreateActionState } from "./type";
@@ -29,9 +29,8 @@ export async function createAction(
 		method: "POST",
 		headers: {
 			Authorization: `Bearer ${session?.user.authorization.accessToken}`,
-			"Content-Type": "application/json",
 		},
-		body: JSON.stringify(parseCamelToSnake(validatedFields.data)),
+		body: parseObjectToFormData(parseCamelToSnake(validatedFields.data)),
 	});
 
 	if (!res.ok) {
@@ -49,6 +48,7 @@ export async function createAction(
 			resource: params.inputs.resource,
 			title: "",
 			content: "",
+			docs: []
 		},
 		data: parseSnakeToCamel(await res.json()),
 	};

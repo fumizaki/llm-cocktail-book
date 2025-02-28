@@ -25,6 +25,20 @@ type Props = {
 	className?: string;
 };
 
+const resources = [
+	{ value: 'openai', label: 'OpenAI', isDisabled: false },
+	{ value: 'google', label: 'Google', isDisabled: false },
+	{ value: 'anthropic', label: 'Anthropic', isDisabled: false },
+]
+
+const modes = [
+	{ value: 'discussion', label: 'Discussion', isDisabled: false },
+	{ value: 'code', label: 'Code', isDisabled: false },
+	{ value: 'prompt', label: 'Prompt', isDisabled: false },
+	{ value: 'translation', label: 'Translation', isDisabled: false },
+	{ value: 'summary', label: 'Summary', isDisabled: false },
+]
+
 export const CreateChatbotMessageForm = ({ chatbotId, className }: Props) => {
 	const router = useRouter();
 	const { toast } = useToast();
@@ -48,8 +62,6 @@ export const CreateChatbotMessageForm = ({ chatbotId, className }: Props) => {
 				title: "Success",
 				description: "Create Message Successfully",
 			});
-			setImages([])
-			setDocs([])
 			router.refresh();
 		} else if (state.success === false) {
 			toast({
@@ -118,9 +130,9 @@ export const CreateChatbotMessageForm = ({ chatbotId, className }: Props) => {
 									<SelectValue />
 								</SelectTrigger>
 								<SelectContent>
-									<SelectItem value="openai">OpenAI</SelectItem>
-									<SelectItem value="google">Google</SelectItem>
-									<SelectItem value="anthropic">Anthropic</SelectItem>
+									{resources.map((resource, i) => (
+										<SelectItem key={i} value={resource.value} disabled={resource.isDisabled}>{resource.label}</SelectItem>
+									))}
 								</SelectContent>
 							</Select>
 						</Label>
@@ -135,17 +147,9 @@ export const CreateChatbotMessageForm = ({ chatbotId, className }: Props) => {
 									<SelectValue placeholder="Mode" />
 								</SelectTrigger>
 								<SelectContent>
-									<SelectItem value="discussion">Discussion</SelectItem>
-									<SelectItem value="code">Code</SelectItem>
-									<SelectItem value="prompt">
-										Prompt
-									</SelectItem>
-									<SelectItem value="summary">
-										Summary
-									</SelectItem>
-									<SelectItem value="translation">
-										Translation
-									</SelectItem>
+									{modes.map((mode, i) => (
+										<SelectItem key={i} value={mode.value} disabled={mode.isDisabled}>{mode.label}</SelectItem>
+									))}
 								</SelectContent>
 							</Select>
 						</Label>
